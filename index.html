@@ -1,0 +1,3108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#080808">
+<title>Instaservice — La Agencia de los Panameños</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --r:#D8242A;--rl:#FF3B42;--rd:#9A1A1E;
+  --bg:#080808;--bg2:#0f0f0f;--bg3:#161616;
+  --w:#FFFFFF;--w2:rgba(255,255,255,0.7);--w3:rgba(255,255,255,0.3);
+  --fh:'Bebas Neue',sans-serif;--fs:'Barlow Condensed',sans-serif;--fb:'Barlow',sans-serif;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-top: env(safe-area-inset-top, 0px);
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--w);font-family:var(--fb);overflow-x:hidden;cursor:none;}
+
+/* CURSOR */
+#cursor{position:fixed;width:10px;height:10px;background:var(--r);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .25s,height .25s;will-change:transform;}
+#cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(216,36,42,.45);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s;will-change:transform;}
+.cur-big #cursor{width:18px;height:18px;}
+.cur-big #cursor-ring{width:56px;height:56px;}
+
+/* NOISE */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");pointer-events:none;z-index:800;opacity:.5;}
+
+/* LOADER */
+#loader{position:fixed;inset:0;background:var(--bg);z-index:8000;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .7s,visibility .7s;}
+#loader.out{opacity:0;visibility:hidden;}
+.ld-logo{font-family:var(--fh);font-size:clamp(52px,8vw,100px);letter-spacing:4px;line-height:1;}
+.ld-logo span{color:var(--r);}
+.ld-track{width:280px;height:2px;background:rgba(255,255,255,.1);margin-top:.5rem;overflow:hidden;border-radius:2px;}
+.ld-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--rd),var(--r),var(--rl));transition:width .12s linear;border-radius:2px;}
+.ld-num{font-family:var(--fs);font-size:12px;font-weight:600;letter-spacing:4px;color:var(--w3);margin-top:.75rem;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:400;padding:0 6%;height:72px;display:flex;align-items:center;justify-content:space-between;transition:background .5s,backdrop-filter .5s,transform .35s cubic-bezier(.16,1,.3,1);}
+nav.on{background:rgba(8,8,8,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.04);}
+.nlogo{font-family:var(--fh);font-size:24px;letter-spacing:3px;color:var(--w);text-decoration:none;display:flex;align-items:center;gap:10px;cursor:pointer;}
+.nmark{width:30px;height:30px;background:var(--r);clip-path:polygon(30% 0%,70% 0%,100% 30%,100% 70%,70% 100%,30% 100%,0% 70%,0% 30%);display:flex;align-items:center;justify-content:center;}
+.nmark svg{width:14px;height:14px;fill:white;}
+.nlogo span{color:var(--r);}
+
+/* MENU BUTTON */
+.nav-right{display:flex;align-items:center;gap:1rem;}
+.menu-btn{display:flex;align-items:center;gap:10px;background:transparent;border:1px solid rgba(255,255,255,.1);padding:9px 18px;cursor:pointer;transition:border-color .3s,background .3s;position:relative;z-index:500;}
+.menu-btn:hover{border-color:rgba(216,36,42,.5);background:rgba(216,36,42,.06);}
+.menu-btn-bars{display:flex;flex-direction:column;gap:4px;width:18px;}
+.menu-btn-bars span{display:block;height:1.5px;background:var(--w);transition:transform .35s cubic-bezier(.65,0,.35,1),opacity .25s,width .3s;}
+.menu-btn-bars span:nth-child(2){width:70%;}
+.menu-btn.open .menu-btn-bars span:nth-child(1){transform:translateY(5.5px) rotate(45deg);}
+.menu-btn.open .menu-btn-bars span:nth-child(2){opacity:0;transform:translateX(-6px);}
+.menu-btn.open .menu-btn-bars span:nth-child(3){transform:translateY(-5.5px) rotate(-45deg);}
+.menu-btn-label{font-family:var(--fs);font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--w3);transition:color .2s;}
+.menu-btn:hover .menu-btn-label,.menu-btn.open .menu-btn-label{color:var(--w);}
+
+/* DROPDOWN PANEL */
+.nav-dropdown{position:fixed;top:72px;right:6%;z-index:399;background:rgba(10,10,10,.97);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.06);border-top:2px solid var(--r);min-width:300px;opacity:0;visibility:hidden;transform:translateY(-10px) scale(.97);transform-origin:top right;transition:opacity .3s cubic-bezier(.16,1,.3,1),transform .35s cubic-bezier(.16,1,.3,1),visibility .3s;}
+.nav-dropdown.open{opacity:1;visibility:visible;transform:translateY(0) scale(1);}
+.nav-dropdown-inner{padding:.5rem 0;}
+.nav-item{display:flex;align-items:center;gap:1.25rem;padding:1rem 1.75rem;cursor:pointer;transition:background .2s;position:relative;overflow:hidden;}
+.nav-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:var(--r);transition:width .3s cubic-bezier(.65,0,.35,1);}
+.nav-item:hover::before,.nav-item.active::before{width:2px;}
+.nav-item:hover,.nav-item.active{background:rgba(255,255,255,.04);}
+.nav-item-ico{width:38px;height:38px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;transition:background .2s,border-color .2s;}
+.nav-item:hover .nav-item-ico,.nav-item.active .nav-item-ico{background:rgba(216,36,42,.12);border-color:rgba(216,36,42,.25);}
+.nav-item-text{flex:1;}
+.nav-item-text strong{display:block;font-family:var(--fs);font-size:15px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--w);margin-bottom:2px;}
+.nav-item-text span{font-size:12px;color:var(--w3);line-height:1.4;}
+.nav-item-arr{font-size:14px;color:rgba(255,255,255,.15);transition:color .2s,transform .25s;}
+.nav-item:hover .nav-item-arr,.nav-item.active .nav-item-arr{color:var(--r);transform:translateX(3px);}
+.nav-dropdown-divider{height:1px;background:rgba(255,255,255,.05);margin:.25rem 1.75rem;}
+.nav-dropdown-footer{padding:.75rem 1.75rem;display:flex;align-items:center;justify-content:space-between;}
+.nav-dropdown-footer a{font-family:var(--fs);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--w3);text-decoration:none;transition:color .2s;}
+.nav-dropdown-footer a:hover{color:var(--r);}
+
+.ncta{font-family:var(--fs);font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--w);text-decoration:none;padding:9px 22px;border:1px solid var(--r);position:relative;overflow:hidden;transition:color .3s;}
+.ncta::before{content:'';position:absolute;inset:0;background:var(--r);transform:translateX(-101%);transition:transform .3s cubic-bezier(.65,0,.35,1);}
+.ncta span{position:relative;z-index:1;}
+.ncta:hover::before{transform:translateX(0);}
+
+/* PAGES SYSTEM */
+.page{display:none;min-height:100vh;}
+.page.active{display:block;}
+#page-home{display:block;}
+
+/* =============================================
+   HERO CINEMATIC PREMIUM — INSTASERVICE 2025
+   ============================================= */
+
+/* KEYFRAMES BASE */
+@keyframes sr{to{opacity:1;transform:translateX(0);}}
+@keyframes fu{to{opacity:1;transform:translateY(0);}}
+@keyframes pd{0%,100%{box-shadow:0 0 0 0 rgba(216,36,42,.6);}60%{box-shadow:0 0 0 10px rgba(216,36,42,0);}}
+@keyframes sa{0%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);transform-origin:top;}51%{transform:scaleY(1);transform-origin:bottom;}100%{transform:scaleY(0);transform-origin:bottom;}}
+@keyframes gridPulse{0%,100%{opacity:.18;}50%{opacity:.32;}}
+@keyframes scanLine{0%{transform:translateY(-100%);}100%{transform:translateY(100vh);}}
+@keyframes redGlow{0%,100%{opacity:.35;transform:scale(1);}50%{opacity:.6;transform:scale(1.08);}}
+@keyframes particleFly{0%{transform:translateY(0) translateX(0);opacity:0;}10%{opacity:1;}90%{opacity:.6;}100%{transform:translateY(-120px) translateX(var(--tx));opacity:0;}}
+@keyframes zoomSlow{0%{transform:scale(1);}100%{transform:scale(1.08);}}
+@keyframes counterIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 20px rgba(216,36,42,.2),inset 0 0 20px rgba(216,36,42,.05);}50%{box-shadow:0 0 40px rgba(216,36,42,.4),inset 0 0 30px rgba(216,36,42,.1);}}
+@keyframes borderGlow{0%,100%{border-color:rgba(216,36,42,.25);}50%{border-color:rgba(216,36,42,.7);}}
+@keyframes liquidHover{0%{transform:scale(1,1);}25%{transform:scale(.95,1.05);}50%{transform:scale(1.05,.95);}75%{transform:scale(.98,1.02);}100%{transform:scale(1,1);}}
+@keyframes statsReveal{from{opacity:0;transform:translateY(30px) scale(.95);}to{opacity:1;transform:translateY(0) scale(1);}}
+@keyframes tick{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+@keyframes tickerGlow{0%,100%{opacity:.8;}50%{opacity:1;}}
+
+/* HERO WRAPPER */
+.hero{
+  min-height:100vh;
+  min-height:100svh;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  overflow:hidden;
+  padding-bottom:10vh;
+}
+
+/* VIDEO BG */
+.hero-video-wrap{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+}
+.hero-video-wrap video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  animation:zoomSlow 20s ease-in-out infinite alternate;
+  filter:blur(1px) brightness(.7);
+  transform-origin:center;
+}
+
+/* FALLBACK IMAGE (when no video plays) */
+.hero-img-fallback{
+  position:absolute;
+  inset:0;
+  background:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778892582/675447746_18455830984106348_3257308772832864931_n_dc4gda.jpg') center center/cover no-repeat;
+  animation:zoomSlow 20s ease-in-out infinite alternate;
+  opacity:.5;
+  z-index:0;
+}
+
+/* OVERLAY LAYERS */
+.hero-overlay-1{
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(
+    180deg,
+    rgba(8,8,8,.75) 0%,
+    rgba(8,8,8,.5) 35%,
+    rgba(8,8,8,.45) 60%,
+    rgba(8,8,8,.88) 100%
+  );
+}
+.hero-overlay-2{
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(
+    105deg,
+    rgba(8,8,8,.92) 0%,
+    rgba(8,8,8,.6) 45%,
+    rgba(8,8,8,.12) 100%
+  );
+}
+.hero-overlay-red{
+  position:absolute;
+  bottom:-20%;
+  left:-10%;
+  width:60%;
+  height:80%;
+  z-index:1;
+  background:radial-gradient(ellipse at 30% 70%,rgba(216,36,42,.18) 0%,transparent 65%);
+  animation:redGlow 6s ease-in-out infinite;
+  pointer-events:none;
+}
+.hero-overlay-red2{
+  position:absolute;
+  top:-10%;
+  right:-5%;
+  width:50%;
+  height:60%;
+  z-index:1;
+  background:radial-gradient(ellipse at 70% 30%,rgba(216,36,42,.08) 0%,transparent 60%);
+  pointer-events:none;
+}
+
+/* TECHNICAL GRID */
+.hero-grid{
+  position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;
+}
+.hero-grid svg{width:100%;height:100%;opacity:.14;animation:gridPulse 4s ease-in-out infinite;}
+
+/* SCAN LINE */
+.hero-scanline{
+  position:absolute;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(216,36,42,.4),transparent);
+  z-index:2;pointer-events:none;
+  animation:scanLine 8s linear infinite;
+  opacity:.4;
+}
+
+/* PARTICLE CANVAS */
+#pcanvas{position:absolute;inset:0;z-index:2;pointer-events:none;}
+
+/* VERTICAL LINES DECO */
+.hero-vline{
+  position:absolute;top:0;bottom:0;width:1px;z-index:1;pointer-events:none;
+  background:linear-gradient(to bottom,transparent 0%,rgba(216,36,42,.6) 30%,rgba(216,36,42,.6) 70%,transparent 100%);
+}
+.hero-vline-1{right:38%;opacity:.35;}
+.hero-vline-2{right:62%;opacity:.12;}
+.hero-vline-3{left:6%;opacity:.08;}
+
+/* DIAGONAL SLASH */
+.hslash{
+  position:absolute;top:-30%;right:-2%;width:50%;height:160%;
+  background:linear-gradient(145deg,transparent 0%,rgba(216,36,42,.02) 35%,rgba(216,36,42,.06) 50%,rgba(216,36,42,.02) 65%,transparent 100%);
+  transform:skewX(-6deg);z-index:1;pointer-events:none;
+}
+
+/* CONTENT LAYOUT */
+.hcontent{
+  position:relative;
+  z-index:5;
+  padding:0 6%;
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:4rem;
+  align-items:flex-end;
+}
+
+/* EYEBROW BADGE */
+.heyebrow{
+  display:inline-flex;align-items:center;gap:12px;
+  margin-bottom:1.75rem;
+  padding:8px 18px 8px 12px;
+  background:rgba(216,36,42,.08);
+  border:1px solid rgba(216,36,42,.3);
+  backdrop-filter:blur(12px);
+  opacity:0;transform:translateY(20px);
+  animation:fu .7s .6s cubic-bezier(.16,1,.3,1) forwards;
+}
+.hdot{width:8px;height:8px;background:var(--r);border-radius:50%;animation:pd 2.2s infinite;flex-shrink:0;}
+.heyebrow-txt{font-family:var(--fs);font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,.85);}
+.heyebrow-txt span{color:var(--r);}
+
+/* MAIN TITLE */
+h1.htitle{
+  font-family:var(--fh);
+  font-size:clamp(76px,9.5vw,136px);
+  line-height:.86;
+  letter-spacing:2px;
+  margin-bottom:2rem;
+}
+.htitle .t1{display:block;opacity:0;transform:translateX(-60px);animation:sr .9s .75s cubic-bezier(.16,1,.3,1) forwards;}
+.htitle .t2{
+  display:block;color:var(--r);
+  opacity:0;transform:translateX(-60px);
+  animation:sr .9s .9s cubic-bezier(.16,1,.3,1) forwards;
+  text-shadow:0 0 60px rgba(216,36,42,.5),0 0 120px rgba(216,36,42,.2);
+}
+.htitle .t3{
+  display:block;
+  -webkit-text-stroke:1.5px rgba(255,255,255,.45);
+  color:transparent;
+  opacity:0;transform:translateX(-60px);
+  animation:sr .9s 1.05s cubic-bezier(.16,1,.3,1) forwards;
+}
+
+/* DESCRIPTION */
+.hdesc{
+  font-size:16px;color:rgba(255,255,255,.65);
+  line-height:1.85;max-width:440px;
+  margin-bottom:2.5rem;
+  opacity:0;animation:fu .8s 1.25s cubic-bezier(.16,1,.3,1) forwards;
+}
+
+/* BUTTONS */
+.hbtns{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fu .7s 1.45s cubic-bezier(.16,1,.3,1) forwards;}
+
+/* PRIMARY BUTTON */
+.btnr{
+  display:inline-flex;align-items:center;gap:14px;
+  background:var(--r);color:white;
+  font-family:var(--fs);font-size:13px;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;
+  padding:16px 36px;
+  text-decoration:none;position:relative;overflow:hidden;
+  cursor:pointer;
+  box-shadow:0 0 0 rgba(216,36,42,0);
+  transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .3s;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+}
+.btnr::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--rl),var(--r));
+  transform:translateX(-101%);
+  transition:transform .4s cubic-bezier(.16,1,.3,1);
+}
+.btnr::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(255,255,255,.15) 0%,transparent 100%);
+  pointer-events:none;
+}
+.btnr:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 40px rgba(216,36,42,.5),0 0 60px rgba(216,36,42,.25);
+}
+.btnr:hover::before{transform:translateX(0);}
+.btnr>*{position:relative;z-index:1;}
+.btnr .arr{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:20px;height:20px;
+  border:1.5px solid rgba(255,255,255,.5);
+  font-size:11px;
+  transition:transform .3s cubic-bezier(.16,1,.3,1);
+}
+.btnr:hover .arr{transform:translateX(5px);}
+
+/* SECONDARY BUTTON */
+.btng{
+  display:inline-flex;align-items:center;gap:12px;
+  background:rgba(255,255,255,.04);
+  backdrop-filter:blur(10px);
+  color:var(--w);
+  font-family:var(--fs);font-size:13px;font-weight:600;
+  letter-spacing:2.5px;text-transform:uppercase;
+  padding:16px 36px;
+  border:1px solid rgba(255,255,255,.15);
+  text-decoration:none;
+  cursor:pointer;
+  transition:border-color .3s,background .3s,transform .25s,box-shadow .3s;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+}
+.btng:hover{
+  border-color:rgba(216,36,42,.6);
+  background:rgba(216,36,42,.08);
+  transform:translateY(-4px);
+  box-shadow:0 8px 30px rgba(0,0,0,.4);
+}
+
+/* STATS CARDS — RIGHT COLUMN */
+.hright{
+  display:flex;flex-direction:column;gap:2px;
+  opacity:0;animation:fu .9s 1.35s cubic-bezier(.16,1,.3,1) forwards;
+}
+.hstat{
+  display:flex;align-items:center;gap:1.5rem;
+  padding:1.4rem 1.75rem;
+  background:rgba(10,10,10,.7);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.06);
+  border-left:2px solid transparent;
+  position:relative;overflow:hidden;
+  transition:background .3s,transform .3s,border-left-color .3s,box-shadow .3s;
+}
+.hstat::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(216,36,42,.04) 0%,transparent 100%);
+  opacity:0;transition:opacity .3s;
+}
+.hstat:hover{
+  background:rgba(15,15,15,.9);
+  transform:translateX(6px);
+  border-left-color:var(--r);
+  box-shadow:-4px 0 20px rgba(216,36,42,.15),0 4px 20px rgba(0,0,0,.3);
+}
+.hstat:hover::before{opacity:1;}
+.hstat-n{
+  font-family:var(--fh);font-size:52px;color:var(--r);
+  line-height:1;min-width:115px;
+  text-shadow:0 0 30px rgba(216,36,42,.4);
+}
+.hstat-i strong{
+  display:block;font-family:var(--fs);
+  font-size:14px;font-weight:700;letter-spacing:.5px;
+  text-transform:uppercase;margin-bottom:3px;
+  color:rgba(255,255,255,.9);
+}
+.hstat-i span{font-size:12px;color:rgba(255,255,255,.35);}
+
+/* SCROLL HINT */
+.scroll-hint{
+  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+  z-index:5;display:flex;flex-direction:column;align-items:center;gap:8px;
+  opacity:0;animation:fu .8s 2.4s forwards;
+}
+.scl{width:1px;height:52px;background:linear-gradient(to bottom,var(--r),transparent);animation:sa 2.2s ease infinite;}
+.scl-t{font-family:var(--fs);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,.3);}
+
+/* HERO BOTTOM TRANSITION */
+.hero::after{
+  content:'';
+  position:absolute;bottom:0;left:0;right:0;height:180px;z-index:4;pointer-events:none;
+  background:linear-gradient(to bottom,transparent 0%,rgba(8,8,8,.6) 50%,rgba(8,8,8,1) 100%);
+}
+
+/* CORNER BRACKETS */
+.hero-corner{position:absolute;z-index:5;pointer-events:none;}
+.hero-corner-tl{top:88px;left:6%;width:40px;height:40px;border-top:1.5px solid rgba(216,36,42,.5);border-left:1.5px solid rgba(216,36,42,.5);opacity:0;animation:fu .6s 2s forwards;}
+.hero-corner-tr{top:88px;right:6%;width:40px;height:40px;border-top:1.5px solid rgba(216,36,42,.3);border-right:1.5px solid rgba(216,36,42,.3);opacity:0;animation:fu .6s 2.1s forwards;}
+.hero-corner-bl{bottom:12vh;left:6%;width:30px;height:30px;border-bottom:1px solid rgba(216,36,42,.2);border-left:1px solid rgba(216,36,42,.2);opacity:0;animation:fu .6s 2.2s forwards;}
+
+/* HERO YEAR COUNTER */
+.hero-year{
+  position:absolute;right:6%;bottom:13vh;
+  font-family:var(--fh);font-size:11px;letter-spacing:5px;
+  color:rgba(255,255,255,.2);text-transform:uppercase;
+  z-index:5;
+  writing-mode:vertical-rl;
+  opacity:0;animation:fu .8s 2.3s forwards;
+}
+
+/* ==================== TICKER PREMIUM ==================== */
+.ticker{
+  overflow:hidden;
+  background:rgba(6,6,6,.95);
+  border-top:1px solid rgba(216,36,42,.3);
+  border-bottom:1px solid rgba(216,36,42,.15);
+  position:relative;z-index:10;
+}
+.ticker::before,.ticker::after{
+  content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none;
+}
+.ticker::before{left:0;background:linear-gradient(to right,rgba(6,6,6,1),transparent);}
+.ticker::after{right:0;background:linear-gradient(to left,rgba(6,6,6,1),transparent);}
+.tinner{display:inline-flex;white-space:nowrap;padding:14px 0;animation:tick 28s linear infinite;}
+.titem{
+  font-family:var(--fs);font-size:12px;font-weight:700;
+  letter-spacing:4px;text-transform:uppercase;
+  padding:0 2.5rem;color:rgba(255,255,255,.28);
+  transition:color .3s;
+}
+.titem:hover{color:rgba(255,255,255,.7);}
+.titem b{color:var(--r);font-weight:900;}
+
+/* HOME STATS STRIP */
+.stats-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.04);margin:0 6%;}
+.sstrip{padding:2.5rem 2rem;background:var(--bg2);text-align:center;}
+.sstrip-n{font-family:var(--fh);font-size:56px;color:var(--r);line-height:1;}
+.sstrip-l{font-family:var(--fs);font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--w3);margin-top:.3rem;}
+
+/* HOME PREVIEW GRID */
+.home-grid{padding:80px 6%;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+.hgcard{background:var(--bg3);border:1px solid rgba(255,255,255,.045);padding:2.5rem;position:relative;overflow:hidden;cursor:pointer;transition:border-color .3s,transform .35s;}
+.hgcard::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,.85) 0%,rgba(8,8,8,.55) 50%,rgba(8,8,8,.2) 100%);pointer-events:none;}
+.hgcard .hgcard-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.35;transition:opacity .4s,transform .6s;}
+.hgcard:hover .hgcard-bg{opacity:.55;transform:scale(1.05);}
+.hgcard>*:not(.hgcard-bg){position:relative;z-index:1;}
+.hgcard:hover{border-color:rgba(216,36,42,.3);transform:translateY(-5px);}
+.hgcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--r),transparent);opacity:0;transition:opacity .35s;z-index:2;}
+.hgcard:hover::before{opacity:1;}
+.hgcard-ico{font-size:32px;margin-bottom:1.25rem;display:block;}
+.hgcard-tt{font-family:var(--fh);font-size:38px;letter-spacing:1px;margin-bottom:.5rem;}
+.hgcard-ds{font-size:14px;color:var(--w3);line-height:1.7;}
+.hgcard-arr{position:absolute;bottom:2rem;right:2rem;font-family:var(--fs);font-size:12px;font-weight:700;letter-spacing:2px;color:var(--r);opacity:0;transform:translateX(-8px);transition:opacity .3s,transform .3s;z-index:1;}
+.hgcard:hover .hgcard-arr{opacity:1;transform:translateX(0);}
+/* novedades images centered */
+.nov-img-wrap{width:100%;aspect-ratio:1/1;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#0f0f0f;}
+.nov-img-wrap img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;transition:transform .5s;}
+.hgcard:hover .nov-img-wrap img{transform:scale(1.02);}
+
+/* ==================== PAGE HEADER ==================== */
+.page-hero{min-height:42vh;padding:140px 6% 70px;position:relative;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.05);}
+.page-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0.38;z-index:0;}
+.page-hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(8,8,8,0.93) 0%,rgba(8,8,8,0.65) 60%,rgba(8,8,8,0.25) 100%);z-index:1;}
+.page-hero-overlay2{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,0.7) 0%,transparent 50%);z-index:1;}
+.page-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(216,36,42,.08) 0%,transparent 55%);z-index:2;}
+.page-hero-lbl{font-family:var(--fs);font-size:11px;font-weight:700;letter-spacing:5px;text-transform:uppercase;color:var(--r);margin-bottom:1rem;display:flex;align-items:center;gap:12px;position:relative;z-index:3;}
+.page-hero-lbl::before{content:'';width:20px;height:1px;background:var(--r);}
+.page-hero-title{font-family:var(--fh);font-size:clamp(64px,8vw,110px);line-height:.88;letter-spacing:2px;position:relative;z-index:3;}
+.page-hero-title .out{-webkit-text-stroke:1.5px rgba(255,255,255,.5);color:transparent;}
+.page-hero-sub{font-size:16px;color:var(--w2);line-height:1.8;max-width:600px;margin-top:1.25rem;position:relative;z-index:3;}
+
+/* SECTIONS SHARED */
+.sec{padding:90px 6%;position:relative;}
+.lbl{font-family:var(--fs);font-size:11px;font-weight:700;letter-spacing:5px;text-transform:uppercase;color:var(--r);margin-bottom:1rem;display:flex;align-items:center;gap:12px;}
+.lbl::before{content:'';width:20px;height:1px;background:var(--r);}
+.bigtitle{font-family:var(--fh);font-size:clamp(52px,6.5vw,88px);line-height:.9;letter-spacing:1px;margin-bottom:1.25rem;}
+.bigtitle .out{-webkit-text-stroke:1px rgba(255,255,255,.4);color:transparent;}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(44px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1);}
+.rvl{opacity:0;transform:translateX(-52px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1);}
+.rvr{opacity:0;transform:translateX(52px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1);}
+.rv.vis,.rvl.vis,.rvr.vis{opacity:1;transform:translate(0);}
+
+/* ==================== QUIENES SOMOS ==================== */
+.qs-intro{display:grid;grid-template-columns:1.1fr .9fr;gap:6rem;align-items:start;padding:90px 6% 0;}
+.qs-year{font-family:var(--fh);font-size:clamp(100px,14vw,180px);color:rgba(216,36,42,.07);line-height:1;position:absolute;top:130px;right:6%;pointer-events:none;z-index:0;}
+.qs-text{position:relative;z-index:1;}
+.qs-text p{font-size:16px;color:var(--w2);line-height:1.9;margin-bottom:1.5rem;}
+.qs-text p strong{color:var(--w);font-weight:600;}
+.qs-side{position:relative;z-index:1;}
+.qs-stats-v{display:flex;flex-direction:column;gap:1px;margin-bottom:2rem;}
+.qs-stat{padding:1.5rem 1.75rem;background:var(--bg3);border:1px solid rgba(255,255,255,.045);display:flex;align-items:center;gap:1.5rem;transition:border-color .3s;}
+.qs-stat:hover{border-color:rgba(216,36,42,.2);}
+.qs-stat-n{font-family:var(--fh);font-size:46px;color:var(--r);line-height:1;min-width:90px;}
+.qs-stat-l strong{display:block;font-family:var(--fs);font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;}
+.qs-stat-l span{font-size:12px;color:var(--w3);}
+
+/* TIMELINE */
+.timeline{padding:80px 6%;position:relative;}
+.timeline::before{content:'';position:absolute;left:calc(6% + 26px);top:80px;bottom:80px;width:1px;background:linear-gradient(to bottom,transparent,rgba(216,36,42,.35) 10%,rgba(216,36,42,.35) 90%,transparent);}
+.tl-item{display:grid;grid-template-columns:52px 1fr;gap:2.5rem;margin-bottom:3rem;position:relative;}
+.tl-dot{width:52px;height:52px;border:1px solid rgba(216,36,42,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg2);font-family:var(--fh);font-size:18px;color:var(--r);flex-shrink:0;position:relative;z-index:1;transition:background .3s,border-color .3s;}
+.tl-item:hover .tl-dot{background:var(--r);color:white;border-color:var(--r);}
+.tl-content{padding:1.5rem 2rem;background:var(--bg3);border:1px solid rgba(255,255,255,.04);transition:border-color .3s;}
+.tl-item:hover .tl-content{border-color:rgba(216,36,42,.15);}
+.tl-year{font-family:var(--fs);font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--r);margin-bottom:.4rem;}
+.tl-title{font-family:var(--fs);font-size:20px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.5rem;}
+.tl-desc{font-size:14px;color:var(--w3);line-height:1.7;}
+
+/* VALORES */
+.valores-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.04);margin-top:3rem;}
+.valor{background:var(--bg);padding:2.5rem 2rem;text-align:center;transition:background .3s;position:relative;overflow:hidden;min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.valor-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.18;transition:opacity .4s;z-index:0;}
+.valor:hover .valor-bg{opacity:.32;}
+.valor-ico{font-size:36px;display:block;margin-bottom:1.25rem;position:relative;z-index:1;}
+.valor-tt{font-family:var(--fs);font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.5rem;position:relative;z-index:1;}
+.valor-ds{font-size:13px;color:var(--w3);line-height:1.7;position:relative;z-index:1;}
+.valor:hover{background:rgba(8,8,8,.6);}
+
+/* ==================== SERVICIOS ==================== */
+.svcs-full{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.04);}
+.svc{background:var(--bg);padding:2.75rem 2.25rem;position:relative;overflow:hidden;transition:background .4s;}
+.svc-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.13;transition:opacity .4s;z-index:0;}
+.svc:hover .svc-bg{opacity:.28;}
+.svc::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 110%,rgba(216,36,42,.1),transparent 55%);opacity:0;transition:opacity .4s;z-index:1;}
+.svc:hover{background:rgba(8,8,8,.5);}
+.svc:hover::after{opacity:1;}
+.svc-n{font-family:var(--fh);font-size:90px;color:rgba(216,36,42,.05);line-height:1;position:absolute;top:4px;right:12px;pointer-events:none;transition:color .4s,transform .5s;z-index:2;}
+.svc:hover .svc-n{color:rgba(216,36,42,.1);transform:scale(1.08);}
+.svc-ico{font-size:26px;margin-bottom:1.5rem;display:block;position:relative;z-index:2;}
+.svc-bar{width:28px;height:2px;background:var(--r);margin-bottom:1.25rem;transform:scaleX(.4);transform-origin:left;transition:transform .45s;position:relative;z-index:2;}
+.svc:hover .svc-bar{transform:scaleX(1);}
+.svc-nm{font-family:var(--fs);font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.65rem;position:relative;z-index:2;}
+.svc-ds{font-size:13px;color:var(--w3);line-height:1.7;position:relative;z-index:2;}
+.svc-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:1rem;position:relative;z-index:2;}
+.svc-tag{font-family:var(--fs);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(255,255,255,.07);color:var(--w3);}
+
+/* PRECIOS MANTENIMIENTO */
+.precios-section{padding:80px 6%;background:var(--bg2);}
+.precios-intro{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-bottom:3rem;}
+.precios-table-wrap{overflow-x:auto;}
+.ptable{width:100%;border-collapse:collapse;}
+.ptable th{font-family:var(--fs);font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--w3);padding:1rem 1.5rem;text-align:left;border-bottom:1px solid rgba(255,255,255,.06);}
+.ptable th.red{color:var(--r);}
+.ptable td{padding:.85rem 1.5rem;font-size:14px;border-bottom:1px solid rgba(255,255,255,.03);color:var(--w2);}
+.ptable td.check{color:var(--r);font-size:16px;font-weight:700;text-align:center;}
+.ptable td.dash{color:rgba(255,255,255,.15);text-align:center;}
+.ptable th.red{text-align:center;}
+.ptable tr:hover td{background:rgba(255,255,255,.02);}
+.ptable td.price{color:var(--r);font-family:var(--fh);font-size:24px;text-align:center;}
+.ptable-price{width:100%;border-collapse:collapse;margin-top:2rem;}
+.ptable-price th{font-family:var(--fs);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--w3);padding:1rem 1.5rem;background:var(--bg3);text-align:left;}
+.ptable-price td{padding:.85rem 1.5rem;font-size:15px;font-weight:600;border-bottom:1px solid rgba(255,255,255,.04);color:var(--w);}
+.ptable-price td:first-child{font-family:var(--fs);font-weight:700;text-transform:uppercase;letter-spacing:.5px;}
+.ptable-price .price{color:var(--r);font-family:var(--fh);font-size:24px;}
+
+/* TRAMITES */
+.tramites-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:3rem;}
+.tramite-card{background:var(--bg3);border:1px solid rgba(255,255,255,.045);padding:2rem;transition:border-color .3s,transform .3s;position:relative;overflow:hidden;}
+.tramite-card:hover{border-color:rgba(216,36,42,.2);transform:translateY(-4px);}
+.tramite-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 110%,rgba(216,36,42,.12),transparent 55%);opacity:0;transition:opacity .4s;z-index:1;pointer-events:none;}
+.tramite-card:hover::after{opacity:1;}
+.tramite-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.13;transition:opacity .4s;z-index:0;}
+.tramite-card:hover .tramite-bg{opacity:.28;}
+.tramite-ico{font-size:28px;margin-bottom:1rem;position:relative;z-index:2;}
+.tramite-tt{font-family:var(--fs);font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.5rem;position:relative;z-index:2;}
+.tramite-ds{font-size:13px;color:var(--w3);line-height:1.7;position:relative;z-index:2;}
+
+/* ==================== RESEÑAS ==================== */
+.reviews-page{padding:70px 6%;}
+.reviews-header{display:flex;flex-direction:column;gap:2.5rem;margin-bottom:4rem;}
+.reviews-top{display:flex;align-items:center;gap:4rem;}
+.rev-overall{text-align:center;}
+.rev-score{font-family:var(--fh);font-size:90px;color:var(--r);line-height:1;}
+.rev-stars-big{display:flex;gap:5px;justify-content:center;margin:.3rem 0;}
+.rstar-b{width:18px;height:18px;background:var(--r);clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);}
+.rstar-b.half{background:linear-gradient(90deg,var(--r) 50%,rgba(255,255,255,.12) 50%);}
+.rev-count{font-family:var(--fs);font-size:12px;font-weight:600;letter-spacing:2px;color:var(--w3);text-transform:uppercase;margin-top:.3rem;}
+.rev-google-btn{display:inline-flex;align-items:center;gap:10px;padding:12px 24px;border:1px solid rgba(216,36,42,.4);font-family:var(--fs);font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--w);text-decoration:none;transition:background .3s,border-color .3s;margin-top:1rem;}
+.rev-google-btn:hover{background:var(--r);border-color:var(--r);}
+.rev-google-btn svg{width:18px;height:18px;}
+.rev-branches{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+.rev-branch{display:flex;flex-direction:column;padding:1.5rem 1.75rem;background:var(--bg3);border:1px solid rgba(255,255,255,.045);text-decoration:none;color:inherit;transition:border-color .35s,transform .3s,background .3s;position:relative;overflow:hidden;}
+.rev-branch::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--rd),var(--rl));transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.65,0,.35,1);}
+.rev-branch:hover{border-color:rgba(216,36,42,.3);transform:translateY(-4px);background:rgba(22,22,22,.9);}
+.rev-branch:hover::before{transform:scaleX(1);}
+.rev-branch-num{font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--r);margin-bottom:.75rem;opacity:.7;}
+.rev-branch-name{font-family:var(--fs);font-size:16px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:1.25rem;line-height:1.2;}
+.rev-branch-score-big{font-family:var(--fh);font-size:56px;color:var(--r);line-height:1;margin-bottom:.35rem;}
+.rev-branch-stars{display:flex;gap:4px;margin-bottom:.4rem;}
+.rstar-s{width:11px;height:11px;background:var(--r);clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);}
+.rev-branch-bar-wrap{width:100%;height:3px;background:rgba(255,255,255,.07);border-radius:2px;margin:.75rem 0 .5rem;overflow:hidden;}
+.rev-branch-bar{height:100%;background:linear-gradient(90deg,var(--rd),var(--rl));border-radius:2px;transition:width 1s cubic-bezier(.16,1,.3,1);}
+.rev-branch-meta{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:.75rem;}
+.rev-branch-count{font-size:12px;color:var(--w3);font-family:var(--fs);letter-spacing:.5px;}
+.rev-branch-link{font-family:var(--fs);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(216,36,42,.6);transition:color .2s;}
+.rev-branch:hover .rev-branch-link{color:var(--rl);}
+
+/* REVIEW CARDS */
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
+.rcard{background:var(--bg2);border:1px solid rgba(255,255,255,.045);padding:1.875rem 2rem;position:relative;overflow:hidden;transition:border-color .3s,transform .3s;}
+.rcard:hover{border-color:rgba(216,36,42,.18);transform:translateY(-5px);}
+.rcard::before{content:'"';position:absolute;top:-15px;right:16px;font-family:var(--fh);font-size:110px;color:rgba(216,36,42,.05);line-height:1;pointer-events:none;}
+.rstars{display:flex;gap:3px;margin-bottom:.875rem;}
+.rstar{width:12px;height:12px;background:var(--r);clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);}
+.rtxt{font-size:13px;color:var(--w2);line-height:1.75;margin-bottom:1.1rem;font-style:italic;}
+.rauth{font-family:var(--fs);font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--w3);}
+.rbranch{display:inline-block;margin-top:.5rem;font-family:var(--fs);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--r);padding:2px 8px;border:1px solid rgba(216,36,42,.2);}
+
+/* CTA RESEÑAS */
+.rev-cta{text-align:center;padding:60px 6%;background:var(--bg2);border-top:1px solid rgba(255,255,255,.04);}
+.rev-cta p{font-size:16px;color:var(--w2);margin-bottom:2rem;}
+
+/* ==================== CONTACTO & SUCURSALES ==================== */
+.contact-page{padding:70px 6%;}
+.contact-intro{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-bottom:4rem;}
+.contact-info h3{font-family:var(--fh);font-size:42px;letter-spacing:1px;margin-bottom:1rem;}
+.contact-info p{font-size:15px;color:var(--w2);line-height:1.85;margin-bottom:1.5rem;}
+.contact-detail{display:flex;align-items:center;gap:1rem;padding:.85rem 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.contact-detail:last-child{border:none;}
+.contact-detail-ico{width:36px;height:36px;background:rgba(216,36,42,.1);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.contact-detail-text strong{display:block;font-family:var(--fs);font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;}
+.contact-detail-text span{font-size:14px;color:var(--w2);}
+.contact-detail-text a{font-size:14px;color:var(--r);text-decoration:none;transition:color .2s;}
+.contact-detail-text a:hover{color:var(--rl);}
+.contact-social{display:flex;gap:10px;margin-top:1.5rem;}
+.csoc{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border:1px solid rgba(255,255,255,.08);font-family:var(--fs);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--w3);text-decoration:none;transition:border-color .3s,color .3s;}
+.csoc:hover{border-color:var(--r);color:var(--r);}
+.contact-phone-big{font-family:var(--fh);font-size:clamp(48px,5vw,72px);color:var(--r);letter-spacing:3px;text-decoration:none;display:block;margin-bottom:.5rem;transition:color .2s;}
+.contact-phone-big:hover{color:var(--rl);}
+.contact-hours{font-family:var(--fs);font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--w3);}
+
+/* SUCURSALES CARDS */
+.branches-grid{display:flex;flex-direction:column;gap:2rem;}
+.branch-card{background:var(--bg3);border:1px solid rgba(255,255,255,.045);overflow:hidden;transition:border-color .4s;}
+.branch-card:hover{border-color:rgba(216,36,42,.25);}
+.branch-inner{display:grid;grid-template-columns:1fr 1.2fr;}
+.branch-info{padding:2.5rem 2.75rem;}
+.branch-num{font-family:var(--fh);font-size:80px;color:rgba(216,36,42,.07);line-height:1;margin-bottom:-.5rem;}
+.branch-name{font-family:var(--fh);font-size:52px;letter-spacing:1px;line-height:.9;margin-bottom:1rem;}
+.branch-name b{color:var(--r);}
+.branch-tag{display:inline-flex;padding:4px 14px;border:1px solid rgba(216,36,42,.3);font-family:var(--fs);font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--r);margin-bottom:1.5rem;}
+.branch-details{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.5rem;}
+.branch-detail{display:flex;align-items:flex-start;gap:.75rem;font-size:14px;color:var(--w2);}
+.branch-detail-icon{font-size:14px;flex-shrink:0;margin-top:1px;}
+.branch-hours{font-family:var(--fs);font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--w3);padding:.65rem 1rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.04);display:inline-block;margin-bottom:1.5rem;}
+.branch-btns{display:flex;gap:.75rem;flex-wrap:wrap;}
+.branch-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;font-family:var(--fs);font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;transition:all .3s;cursor:pointer;}
+.branch-btn-red{background:var(--r);color:white;}
+.branch-btn-red:hover{background:var(--rl);}
+.branch-btn-outline{border:1px solid rgba(255,255,255,.1);color:var(--w3);}
+.branch-btn-outline:hover{border-color:rgba(216,36,42,.4);color:var(--r);}
+.branch-map{position:relative;overflow:hidden;}
+.branch-map iframe{width:100%;height:100%;min-height:320px;border:0;filter:invert(90%) hue-rotate(180deg) saturate(0.7);}
+.branch-map::after{content:'';position:absolute;inset:0;border-left:1px solid rgba(255,255,255,.04);pointer-events:none;}
+
+/* MARCAS */
+.msep{padding:50px 0;overflow:hidden;background:var(--r);position:relative;}
+.msep::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 50px,rgba(0,0,0,.07) 50px,rgba(0,0,0,.07) 51px);}
+.msep-in{display:flex;animation:tick 18s linear infinite;}
+.msep-it{font-family:var(--fh);font-size:clamp(38px,5vw,68px);white-space:nowrap;padding:0 2rem;letter-spacing:2px;position:relative;z-index:1;}
+.msep-it span{opacity:.35;}
+
+/* FOOTER */
+footer{background:#050505;border-top:1px solid rgba(255,255,255,.04);padding:72px 6% 36px;}
+.ftop{display:grid;grid-template-columns:2.5fr 1fr 1fr 1fr;gap:4rem;margin-bottom:52px;}
+.fbrand .flogo{font-family:var(--fh);font-size:28px;letter-spacing:3px;display:flex;align-items:center;gap:10px;margin-bottom:1rem;}
+.fbrand .flogo span{color:var(--r);}
+.fbrand p{font-size:13px;color:var(--w3);line-height:1.85;max-width:270px;}
+.fsoc-row{display:flex;gap:8px;margin-top:1.5rem;}
+.fsoc{width:36px;height:36px;border:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-family:var(--fs);font-size:11px;font-weight:700;color:var(--w3);text-decoration:none;transition:border-color .3s,color .3s;}
+.fsoc:hover{border-color:var(--r);color:var(--r);}
+.fcol h4{font-family:var(--fs);font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:1.5rem;position:relative;}
+.fcol h4::after{content:'';position:absolute;bottom:-6px;left:0;width:18px;height:1px;background:var(--r);}
+.fcol ul{list-style:none;}
+.fcol li{margin-bottom:.65rem;}
+.fcol a{font-size:13px;color:var(--w3);text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:6px;cursor:pointer;}
+.fcol a::before{content:'';width:4px;height:4px;border:1px solid rgba(255,255,255,.2);border-radius:50%;flex-shrink:0;transition:all .2s;}
+.fcol a:hover{color:var(--w);}
+.fcol a:hover::before{background:var(--r);border-color:var(--r);}
+.fbot{border-top:1px solid rgba(255,255,255,.04);padding-top:1.75rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.fbot p,.fbot a{font-size:12px;color:rgba(255,255,255,.18);text-decoration:none;transition:color .2s;}
+.fbot a:hover{color:var(--r);}
+
+/* ==================== RESPONSIVE ==================== */
+@media(max-width:1024px){
+  .hcontent{grid-template-columns:1fr;}
+  .hright{display:none!important;}
+  .qs-intro{grid-template-columns:1fr;}
+  .qs-year{display:none;}
+  .contact-intro{grid-template-columns:1fr;}
+  .branch-inner{grid-template-columns:1fr;}
+  .branch-map iframe{min-height:250px;}
+  .svcs-full{grid-template-columns:repeat(2,1fr);}
+  .reviews-header{flex-direction:column;}
+  .reviews-top{flex-direction:column;gap:2rem;}
+  .rev-branches{grid-template-columns:1fr;}
+  .ftop{grid-template-columns:1fr 1fr;}
+  .precios-intro{grid-template-columns:1fr;}
+  .tramites-grid{grid-template-columns:1fr;}
+  .novedades-grid{grid-template-columns:repeat(2,1fr)!important;}
+}
+
+/* ===== TABLET ===== */
+@media(max-width:768px){
+  nav{padding:0 5%;height:64px;}
+  .menu-btn{padding:8px 14px;}
+  .menu-btn-label{display:none;}
+  .nav-dropdown{right:5%;left:5%;min-width:unset;}
+  .nav-item{padding:.85rem 1.25rem;}
+
+  .hero{padding-bottom:8vh;padding-top:64px;min-height:100svh;justify-content:center;}
+  .hcontent{grid-template-columns:1fr;gap:2rem;}
+  .hright{display:none!important;}
+  h1.htitle{font-size:clamp(64px,13vw,100px);}
+  .hdesc{font-size:15px;}
+  .hbtns{flex-direction:column;gap:.75rem;}
+  .btnr,.btng{width:100%;justify-content:center;}
+
+  .stats-strip{grid-template-columns:repeat(2,1fr);}
+  .home-grid{grid-template-columns:1fr;}
+  .sec{padding:70px 5%;}
+  .bigtitle{font-size:clamp(44px,8vw,70px);}
+
+  .svcs-full{grid-template-columns:1fr;}
+  .valores-grid{grid-template-columns:1fr;}
+  .reviews-grid{grid-template-columns:1fr 1fr;}
+  .tramites-grid{grid-template-columns:1fr;}
+  .novedades-grid{grid-template-columns:1fr!important;}
+
+  .branch-inner{grid-template-columns:1fr;}
+  .branch-name{font-size:40px;}
+  .ftop{grid-template-columns:1fr 1fr;}
+
+  .precios-intro{grid-template-columns:1fr;}
+  .precios-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .ptable{min-width:520px;}
+
+  .page-hero{padding:110px 5% 50px;}
+  .page-hero-title{font-size:clamp(52px,10vw,90px);}
+
+  .contact-intro{grid-template-columns:1fr;}
+  .contact-social{flex-wrap:wrap;}
+
+  /* CV form tablet */
+  .cv-section{padding:60px 5%;}
+  .cv-toggle{display:flex;flex-direction:column;width:100%;max-width:380px;}
+
+  footer{padding:52px 5% 28px;}
+  .ftop{gap:2.5rem;}
+}
+
+/* ===== MOBILE ===== */
+@media(max-width:480px){
+  /* General */
+  body{cursor:auto;}
+  #cursor,#cursor-ring{display:none;}
+
+  nav{height:60px;padding:0 4%;}
+  .nlogo img{height:30px;}
+  .nav-dropdown{top:60px;right:4%;left:4%;}
+  .nav-item{padding:.8rem 1rem;gap:1rem;}
+  .nav-item-ico{width:34px;height:34px;font-size:14px;}
+
+  /* Hero */
+  .hero{padding-bottom:6vh;padding-top:60px;min-height:100svh;justify-content:center;}
+  .hcontent{padding:0 4%;gap:1.5rem;grid-template-columns:1fr;padding-top:1rem;}
+  /* Ocultar stats duplicadas — ya se muestran en stats-strip abajo */
+  .hright{display:none!important;}
+  h1.htitle{font-size:clamp(52px,14vw,76px);margin-bottom:1.25rem;}
+  .heyebrow{margin-bottom:.85rem;}
+  .heyebrow-txt{font-size:10px;letter-spacing:2.5px;}
+  .hdesc{font-size:14px;line-height:1.7;margin-bottom:1.75rem;}
+  .hbtns{gap:.6rem;flex-direction:column;}
+  .btnr,.btng{padding:15px 22px;font-size:12px;letter-spacing:2px;clip-path:none;width:100%;justify-content:center;}
+  .scroll-hint{display:none;}
+  .hero-year{display:none;}
+  .hero-corner-tr{display:none;}
+  /* Stats strip (el unico que se muestra en mobile) */
+  .stats-strip{grid-template-columns:1fr 1fr;margin:0 4%;}
+  .sstrip{padding:1.5rem 1rem;}
+  .sstrip-n{font-size:42px;}
+  /* Home grid */
+  .home-grid{padding:50px 4%;gap:1rem;}
+  .hgcard{padding:1.75rem 1.5rem;}
+  .hgcard-tt{font-size:28px;}
+
+  /* Sections */
+  .sec{padding:52px 4%;}
+  .bigtitle{font-size:clamp(38px,11vw,56px);}
+  .lbl{font-size:10px;}
+  .page-hero{padding:90px 4% 40px;}
+  .page-hero-title{font-size:clamp(44px,12vw,70px);}
+  .page-hero-sub{font-size:14px;}
+
+  /* Servicios */
+  .svcs-full{grid-template-columns:1fr;gap:0;}
+  .svc{padding:2rem 1.5rem;}
+  .svc-n{font-size:70px;}
+
+  /* Precios */
+  .precios-section{padding:52px 4%;}
+  .precios-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .ptable,.ptable-price{min-width:480px;font-size:13px;}
+  .ptable th,.ptable td,.ptable-price th,.ptable-price td{padding:.7rem 1rem;}
+
+  /* Tramites */
+  .tramites-grid{grid-template-columns:1fr;gap:1rem;margin-top:2rem;}
+  .tramite-card{padding:1.5rem;}
+
+  /* Timeline */
+  .timeline::before{left:26px;}
+  .tl-item{grid-template-columns:44px 1fr;gap:1.5rem;}
+  .tl-dot{width:44px;height:44px;font-size:15px;}
+  .tl-content{padding:1.1rem 1.25rem;}
+
+  /* Valores */
+  .valores-grid{grid-template-columns:1fr;}
+
+  /* Reseñas */
+  .reviews-page{padding:40px 4%;}
+  .reviews-top{flex-direction:column;gap:2rem;}
+  .reviews-top>div:last-child{border-left:none;padding-left:0;border-top:1px solid rgba(255,255,255,.06);padding-top:2rem;}
+  .rev-branches{grid-template-columns:1fr;}
+  .rev-score{font-size:72px;}
+  .rcard{padding:1.5rem;}
+
+  /* Contacto */
+  .contact-page{padding:40px 4%;}
+  .contact-intro{gap:2rem;}
+  .contact-info h3{font-size:32px;}
+  .contact-phone-big{font-size:clamp(36px,9vw,56px);}
+  .contact-social{flex-direction:column;gap:.5rem;}
+  .csoc{width:100%;justify-content:center;}
+
+  /* Sucursales */
+  .branch-info{padding:1.75rem 1.5rem;}
+  .branch-num{font-size:60px;}
+  .branch-name{font-size:34px;}
+  .branch-btns{flex-direction:column;}
+  .branch-btn{width:100%;justify-content:center;padding:12px;}
+  .branch-map iframe{min-height:220px;}
+
+  /* Footer */
+  footer{padding:40px 4% 24px;}
+  .ftop{grid-template-columns:1fr;gap:2rem;}
+  .fbot{flex-direction:column;text-align:center;gap:.5rem;}
+
+  /* Ticker */
+  .tinner{animation-duration:14s;}
+
+  /* Buttons touch targets */
+  a,button{min-height:44px;}
+  .svc-tag{padding:5px 12px;font-size:10px;}
+
+  /* Novedades */
+  .novedades-grid{grid-template-columns:1fr 1fr!important;}
+
+  /* QS */
+  .qs-intro{padding:52px 4% 0;}
+  .qs-stats-v{gap:0;}
+  .qs-stat{padding:1.1rem 1.25rem;}
+  .qs-stat-n{font-size:36px;min-width:70px;}
+
+  /* Compra/Venta form */
+  .cv-section{padding:52px 4%;}
+  .cv-title{font-size:clamp(36px,11vw,58px);}
+  .cv-toggle{display:flex;flex-direction:column;width:100%;}
+  .cv-toggle-btn{padding:14px 20px;text-align:center;width:100%;}
+  .cv-form{grid-template-columns:1fr;gap:1rem;}
+  .cv-form-full{grid-column:1;}
+  .cv-input,.cv-select,.cv-textarea{font-size:16px;padding:14px 16px;}
+  .cv-submit{padding:16px 24px;font-size:13px;}
+  .cv-success{padding:2rem 1.25rem;}
+  .cv-success-tt{font-size:28px;}
+}
+
+/* ==================== COMPRA / VENTA FORM ==================== */
+.cv-section{padding:80px 6%;background:var(--bg2);border-top:1px solid rgba(255,255,255,.04);}
+.cv-header{text-align:center;margin-bottom:3rem;}
+.cv-title{font-family:var(--fh);font-size:clamp(44px,7vw,88px);line-height:.88;letter-spacing:2px;margin-bottom:1.25rem;}
+.cv-title .out{-webkit-text-stroke:1.5px rgba(255,255,255,.35);color:transparent;}
+.cv-sub{font-size:16px;color:var(--w2);line-height:1.8;max-width:500px;margin:0 auto 2rem;}
+.cv-toggle{display:inline-flex;gap:0;border:1px solid rgba(255,255,255,.08);overflow:hidden;margin:0 auto;width:auto;}
+.cv-toggle-btn{font-family:var(--fs);font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:13px 32px;background:transparent;color:var(--w3);border:none;cursor:pointer;transition:background .25s,color .25s;white-space:nowrap;}
+.cv-toggle-btn.active{background:var(--r);color:white;}
+.cv-toggle-btn:not(.active):hover{background:rgba(255,255,255,.04);color:var(--w);}
+.cv-form-wrap{max-width:780px;margin:0 auto;}
+.cv-success{display:none;text-align:center;padding:3rem 2rem;background:rgba(216,36,42,.06);border:1px solid rgba(216,36,42,.25);}
+.cv-success-ico{font-size:48px;display:block;margin-bottom:1.25rem;}
+.cv-success-tt{font-family:var(--fh);font-size:36px;letter-spacing:1px;margin-bottom:.75rem;}
+.cv-success-ds{font-size:15px;color:var(--w2);line-height:1.8;}
+.cv-form{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1rem;}
+.cv-form-full{grid-column:1 / -1;}
+.cv-field{display:flex;flex-direction:column;gap:.5rem;}
+.cv-label{font-family:var(--fs);font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--w3);}
+.cv-input,.cv-select,.cv-textarea{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);color:var(--w);font-family:var(--fb);font-size:14px;padding:13px 16px;outline:none;width:100%;transition:border-color .2s,background .2s;-webkit-appearance:none;appearance:none;border-radius:0;}
+.cv-input::placeholder,.cv-textarea::placeholder{color:rgba(255,255,255,.2);}
+.cv-input:focus,.cv-select:focus,.cv-textarea:focus{border-color:rgba(216,36,42,.55);background:rgba(255,255,255,.06);}
+.cv-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,.3)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:38px;cursor:pointer;}
+.cv-select option{background:#161616;color:var(--w);}
+.cv-textarea{resize:vertical;min-height:100px;line-height:1.65;}
+.cv-submit{width:100%;background:var(--r);color:white;font-family:var(--fs);font-size:14px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:17px 32px;border:none;cursor:pointer;position:relative;overflow:hidden;transition:background .3s,transform .2s;}
+.cv-submit::before{content:'';position:absolute;inset:0;background:var(--rl);transform:translateX(-101%);transition:transform .35s cubic-bezier(.65,0,.35,1);}
+.cv-submit:hover{transform:translateY(-2px);}
+.cv-submit:hover::before{transform:translateX(0);}
+.cv-submit span{position:relative;z-index:1;}
+.cv-input.error,.cv-select.error{border-color:rgba(216,36,42,.7);background:rgba(216,36,42,.05);}
+.cv-field-error{font-size:11px;color:var(--rl);letter-spacing:.5px;font-family:var(--fs);font-weight:600;}
+.cv-reset-btn{display:inline-flex;align-items:center;gap:8px;margin-top:1.5rem;background:transparent;border:1px solid rgba(255,255,255,.15);color:var(--w3);font-family:var(--fs);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:10px 22px;cursor:pointer;transition:border-color .3s,color .3s;}
+.cv-reset-btn:hover{border-color:rgba(216,36,42,.4);color:var(--r);}
+
+/* Planes mantenimiento responsive */
+@media(max-width:768px){.planes-grid{grid-template-columns:1fr!important;}}
+
+
+/* ==================== PLANES GRID RESPONSIVE ==================== */
+@media(max-width:768px){
+  .planes-grid{grid-template-columns:1fr!important;}
+}
+@media(max-width:480px){
+  .planes-grid{grid-template-columns:1fr!important;}
+}
+
+
+</style>
+</head>
+<body>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778880516/cccccc_httfzl.png" alt="Instaservice" style="height:clamp(60px,10vw,100px);width:auto;object-fit:contain;margin-bottom:2rem;opacity:0;animation:loaderLogoIn .5s .15s forwards;">
+  <div class="ld-track"><div class="ld-fill" id="lf"></div></div>
+  <div class="ld-num" id="ln">0%</div>
+</div>
+<style>
+@keyframes loaderLogoIn{from{opacity:0;transform:scale(.92);}to{opacity:1;transform:scale(1);}}
+</style>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nlogo" onclick="showPage('home')">
+    <img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778880516/cccccc_httfzl.png" alt="Instaservice" style="height:38px;width:auto;object-fit:contain;">
+  </a>
+  <div class="nav-right">
+    <button class="menu-btn" id="menuBtn" onclick="toggleMenu()" aria-label="Menú">
+      <div class="menu-btn-bars">
+        <span></span><span></span><span></span>
+      </div>
+      <span class="menu-btn-label">Menú</span>
+    </button>
+  </div>
+</nav>
+
+<!-- DROPDOWN -->
+<div class="nav-dropdown" id="navDropdown">
+  <div class="nav-dropdown-inner">
+    <div class="nav-item" onclick="navGo('quienes')">
+      <div class="nav-item-ico">🏆</div>
+      <div class="nav-item-text"><strong>Quiénes Somos</strong><span>Historia, valores y equipo</span></div>
+      <div class="nav-item-arr">→</div>
+    </div>
+    <div class="nav-item" onclick="navGo('servicios')">
+      <div class="nav-item-ico">🔧</div>
+      <div class="nav-item-text"><strong>Servicios</strong><span>Mecánica, frenos, A/C y más</span></div>
+      <div class="nav-item-arr">→</div>
+    </div>
+    <div class="nav-item" onclick="navGo('resenas')">
+      <div class="nav-item-ico">⭐</div>
+      <div class="nav-item-text"><strong>Reseñas</strong><span>Lo que dicen nuestros clientes</span></div>
+      <div class="nav-item-arr">→</div>
+    </div>
+    <div class="nav-item" onclick="navGo('contacto')">
+      <div class="nav-item-ico">📍</div>
+      <div class="nav-item-text"><strong>Contacto & Sucursales</strong><span>Ubicaciones y horarios</span></div>
+      <div class="nav-item-arr">→</div>
+    </div>
+    <div class="nav-dropdown-divider"></div>
+    <div class="nav-dropdown-footer">
+      <a href="https://instagram.com/instaservicetaller" target="_blank">📸 @instaservicetaller</a>
+      <a href="https://www.facebook.com/InstaserviceTaller/" target="_blank">Facebook</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE: HOME ===================== -->
+<div id="page-home" class="page active">
+  <section class="hero">
+
+    <!-- ── VIDEO BACKGROUND ── -->
+    <div class="hero-video-wrap">
+      <video autoplay muted loop playsinline webkit-playsinline x5-playsinline x5-video-player-type="h5" x5-video-player-fullscreen="false" disablePictureInPicture preload="auto" poster="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778892582/675447746_18455830984106348_3257308772832864931_n_dc4gda.jpg">
+        <!-- ac_none = sin audio, garantiza autoplay en mobile -->
+        <source src="https://res.cloudinary.com/dvvuwigmy/video/upload/ac_none/v1778969811/insta_video_88693_gif9kh.mp4" type="video/mp4">
+      </video>
+      <!-- Fallback image if video fails to load -->
+      <div class="hero-img-fallback" style="opacity:0;transition:opacity .5s;"></div>
+    </div>
+
+    <!-- ── OVERLAYS ── -->
+    <div class="hero-overlay-1"></div>
+    <div class="hero-overlay-2"></div>
+    <div class="hero-overlay-red"></div>
+    <div class="hero-overlay-red2"></div>
+
+    <!-- ── TECHNICAL GRID SVG ── -->
+    <div class="hero-grid">
+      <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(216,36,42,0.5)" stroke-width="0.5"/>
+          </pattern>
+          <pattern id="grid-large" width="180" height="180" patternUnits="userSpaceOnUse">
+            <path d="M 180 0 L 0 0 0 180" fill="none" stroke="rgba(216,36,42,0.9)" stroke-width="1"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid)"/>
+        <rect width="100%" height="100%" fill="url(#grid-large)"/>
+        <!-- Horizontal accent lines -->
+        <line x1="0" y1="200" x2="1440" y2="200" stroke="rgba(216,36,42,0.3)" stroke-width="1"/>
+        <line x1="0" y1="700" x2="1440" y2="700" stroke="rgba(216,36,42,0.15)" stroke-width="1"/>
+        <!-- Diagonal accent -->
+        <line x1="700" y1="0" x2="1440" y2="900" stroke="rgba(216,36,42,0.08)" stroke-width="1.5"/>
+      </svg>
+    </div>
+
+    <!-- ── SCAN LINE ── -->
+    <div class="hero-scanline"></div>
+
+    <!-- ── PARTICLE CANVAS ── -->
+    <canvas id="pcanvas"></canvas>
+
+    <!-- ── VERTICAL LINES ── -->
+    <div class="hslash"></div>
+    <div class="hero-vline hero-vline-1"></div>
+    <div class="hero-vline hero-vline-2"></div>
+    <div class="hero-vline hero-vline-3"></div>
+
+    <!-- ── CORNER BRACKETS ── -->
+    <div class="hero-corner hero-corner-tl"></div>
+    <div class="hero-corner hero-corner-tr"></div>
+    <div class="hero-corner hero-corner-bl"></div>
+
+    <!-- ── YEAR LABEL ── -->
+    <div class="hero-year">EST. 1991 · PANAMÁ</div>
+
+    <!-- ── MAIN CONTENT ── -->
+    <div class="hcontent">
+      <div class="hleft">
+
+        <!-- BADGE -->
+        <div class="heyebrow">
+          <span class="hdot"></span>
+          <span class="heyebrow-txt">● Taller automotriz <span>premium</span> en Panamá</span>
+        </div>
+
+        <!-- TITLE -->
+        <h1 class="htitle">
+          <span class="t1">TU AUTO</span>
+          <span class="t2">MERECE</span>
+          <span class="t3">ATENCIÓN PROFESIONAL</span>
+        </h1>
+
+        <!-- DESC -->
+        <p class="hdesc">Más de 30 años ofreciendo mecánica, diagnóstico y trámites vehiculares en Panamá. La Agencia de los Panameños.</p>
+
+        <!-- BUTTONS -->
+        <div class="hbtns">
+          <a href="https://wa.me/50764443786?text=Hola%20Instaservice%2C%20quiero%20agendar%20una%20revisi%C3%B3n%20para%20mi%20veh%C3%ADculo." target="_blank" class="btnr">
+            <span>Agendar Revisión</span><span class="arr">→</span>
+          </a>
+          <a onclick="navGo('servicios')" class="btng">Ver Servicios</a>
+        </div>
+
+      </div>
+
+      <!-- STATS GLASSMORPHISM CARDS -->
+      <div class="hright">
+        <div class="hstat">
+          <div class="hstat-n" id="hc">0K+</div>
+          <div class="hstat-i"><strong>Clientes Satisfechos</strong><span>Y creciendo cada día</span></div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-n">3</div>
+          <div class="hstat-i"><strong>Sucursales</strong><span>Corozal · Bethania · Chanis</span></div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-n">30+</div>
+          <div class="hstat-i"><strong>Años de Experiencia</strong><span>En el sector automotriz</span></div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-n">30m</div>
+          <div class="hstat-i"><strong>Servicio Express</strong><span>Sin cita previa necesaria</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCROLL HINT -->
+    <div class="scroll-hint"><span class="scl-t">Scroll</span><div class="scl"></div></div>
+
+  </section>
+
+  <div class="ticker">
+    <div class="tinner">
+      <span class="titem">Cambio de Aceite</span><span class="titem"><b>✦</b> Frenos</span><span class="titem">Alineación & Balanceo</span><span class="titem"><b>✦</b> Trámites Vehiculares</span><span class="titem">Aire Acondicionado</span><span class="titem"><b>✦</b> Diagnóstico Electrónico</span><span class="titem">Suspensión</span><span class="titem"><b>✦</b> Inspección Vehicular</span><span class="titem">Chapistería</span><span class="titem"><b>✦</b> Llantas</span><span class="titem">Cambio de Aceite</span><span class="titem"><b>✦</b> Frenos</span><span class="titem">Alineación & Balanceo</span><span class="titem"><b>✦</b> Trámites Vehiculares</span><span class="titem">Aire Acondicionado</span><span class="titem"><b>✦</b> Diagnóstico Electrónico</span><span class="titem">Suspensión</span><span class="titem"><b>✦</b> Inspección Vehicular</span><span class="titem">Chapistería</span><span class="titem"><b>✦</b> Llantas</span>
+    </div>
+  </div>
+
+  <div class="stats-strip">
+    <div class="sstrip"><div class="sstrip-n" id="stat-ig">0K+</div><div class="sstrip-l">Seguidores Instagram</div></div>
+    <div class="sstrip"><div class="sstrip-n" id="stat-years">0+</div><div class="sstrip-l">Años de Experiencia</div></div>
+    <div class="sstrip"><div class="sstrip-n" id="stat-suc">0</div><div class="sstrip-l">Sucursales en Panamá</div></div>
+    <div class="sstrip"><div class="sstrip-n" id="stat-rating">0★</div><div class="sstrip-l">Calificación Google</div></div>
+  </div>
+
+  <!-- PREVIEW CARDS - NAVEGACION A SECCIONES -->
+  <div class="home-grid">
+    <div class="hgcard rv" onclick="showPage('quienes')">
+      <div class="hgcard-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778892582/675447746_18455830984106348_3257308772832864931_n_dc4gda.jpg');"></div>
+      <span class="hgcard-ico">🏆</span>
+      <div class="hgcard-tt">Quiénes Somos</div>
+      <p class="hgcard-ds">Más de 30 años construyendo confianza. Conocé nuestra historia, valores y el equipo detrás de la Agencia de los Panameños.</p>
+      <div class="hgcard-arr">Ver historia →</div>
+    </div>
+    <div class="hgcard rv" style="transition-delay:.1s" onclick="showPage('servicios')">
+      <div class="hgcard-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778892431/673180734_18455831290106348_7850905331393331382_n_mii8gn.jpg');"></div>
+      <span class="hgcard-ico">🔧</span>
+      <div class="hgcard-tt">Servicios</div>
+      <p class="hgcard-ds">Mecánica, frenos, A/C, alineación, electromecánica, trámites vehiculares y mucho más. Todo en un solo lugar, sin cita previa.</p>
+      <div class="hgcard-arr">Ver servicios →</div>
+    </div>
+    <div class="hgcard rv" style="transition-delay:.2s" onclick="showPage('resenas')">
+      <div class="hgcard-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778892716/658924316_18455830912106348_6849801991620259883_n_tznhyb.jpg');"></div>
+      <span class="hgcard-ico">⭐</span>
+      <div class="hgcard-tt">Reseñas</div>
+      <p class="hgcard-ds">Más de 490 reseñas en Google con calificación de 4.4 estrellas. Leé lo que dicen nuestros clientes en las 3 sucursales.</p>
+      <div class="hgcard-arr">Ver reseñas →</div>
+    </div>
+    <div class="hgcard rv" style="transition-delay:.3s" onclick="showPage('contacto')">
+      <div class="hgcard-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778895532/675346138_18455830957106348_1874998712270215820_n_icui8z.jpg');background-size:cover;background-repeat:no-repeat;"></div>
+      <span class="hgcard-ico">📍</span>
+      <div class="hgcard-tt">Contacto & Sucursales</div>
+      <p class="hgcard-ds">3 ubicaciones estratégicas en Ciudad de Panamá. Encontrá la más cerca con mapas, teléfonos y horarios de cada sucursal.</p>
+      <div class="hgcard-arr">Ver sucursales →</div>
+    </div>
+  </div>
+
+  <!-- NOVEDADES -->
+  <div style="padding:80px 6% 60px;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778995173/sdasdsadsd_pqy9fi.png');background-size:cover;background-position:center;opacity:.18;pointer-events:none;z-index:0;"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,8,8,.72) 0%,rgba(8,8,8,.55) 50%,rgba(8,8,8,.72) 100%);pointer-events:none;z-index:0;"></div>
+    <div class="lbl rv" style="position:relative;z-index:1;">Novedades</div>
+    <h2 class="bigtitle rv" style="margin-bottom:2.5rem;position:relative;z-index:1;">Lo Último de<br><span class="out">Instaservice</span></h2>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;position:relative;z-index:1;" class="novedades-grid">
+      <div class="hgcard rv" style="padding:0;overflow:hidden;cursor:default;">
+        <div class="nov-img-wrap"><img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778879500/660399867_18452351089106348_2852455097085461363_n_waqi94.jpg" alt="Novedad"></div>
+      </div>
+      <div class="hgcard rv" style="padding:0;overflow:hidden;cursor:default;transition-delay:.1s">
+        <div class="nov-img-wrap"><img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778879500/684772004_18457641442106348_6264215972418555907_n_krhjqu.jpg" alt="Novedad"></div>
+      </div>
+      <div class="hgcard rv" style="padding:0;overflow:hidden;cursor:default;transition-delay:.2s">
+        <div class="nov-img-wrap"><img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778879500/469519390_18377320870106348_9135024385060812735_n_jeoabq.jpg" alt="Novedad"></div>
+      </div>
+      <div class="hgcard rv" style="padding:0;overflow:hidden;cursor:default;transition-delay:.3s">
+        <div class="nov-img-wrap"><img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778892426/469588830_18377320795106348_2528560920600280209_n_currnj.jpg" alt="Novedad"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLANES DE MANTENIMIENTO -->
+  <div style="padding:20px 6% 80px;">
+    <div class="lbl rv">Mantenimiento</div>
+    <h2 class="bigtitle rv" style="margin-bottom:2.5rem;">Planes de<br><span class="out">Mantenimiento</span></h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;" class="planes-grid">
+      <div class="rv" style="background:var(--bg3);border:1px solid rgba(255,255,255,.045);overflow:hidden;transition:border-color .3s,transform .35s;cursor:pointer;" onmouseover="this.style.borderColor='rgba(216,36,42,.3)';this.style.transform='translateY(-5px)'" onmouseout="this.style.borderColor='rgba(255,255,255,.045)';this.style.transform='translateY(0)'">
+        <img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778879501/671129984_18454225924106348_8536080587426162201_n_m0ywmy.jpg" alt="Plan Básico" style="width:100%;display:block;object-fit:cover;">
+        <div style="padding:1.25rem 1.5rem;">
+          <div style="font-family:var(--fs);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--r);margin-bottom:.4rem;">Plan</div>
+          <div style="font-family:var(--fh);font-size:28px;letter-spacing:1px;">Básico</div>
+        </div>
+      </div>
+      <div class="rv" style="background:var(--bg3);border:1px solid rgba(255,255,255,.045);overflow:hidden;transition:border-color .3s,transform .35s;cursor:pointer;transition-delay:.1s" onmouseover="this.style.borderColor='rgba(216,36,42,.3)';this.style.transform='translateY(-5px)'" onmouseout="this.style.borderColor='rgba(255,255,255,.045)';this.style.transform='translateY(0)'">
+        <img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778879500/671737182_18454225927106348_1049080156315719843_n_mc26e3.jpg" alt="Plan Semi Full" style="width:100%;display:block;object-fit:cover;">
+        <div style="padding:1.25rem 1.5rem;">
+          <div style="font-family:var(--fs);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--r);margin-bottom:.4rem;">Plan</div>
+          <div style="font-family:var(--fh);font-size:28px;letter-spacing:1px;">Semi Full</div>
+        </div>
+      </div>
+      <div class="rv" style="background:var(--bg3);border:1px solid rgba(255,255,255,.045);overflow:hidden;transition:border-color .3s,transform .35s;cursor:pointer;transition-delay:.2s" onmouseover="this.style.borderColor='rgba(216,36,42,.3)';this.style.transform='translateY(-5px)'" onmouseout="this.style.borderColor='rgba(255,255,255,.045)';this.style.transform='translateY(0)'">
+        <img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778879500/673843252_18454225936106348_8088907720767608248_n_gsdare.jpg" alt="Plan Full" style="width:100%;display:block;object-fit:cover;">
+        <div style="padding:1.25rem 1.5rem;">
+          <div style="font-family:var(--fs);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--r);margin-bottom:.4rem;">Plan</div>
+          <div style="font-family:var(--fh);font-size:28px;letter-spacing:1px;">Full</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="msep" style="margin-top:0;">
+    <div class="msep-in">
+      <span class="msep-it">LA AGENCIA DE LOS PANAMEÑOS</span><span class="msep-it"><span>✦</span></span>
+      <span class="msep-it">SERVICIO EXPRESS</span><span class="msep-it"><span>✦</span></span>
+      <span class="msep-it">SIN CITA PREVIA</span><span class="msep-it"><span>✦</span></span>
+      <span class="msep-it">DESDE 1991</span><span class="msep-it"><span>✦</span></span>
+      <span class="msep-it">LA AGENCIA DE LOS PANAMEÑOS</span><span class="msep-it"><span>✦</span></span>
+      <span class="msep-it">SERVICIO EXPRESS</span><span class="msep-it"><span>✦</span></span>
+      <span class="msep-it">SIN CITA PREVIA</span><span class="msep-it"><span>✦</span></span>
+      <span class="msep-it">DESDE 1991</span><span class="msep-it"><span>✦</span></span>
+    </div>
+  </div>
+
+  <div class="cv-section rv">
+    <div class="cv-header">
+      <div class="lbl" style="justify-content:center;">Compra & Venta de Autos</div>
+      <div class="cv-title">¿QUERÉS COMPRAR O<br><span class="out">VENDER TU AUTO</span><br>CON NOSOTROS?</div>
+      <p class="cv-sub">Completá el formulario y un asesor de Instaservice te contacta a la brevedad. Sin vueltas, sin complicaciones.</p>
+      <div class="cv-toggle">
+        <button class="cv-toggle-btn active" id="btn-comprar" onclick="setCvMode('comprar')">🚗 Quiero Comprar</button>
+        <button class="cv-toggle-btn" id="btn-vender" onclick="setCvMode('vender')">💰 Quiero Vender</button>
+      </div>
+    </div>
+    <div class="cv-form-wrap">
+      <div id="cv-success" class="cv-success">
+        <span class="cv-success-ico">✅</span>
+        <div class="cv-success-tt">¡Recibimos tu consulta!</div>
+        <p class="cv-success-ds">Un asesor de Instaservice te va a contactar en breve.<br>También podés llamarnos al <a href="tel:64443786" style="color:var(--r);text-decoration:none;">6444‑3786</a>.</p>
+        <button class="cv-reset-btn" onclick="resetCvForm()">↩ Nueva consulta</button>
+      </div>
+      <div id="cv-form-inner">
+        <div class="cv-form">
+          <div class="cv-field">
+            <label class="cv-label">Nombre completo *</label>
+            <input class="cv-input" id="cv-nombre" type="text" placeholder="Ej: Juan Pérez">
+          </div>
+          <div class="cv-field">
+            <label class="cv-label">Teléfono / WhatsApp *</label>
+            <input class="cv-input" id="cv-telefono" type="tel" placeholder="Ej: 6000-0000">
+          </div>
+          <div class="cv-field" id="cvf-marca">
+            <label class="cv-label" id="cvl-marca">Marca que buscás</label>
+            <input class="cv-input" id="cv-marca" type="text" placeholder="Ej: Toyota, Honda, Kia…">
+          </div>
+          <div class="cv-field" id="cvf-anio">
+            <label class="cv-label" id="cvl-anio">Año aproximado</label>
+            <input class="cv-input" id="cv-anio" type="text" placeholder="Ej: 2018–2022">
+          </div>
+          <div class="cv-field" id="cvf-presupuesto">
+            <label class="cv-label">Presupuesto estimado</label>
+            <select class="cv-select" id="cv-presupuesto">
+              <option value="">Seleccioná un rango</option>
+              <option>Menos de $5,000</option>
+              <option>$5,000 – $10,000</option>
+              <option>$10,000 – $15,000</option>
+              <option>$15,000 – $25,000</option>
+              <option>Más de $25,000</option>
+            </select>
+          </div>
+          <div class="cv-field" id="cvf-condicion">
+            <label class="cv-label" id="cvl-condicion">Condición del auto</label>
+            <select class="cv-select" id="cv-condicion">
+              <option value="">Indiferente</option>
+              <option>Nuevo</option>
+              <option>Seminuevo (hasta 3 años)</option>
+              <option>Usado</option>
+            </select>
+          </div>
+          <div class="cv-field cv-form-full">
+            <label class="cv-label" id="cvl-msg">Detalle adicional</label>
+            <textarea class="cv-textarea" id="cv-mensaje" placeholder="Contanos más sobre lo que buscás o el auto que querés vender…"></textarea>
+          </div>
+          <div class="cv-form-full">
+            <button class="cv-submit" onclick="submitCvForm()"><span id="cv-submit-txt">📩 Enviar Consulta</span></button>
+          </div>
+        </div>
+        <p class="cv-note">🔒 Tus datos son privados. Solo los usamos para contactarte.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="ftop">
+      <div class="fbrand">
+        <div class="flogo"><img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778880516/cccccc_httfzl.png" alt="Instaservice" style="height:32px;width:auto;object-fit:contain;"></div>
+        <p>"La Agencia de los Panameños" — Taller automotriz y trámites vehiculares con más de 30 años sirviendo a Panamá con profesionalismo y confianza.</p>
+        <div class="fsoc-row">
+          <a href="https://instagram.com/instaservicetaller" target="_blank" class="fsoc" title="Instagram">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="tel:64443786" class="fsoc" title="Llamar">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          </a>
+          <a href="https://www.facebook.com/InstaserviceTaller/" target="_blank" class="fsoc" title="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="fcol"><h4>Secciones</h4><ul>
+        <li><a onclick="showPage('quienes')">Quiénes Somos</a></li>
+        <li><a onclick="showPage('servicios')">Servicios</a></li>
+        <li><a onclick="showPage('resenas')">Reseñas</a></li>
+        <li><a onclick="showPage('contacto')">Sucursales</a></li>
+      </ul></div>
+      <div class="fcol"><h4>Sucursales</h4><ul>
+        <li><a onclick="showPage('contacto')">Corozal</a></li>
+        <li><a onclick="showPage('contacto')">Bethania</a></li>
+        <li><a onclick="showPage('contacto')">Chanis</a></li>
+      </ul></div>
+      <div class="fcol"><h4>Contacto</h4><ul>
+        <li><a href="tel:64443786">6444-3786</a></li>
+        <li><a href="https://instagram.com/instaservicetaller" target="_blank">@instaservicetaller</a></li>
+        <li><a href="mailto:ventas@instafrenos.com">ventas@instafrenos.com</a></li>
+        <li><a>Lun–Sáb 8am–5pm</a></li>
+      </ul></div>
+    </div>
+    <div class="fbot"><p>© 2025 Instaservice Panamá. Todos los derechos reservados.</p><a>Política de Privacidad</a></div>
+  </footer>
+</div>
+
+<!-- ===================== PAGE: QUIÉNES SOMOS ===================== -->
+<div id="page-quienes" class="page">
+  <div class="page-hero" style="background:var(--bg);">
+    <div class="page-hero-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778879500/626011167_18440438920106348_755576282888863580_n_p8gsxu.jpg');"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-overlay2"></div>
+    <div style="position:absolute;top:0;right:0;bottom:0;width:40%;background:linear-gradient(135deg,transparent,rgba(216,36,42,.04));pointer-events:none;z-index:2;"></div>
+    <div class="page-hero-lbl">Nuestra Historia</div>
+    <h1 class="page-hero-title">Quiénes<br><span class="out">Somos</span></h1>
+    <p class="page-hero-sub">Más de 30 años construyendo confianza. La historia de cómo un taller se convirtió en la Agencia de los Panameños.</p>
+  </div>
+
+  <div class="qs-intro" style="position:relative;">
+    <div style="position:absolute;inset:0;background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778995173/sdasdsadsd_pqy9fi.png');background-size:cover;background-position:center;opacity:.12;pointer-events:none;z-index:0;"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,8,8,.7) 0%,rgba(8,8,8,.5) 50%,rgba(8,8,8,.7) 100%);pointer-events:none;z-index:0;"></div>
+    <div class="qs-year">1991</div>
+    <div class="qs-text">
+      <div class="lbl">Nuestra Historia</div>
+      <h2 class="bigtitle" style="margin-bottom:2rem;">La Agencia<br>de los <span style="color:var(--r)">Panameños</span></h2>
+      <p><strong>Instaservice nació en 1991</strong> con una visión clara: brindarle al panameño un servicio automotriz honesto, rápido y confiable. Lo que comenzó como un pequeño taller en Corozal se fue consolidando gracias a la calidad del trabajo y la confianza de cada cliente que volvía.</p>
+      <p>Con <strong>más de 30 años en el mercado</strong>, hoy somos una empresa con 3 sucursales estratégicamente ubicadas en Ciudad de Panamá — Corozal, Bethania y Chanis — atendiendo a miles de panameños cada año con el mismo compromiso que nos define desde el primer día.</p>
+      <p>Somos reconocidos en las redes sociales como <strong>@instaservicetaller</strong>, con más de <strong>31,000 seguidores en Instagram</strong>, lo que habla del vínculo genuino que hemos construido con la comunidad. Nos llaman con orgullo <em>"La Agencia de los Panameños"</em> porque entendemos lo que el conductor panameño necesita: precio justo, trabajo de calidad y servicio sin rodeos.</p>
+      <p>Nuestro equipo de técnicos certificados tiene experiencia con <strong>todas las marcas</strong>: Toyota, Honda, Hyundai, Kia, Nissan, Mazda, Ford, Chevrolet, Mitsubishi y más. No necesitás cita previa. Llegás, te atendemos, y salís con tu auto en perfecto estado.</p>
+    </div>
+    <div class="qs-side">
+      <div class="qs-stats-v rv">
+        <div class="qs-stat">
+          <div class="qs-stat-n">1991</div>
+          <div class="qs-stat-l"><strong>Año de Fundación</strong><span>Sede principal en Corozal, Panamá</span></div>
+        </div>
+        <div class="qs-stat">
+          <div class="qs-stat-n">31K+</div>
+          <div class="qs-stat-l"><strong>Comunidad Instagram</strong><span>La taller más seguida de Panamá</span></div>
+        </div>
+        <div class="qs-stat">
+          <div class="qs-stat-n">3</div>
+          <div class="qs-stat-l"><strong>Sucursales Activas</strong><span>Corozal, Bethania y Chanis</span></div>
+        </div>
+        <div class="qs-stat">
+          <div class="qs-stat-n">4.4★</div>
+          <div class="qs-stat-l"><strong>Calificación Google</strong><span>Más de 490 reseñas verificadas</span></div>
+        </div>
+      </div>
+      <div style="padding:1.75rem 2rem;background:rgba(216,36,42,.07);border:1px solid rgba(216,36,42,.2);margin-top:.75rem;">
+        <div style="font-family:var(--fh);font-size:22px;letter-spacing:1px;margin-bottom:.5rem;">DIAGNÓSTICO GRATUITO</div>
+        <p style="font-size:13px;color:var(--w2);line-height:1.7;">Revisamos tu vehículo sin cargo adicional. Solo pagás por lo que autorizás. Sin sorpresas, sin cobros ocultos.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="timeline" style="padding-top:100px;">
+    <div class="lbl" style="margin-bottom:3rem;">Nuestra Evolución</div>
+    <div class="tl-item rv">
+      <div class="tl-dot">91</div>
+      <div class="tl-content">
+        <div class="tl-year">1991 — Los Inicios</div>
+        <div class="tl-title">Nace Instaservice en Corozal</div>
+        <p class="tl-desc">El taller abre sus puertas en Corozal, Ciudad de Panamá, con el objetivo de ofrecer mecánica general y reparación de frenos de calidad a precios accesibles para el panameño común.</p>
+      </div>
+    </div>
+    <div class="tl-item rv" style="transition-delay:.1s">
+      <div class="tl-dot">00s</div>
+      <div class="tl-content">
+        <div class="tl-year">2000s — Expansión de Servicios</div>
+        <div class="tl-title">Electromecánica, A/C y Trámites</div>
+        <p class="tl-desc">El taller incorpora diagnóstico electrónico, servicio de aire acondicionado y gestión de trámites vehiculares, convirtiéndose en un servicio integral que los panameños empiezan a reconocer.</p>
+      </div>
+    </div>
+    <div class="tl-item rv" style="transition-delay:.2s">
+      <div class="tl-dot">10s</div>
+      <div class="tl-content">
+        <div class="tl-year">2010s — Crecimiento</div>
+        <div class="tl-title">Apertura de Bethania y Chanis</div>
+        <p class="tl-desc">La demanda y la confianza acumulada permiten abrir nuevas sucursales en Bethania (Ave. Ricardo J. Alfaro) y Chanis/El Dorado, llevando el servicio a más vecindarios de la capital.</p>
+      </div>
+    </div>
+    <div class="tl-item rv" style="transition-delay:.3s">
+      <div class="tl-dot">📱</div>
+      <div class="tl-content">
+        <div class="tl-year">2020s — La Comunidad Digital</div>
+        <div class="tl-title">31K+ Seguidores en Instagram</div>
+        <p class="tl-desc">Instaservice construye una comunidad digital de más de 31,000 seguidores y se consolida como referente automotriz en redes sociales, acumulando más de 490 reseñas positivas en Google.</p>
+      </div>
+    </div>
+    <div class="tl-item rv" style="transition-delay:.4s">
+      <div class="tl-dot">→</div>
+      <div class="tl-content">
+        <div class="tl-year">Próximamente</div>
+        <div class="tl-title">Nueva Sucursal en Camino</div>
+        <p class="tl-desc">Instaservice continúa creciendo. Una cuarta sucursal está en camino para seguir llevando el mejor servicio automotriz a más panameños.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- VALORES -->
+  <div class="sec" style="background:var(--bg2);">
+    <div class="lbl">Lo que nos define</div>
+    <h2 class="bigtitle rv">Nuestros<br><span class="out">Valores</span></h2>
+    <div class="valores-grid" style="margin-top:3rem;">
+      <div class="valor rv">
+        <div class="valor-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778896638/Honestidad-en-la-empresa_qfyy6u.jpg');"></div>
+        <span class="valor-ico">🤝</span><div class="valor-tt">Honestidad</div><p class="valor-ds">Diagnóstico claro, presupuesto transparente. Nunca cobramos por lo que no autorizaste ni exageramos los problemas de tu vehículo.</p>
+      </div>
+      <div class="valor rv" style="transition-delay:.1s">
+        <div class="valor-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778896637/velocc3admetro_qas9bb.webp');"></div>
+        <span class="valor-ico">⚡</span><div class="valor-tt">Rapidez</div><p class="valor-ds">Servicio express sin cita previa. En 30 minutos podés tener tu cambio de aceite listo. Respetamos tu tiempo tanto como el tuyo.</p>
+      </div>
+      <div class="valor rv" style="transition-delay:.2s">
+        <div class="valor-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778896637/Garantia-de-prestamo-850x443_gt6buk.jpg');"></div>
+        <span class="valor-ico">🛡️</span><div class="valor-tt">Garantía</div><p class="valor-ds">Todos los trabajos respaldados con garantía por escrito. Si algo no queda bien, volvemos a hacerlo sin costo adicional.</p>
+      </div>
+      <div class="valor rv" style="transition-delay:.1s">
+        <div class="valor-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778896638/calidad-w-min_zkgulx.jpg');"></div>
+        <span class="valor-ico">🔬</span><div class="valor-tt">Calidad</div><p class="valor-ds">Repuestos originales y de primera calidad. Técnicos certificados con años de experiencia en todas las marcas del mercado.</p>
+      </div>
+      <div class="valor rv" style="transition-delay:.2s">
+        <div class="valor-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778896638/bandera-panama-cerro-ancon_gae1mt.jpg');"></div>
+        <span class="valor-ico">🇵🇦</span><div class="valor-tt">Panameñidad</div><p class="valor-ds">Somos de aquí, para los de aquí. Entendemos las necesidades del conductor panameño y hablamos el mismo idioma.</p>
+      </div>
+      <div class="valor rv" style="transition-delay:.3s">
+        <div class="valor-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778896637/j4MsWvNnzYsdxsxMqkMZajl72eJkfbmt4t8yenImKBXEejxNn4ZJNZ2ss5Ku7Cxt_racca1.jpg');"></div>
+        <span class="valor-ico">📍</span><div class="valor-tt">Accesibilidad</div><p class="valor-ds">3 ubicaciones estratégicas para que siempre haya un Instaservice cerca de vos, sin importar en qué parte de la ciudad estés.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:60px 6%;border-top:1px solid rgba(255,255,255,.04);">
+    <p style="font-size:16px;color:var(--w2);margin-bottom:1.5rem;">¿Listo para conocernos en persona?</p>
+    <button onclick="showPage('contacto')" class="btnr" style="border:none;"><span>Ver Nuestras Sucursales</span><span class="arr">→</span></button>
+  </div>
+  <footer style="background:#050505;border-top:1px solid rgba(255,255,255,.04);padding:36px 6%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+    <p style="font-size:12px;color:rgba(255,255,255,.2);">© 2025 Instaservice Panamá. Todos los derechos reservados.</p>
+    <div style="display:flex;gap:1.5rem;">
+      <a href="https://instagram.com/instaservicetaller" target="_blank" style="font-family:var(--fs);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.2);text-decoration:none;">Instagram</a>
+      <a href="tel:64443786" style="font-family:var(--fs);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.2);text-decoration:none;">6444-3786</a>
+    </div>
+  </footer>
+</div>
+
+<!-- ===================== PAGE: SERVICIOS ===================== -->
+<div id="page-servicios" class="page">
+  <div class="page-hero" style="background:var(--bg);">
+    <div class="page-hero-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778879500/626011167_18440438920106348_755576282888863580_n_p8gsxu.jpg');"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-overlay2"></div>
+    <div class="page-hero-lbl">Todo en un solo lugar</div>
+    <h1 class="page-hero-title">Nuestros<br><span class="out">Servicios</span></h1>
+    <p class="page-hero-sub">Técnicos certificados, equipos de diagnóstico de última generación. Sin cita previa, para todas las marcas del mercado.</p>
+  </div>
+
+  <!-- SERVICIOS GRID -->
+  <div style="padding:80px 6% 0; background:var(--bg);">
+    <div class="lbl rv">Mecánica & Mantenimiento</div>
+    <h2 class="bigtitle rv" style="margin-bottom:3rem;">Servicios<br><span class="out">Técnicos</span></h2>
+    <div class="svcs-full">
+      <div class="svc rv" style="transition-delay:.05s">
+        <div class="svc-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778897284/Hombre-haciendo-un-mantenimiento-correctivo-automotriz_kl7zw0.jpg');"></div>
+        <div class="svc-n">01</div><span class="svc-ico">🔧</span><div class="svc-bar"></div>
+        <div class="svc-nm">Mantenimiento General</div>
+        <p class="svc-ds">Cambio de aceite y filtros (básico, semifull y full). Revisión de fluidos, bujías, correas y componentes del motor. Servicio express en 30 minutos.</p>
+        <div class="svc-tags"><span class="svc-tag">4x4 · 4WD</span><span class="svc-tag">SUV</span><span class="svc-tag">Sedán</span></div>
+      </div>
+      <div class="svc rv" style="transition-delay:.1s">
+        <div class="svc-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778897284/sistema-de-frenos_rwroj8.jpg');"></div>
+        <div class="svc-n">02</div><span class="svc-ico">🛑</span><div class="svc-bar"></div>
+        <div class="svc-nm">Sistema de Frenos</div>
+        <p class="svc-ds">Diagnóstico gratuito del sistema. Cambio de pastillas, discos, tambores y líquido de frenos. Limpieza y ajuste completo del sistema.</p>
+        <div class="svc-tags"><span class="svc-tag">Diagnóstico Gratis</span><span class="svc-tag">Garantía Escrita</span></div>
+      </div>
+      <div class="svc rv" style="transition-delay:.15s">
+        <div class="svc-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778897285/carroya_aire_acondicionado_1_ivvjrt.jpg');"></div>
+        <div class="svc-n">03</div><span class="svc-ico">❄️</span><div class="svc-bar"></div>
+        <div class="svc-nm">Aire Acondicionado</div>
+        <p class="svc-ds">Recarga de gas refrigerante, limpieza de evaporador, filtro de cabina y diagnóstico completo del sistema A/C. Ambiente fresco garantizado.</p>
+        <div class="svc-tags"><span class="svc-tag">Diagnóstico Gratis</span><span class="svc-tag">Recarga Gas</span></div>
+      </div>
+      <div class="svc rv" style="transition-delay:.05s">
+        <div class="svc-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778897285/image00003_5_ed7uya.webp');"></div>
+        <div class="svc-n">04</div><span class="svc-ico">⚙️</span><div class="svc-bar"></div>
+        <div class="svc-nm">Alineación & Balanceo</div>
+        <p class="svc-ds">Alineación computarizada de dirección y balanceo de ruedas. Corrección de ángulos para un manejo seguro y mayor duración de llantas.</p>
+        <div class="svc-tags"><span class="svc-tag">Computarizado</span><span class="svc-tag">Express</span></div>
+      </div>
+      <div class="svc rv" style="transition-delay:.1s">
+        <div class="svc-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778897283/que-es-la-electromecanica_cua4ib.webp');"></div>
+        <div class="svc-n">05</div><span class="svc-ico">⚡</span><div class="svc-bar"></div>
+        <div class="svc-nm">Electromecánica</div>
+        <p class="svc-ds">Diagnóstico electrónico avanzado, lectura de códigos de falla (OBD2), reset de luces de motor y reparación de sistemas eléctricos del vehículo.</p>
+        <div class="svc-tags"><span class="svc-tag">OBD2</span><span class="svc-tag">Todas las Marcas</span></div>
+      </div>
+      <div class="svc rv" style="transition-delay:.15s">
+        <div class="svc-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778897283/75_tjzkpq.jpg');"></div>
+        <div class="svc-n">06</div><span class="svc-ico">🔩</span><div class="svc-bar"></div>
+        <div class="svc-nm">Suspensión & Dirección</div>
+        <p class="svc-ds">Revisión y cambio de amortiguadores, muelles, rótulas, terminales y componentes de dirección. Manejo seguro y cómodo garantizado.</p>
+        <div class="svc-tags"><span class="svc-tag">Diagnóstico Gratis</span><span class="svc-tag">Repuestos Originales</span></div>
+      </div>
+      <div class="svc rv" style="transition-delay:.05s">
+        <div class="svc-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778897283/portrait-of-mechanic-at-work-in-his-garage-1_cxobaz.jpg');"></div>
+        <div class="svc-n">07</div><span class="svc-ico">🔍</span><div class="svc-bar"></div>
+        <div class="svc-nm">Revisado Vehicular</div>
+        <p class="svc-ds">Inspección técnica oficial para la revisión vehicular del ATTT. Todo en el mismo lugar, sin perder tiempo en varias instituciones.</p>
+        <div class="svc-tags"><span class="svc-tag">ATTT</span><span class="svc-tag">Oficial</span></div>
+      </div>
+      <div class="svc rv" style="transition-delay:.1s">
+        <div class="svc-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778897283/chapa_pintura_tolvia.jpg');"></div>
+        <div class="svc-n">08</div><span class="svc-ico">🎨</span><div class="svc-bar"></div>
+        <div class="svc-nm">Chapistería & Pintura</div>
+        <p class="svc-ds">Reparación de abolladuras, rayones y daños de carrocería. Pintura de acabado profesional para devolver a tu auto su aspecto original.</p>
+        <div class="svc-tags"><span class="svc-tag">Acabado Profesional</span><span class="svc-tag">Garantía</span></div>
+      </div>
+      <div class="svc rv" style="transition-delay:.15s">
+        <div class="svc-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778897282/NAZ_45b540e25b114b72b0c1c8f32022c0dd_jcjgtb.webp');"></div>
+        <div class="svc-n">09</div><span class="svc-ico">🏎️</span><div class="svc-bar"></div>
+        <div class="svc-nm">Llantas & Rines</div>
+        <p class="svc-ds">Venta, cambio y reparación de llantas para todas las marcas y medidas. Cotización sin compromiso. Montaje y balanceo incluidos.</p>
+        <div class="svc-tags"><span class="svc-tag">Cotización Gratis</span><span class="svc-tag">Montaje Incluido</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRAMITES -->
+  <div style="padding:80px 6%;background:var(--bg2);">
+    <div class="lbl rv">Sin filas ni complicaciones</div>
+    <h2 class="bigtitle rv" style="margin-bottom:.5rem;">Trámites<br><span class="out">Vehiculares</span></h2>
+    <p style="font-size:15px;color:var(--w2);line-height:1.85;max-width:560px;margin-bottom:3rem;" class="rv">Hacemos todos los trámites de tu vehículo por vos. Sin perder tiempo en filas, sin complicaciones. Todo en el mismo lugar donde repará tu auto.</p>
+    <div class="tramites-grid">
+      <div class="tramite-card rv"><div class="tramite-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778898489/Placas-02_1050x700_w6byqn.webp');"></div><div class="tramite-ico">🪪</div><div class="tramite-tt">Trámite de Placa</div><p class="tramite-ds">Gestión completa para obtener o renovar la placa de tu vehículo. Te asesoramos en todo el proceso sin que tengas que ir a ninguna institución.</p></div>
+      <div class="tramite-card rv" style="transition-delay:.1s"><div class="tramite-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778898489/522025571traspasovehiculoprocesocarroya_zv4zqv.jpg');"></div><div class="tramite-ico">📄</div><div class="tramite-tt">Traspaso de Vehículo</div><p class="tramite-ds">Realizamos el traspaso de manera ágil y segura. Todos los documentos registrados correctamente a nombre del nuevo dueño, con garantía.</p></div>
+      <div class="tramite-card rv" style="transition-delay:.2s"><div class="tramite-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778898490/que-cubren-los-seguros-contra-terceros_flqned.jpg');"></div><div class="tramite-ico">🛡️</div><div class="tramite-tt">Póliza de Daños a Terceros</div><p class="tramite-ds">Tramitamos tu póliza de responsabilidad civil (SOAT). Asesoría personalizada para elegir la mejor opción para tu situación.</p></div>
+      <div class="tramite-card rv" style="transition-delay:.3s"><div class="tramite-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778898489/El_certificado_de_inspecci%C3%B3n_en_el_comercio_exterior_vzwh6c.jpg');"></div><div class="tramite-ico">📋</div><div class="tramite-tt">Certificado de Inspección</div><p class="tramite-ds">Inspección técnica oficial para el certificado del ATTT. Realizamos el proceso de forma eficiente con todo incluido en el mismo taller.</p></div>
+    </div>
+  </div>
+
+  <!-- PRECIOS MANTENIMIENTO -->
+  <div class="precios-section">
+    <div class="precios-intro">
+      <div>
+        <div class="lbl rv">Precios Transparentes</div>
+        <h2 class="bigtitle rv">Mantenimiento<br><span class="out">Preventivo</span></h2>
+      </div>
+      <p style="font-size:15px;color:var(--w2);line-height:1.85;" class="rv">Más de 30 años trabajando con todas las marcas del mercado panameño. Precios claros sin sorpresas, elegís el paquete que mejor se adapta a vos, con repuestos de calidad y técnicos certificados que conocen tu vehículo.</p>
+    </div>
+    <div class="precios-table-wrap rv">
+      <table class="ptable" style="margin-bottom:0;">
+        <colgroup>
+          <col style="width:40%;">
+          <col style="width:20%;">
+          <col style="width:20%;">
+          <col style="width:20%;">
+        </colgroup>
+        <thead>
+          <tr><th>Servicio Incluido</th><th class="red">Básico</th><th class="red">Semifull</th><th class="red">Full</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Aceite de Motor</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Filtro de Aceite</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Cambio de Aceite de Motor</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Aditivo Limpiaparabrisas</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Aditivo de Inyectores</td><td class="dash">—</td><td class="check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Filtro de Aire del Motor</td><td class="dash">—</td><td class="check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Filtro de Aire Acondicionado</td><td class="dash">—</td><td class="check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Balance y Rotación de Llantas</td><td class="dash">—</td><td class="check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Limpieza de Frenos</td><td class="dash">—</td><td class="dash">—</td><td class="check">✓</td></tr>
+        </tbody>
+        <thead>
+          <tr style="border-top:2px solid rgba(216,36,42,.25);">
+            <th style="background:var(--bg3);color:var(--w3);">Tipo de Vehículo</th>
+            <th style="background:var(--bg3);" class="red">Básico</th>
+            <th style="background:var(--bg3);" class="red">Semifull</th>
+            <th style="background:var(--bg3);" class="red">Full</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="font-family:var(--fs);font-weight:700;text-transform:uppercase;letter-spacing:.5px;">Sedán</td><td class="price">$37.99</td><td class="price">$44.99</td><td class="price">$61.99</td></tr>
+          <tr><td style="font-family:var(--fs);font-weight:700;text-transform:uppercase;letter-spacing:.5px;">SUV</td><td class="price">$91.99</td><td class="price">$98.99</td><td class="price">$115.99</td></tr>
+          <tr><td style="font-family:var(--fs);font-weight:700;text-transform:uppercase;letter-spacing:.5px;">4x4 / Pickup</td><td class="price">$135.95</td><td class="price">$142.95</td><td class="price">$159.95</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- MARCAS -->
+  <div style="padding:60px 6%;background:var(--bg);text-align:center;">
+    <div class="lbl rv" style="justify-content:center;">Trabajamos con todas las marcas</div>
+    <p style="font-size:28px;font-family:var(--fh);letter-spacing:2px;color:var(--w2);margin-top:.5rem;" class="rv">Toyota · Honda · Hyundai · Kia · Nissan · Mazda · Ford · Chevrolet · Mitsubishi · Suzuki · Volkswagen · y más</p>
+  </div>
+
+  <div style="text-align:center;padding:60px 6%;background:var(--bg2);border-top:1px solid rgba(255,255,255,.04);">
+    <p style="font-size:16px;color:var(--w2);margin-bottom:1.5rem;">¿Querés agendar o consultar sobre un servicio?</p>
+    <a href="tel:64443786" class="btnr" style="display:inline-flex;margin-right:1rem;"><span>Llamar: 6444-3786</span><span class="arr">→</span></a>
+    <a href="https://instagram.com/instaservicetaller" target="_blank" class="btng">@instaservicetaller</a>
+  </div>
+  <footer style="background:#050505;border-top:1px solid rgba(255,255,255,.04);padding:36px 6%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+    <p style="font-size:12px;color:rgba(255,255,255,.2);">© 2025 Instaservice Panamá. Todos los derechos reservados.</p>
+    <div style="display:flex;gap:1.5rem;">
+      <a href="https://instagram.com/instaservicetaller" target="_blank" style="font-family:var(--fs);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.2);text-decoration:none;">Instagram</a>
+      <a href="tel:64443786" style="font-family:var(--fs);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.2);text-decoration:none;">6444-3786</a>
+    </div>
+  </footer>
+</div>
+
+<!-- ===================== PAGE: RESEÑAS ===================== -->
+<div id="page-resenas" class="page">
+  <div class="page-hero" style="background:var(--bg);">
+    <div class="page-hero-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778879500/626011167_18440438920106348_755576282888863580_n_p8gsxu.jpg');"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-overlay2"></div>
+    <div class="page-hero-lbl">Lo que dicen los clientes</div>
+    <h1 class="page-hero-title">Reseñas<br><span class="out">Google</span></h1>
+    <p class="page-hero-sub">Más de 490 reseñas verificadas en Google Maps. Calificación promedio de 4.4 estrellas en nuestras 3 sucursales.</p>
+  </div>
+
+  <div class="reviews-page">
+
+    <!-- VIDEO TESTIMONIAL -->
+    <div class="rv" style="margin-bottom:4rem;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:1.25rem;">
+        <span class="hdot" style="flex-shrink:0;"></span>
+        <span style="font-family:var(--fs);font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--r);">Testimonio Real · Cliente Verificado</span>
+      </div>
+      <div style="position:relative;width:100%;max-width:780px;margin:0 auto;background:#0a0a0a;border:1px solid rgba(216,36,42,.25);overflow:hidden;box-shadow:0 0 60px rgba(216,36,42,.12),0 24px 60px rgba(0,0,0,.5);">
+        <!-- Top accent line -->
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--r),transparent);z-index:2;pointer-events:none;"></div>
+        <!-- Corner brackets -->
+        <div style="position:absolute;top:12px;left:12px;width:24px;height:24px;border-top:1.5px solid rgba(216,36,42,.6);border-left:1.5px solid rgba(216,36,42,.6);z-index:2;pointer-events:none;"></div>
+        <div style="position:absolute;top:12px;right:12px;width:24px;height:24px;border-top:1.5px solid rgba(216,36,42,.6);border-right:1.5px solid rgba(216,36,42,.6);z-index:2;pointer-events:none;"></div>
+        <video
+          controls
+          playsinline
+          webkit-playsinline
+          preload="metadata"
+          poster="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778892582/675447746_18455830984106348_3257308772832864931_n_dc4gda.jpg"
+          style="width:100%;display:block;max-height:480px;object-fit:cover;background:#000;"
+        >
+          <source src="https://res.cloudinary.com/dvvuwigmy/video/upload/v1778969941/insta_video_55998_lkeg1p.mp4" type="video/mp4">
+        </video>
+        <!-- Bottom caption bar -->
+        <div style="padding:1.1rem 1.5rem;background:rgba(8,8,8,.95);border-top:1px solid rgba(255,255,255,.05);display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:36px;height:36px;background:rgba(216,36,42,.12);border:1px solid rgba(216,36,42,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;">👤</div>
+            <div>
+              <div style="font-family:var(--fs);font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;">Cliente Verificado</div>
+              <div style="font-size:11px;color:rgba(255,255,255,.35);letter-spacing:.5px;">Experiencia en Instaservice Taller</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:4px;">
+            <div style="width:12px;height:12px;background:var(--r);clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);"></div>
+            <div style="width:12px;height:12px;background:var(--r);clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);"></div>
+            <div style="width:12px;height:12px;background:var(--r);clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);"></div>
+            <div style="width:12px;height:12px;background:var(--r);clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);"></div>
+            <div style="width:12px;height:12px;background:var(--r);clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESUMEN POR SUCURSAL -->
+    <div class="reviews-header rv">
+      <div class="reviews-top">
+        <div class="rev-overall">
+          <div class="rev-score">4.4</div>
+          <div class="rev-stars-big">
+            <div class="rstar-b"></div><div class="rstar-b"></div><div class="rstar-b"></div><div class="rstar-b"></div><div class="rstar-b half"></div>
+          </div>
+          <div class="rev-count">Promedio General</div>
+          <a href="https://www.google.com/search?q=Instaservice+taller+Panama" target="_blank" class="rev-google-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+            Ver en Google Maps
+          </a>
+        </div>
+        <div style="flex:1;border-left:1px solid rgba(255,255,255,.06);padding-left:4rem;">
+          <div class="lbl" style="margin-bottom:.5rem;">Calificación por Sucursal</div>
+          <p style="font-size:14px;color:var(--w3);line-height:1.7;max-width:460px;">Tres ubicaciones en Ciudad de Panamá, todas con calificación superior a 4 estrellas en Google Maps y más de 490 reseñas combinadas.</p>
+        </div>
+      </div>
+      <div class="rev-branches">
+        <a href="https://www.google.com/maps/place/Taller+de+Mec%C3%A1nica+Instafrenos+Miraflores/@8.9877651,-79.5773059" target="_blank" class="rev-branch">
+          <div class="rev-branch-num">Sucursal 01</div>
+          <div class="rev-branch-name">Corozal /<br>Miraflores</div>
+          <div class="rev-branch-score-big">4.4</div>
+          <div class="rev-branch-stars"><div class="rstar-s"></div><div class="rstar-s"></div><div class="rstar-s"></div><div class="rstar-s"></div><div class="rstar-s" style="background:rgba(255,255,255,.12)"></div></div>
+          <div class="rev-branch-bar-wrap"><div class="rev-branch-bar" style="width:88%"></div></div>
+          <div class="rev-branch-meta"><span class="rev-branch-count">213 reseñas</span><span class="rev-branch-link">Google Maps →</span></div>
+        </a>
+        <a href="https://www.google.com/maps/place/Taller+de+Mec%C3%A1nica+Instafrenos+Bethania/@9.0116644,-79.5261029" target="_blank" class="rev-branch">
+          <div class="rev-branch-num">Sucursal 02</div>
+          <div class="rev-branch-name">Bethania</div>
+          <div class="rev-branch-score-big">4.2</div>
+          <div class="rev-branch-stars"><div class="rstar-s"></div><div class="rstar-s"></div><div class="rstar-s"></div><div class="rstar-s"></div><div class="rstar-s" style="background:rgba(255,255,255,.12)"></div></div>
+          <div class="rev-branch-bar-wrap"><div class="rev-branch-bar" style="width:84%"></div></div>
+          <div class="rev-branch-meta"><span class="rev-branch-count">149 reseñas</span><span class="rev-branch-link">Google Maps →</span></div>
+        </a>
+        <a href="https://www.google.com/maps/place/Taller+de+Mec%C3%A1nica+Instafrenos+Chanis/@9.0176361,-79.4848272" target="_blank" class="rev-branch">
+          <div class="rev-branch-num">Sucursal 03</div>
+          <div class="rev-branch-name">Chanis</div>
+          <div class="rev-branch-score-big">4.4</div>
+          <div class="rev-branch-stars"><div class="rstar-s"></div><div class="rstar-s"></div><div class="rstar-s"></div><div class="rstar-s"></div><div class="rstar-s" style="background:rgba(255,255,255,.12)"></div></div>
+          <div class="rev-branch-bar-wrap"><div class="rev-branch-bar" style="width:88%"></div></div>
+          <div class="rev-branch-meta"><span class="rev-branch-count">132 reseñas</span><span class="rev-branch-link">Google Maps →</span></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- RESEÑAS CARDS -->
+    <div class="lbl rv" style="margin-bottom:2rem;">Testimonios Destacados</div>
+    <div class="reviews-grid">
+      <div class="rcard rv">
+        <div class="rstars"><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span></div>
+        <p class="rtxt">Excelente servicio. Fui por el cambio de aceite y en menos de 30 minutos salí. Los precios son justos y el personal muy profesional.</p>
+        <div class="rauth">— Carlos M.</div><div class="rbranch">Corozal</div>
+      </div>
+      <div class="rcard rv" style="transition-delay:.1s">
+        <div class="rstars"><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span></div>
+        <p class="rtxt">Me ayudaron con todos los trámites del traspaso sin complicaciones. Me asesoraron paso a paso. Definitivamente recomendados.</p>
+        <div class="rauth">— Ana R.</div><div class="rbranch">Bethania</div>
+      </div>
+      <div class="rcard rv" style="transition-delay:.2s">
+        <div class="rstars"><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span></div>
+        <p class="rtxt">Llevo años yendo al local de Chanis. Siempre me tratan bien y el trabajo es de calidad. No los cambio por nada.</p>
+        <div class="rauth">— Javier T.</div><div class="rbranch">Chanis</div>
+      </div>
+      <div class="rcard rv" style="transition-delay:.1s">
+        <div class="rstars"><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span></div>
+        <p class="rtxt">Los frenos de mi Honda estaban fallando y me lo resolvieron ese mismo día. Precio muy razonable y trabajo de calidad.</p>
+        <div class="rauth">— María L.</div><div class="rbranch">Ciudad de Panamá</div>
+      </div>
+      <div class="rcard rv" style="transition-delay:.2s">
+        <div class="rstars"><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span></div>
+        <p class="rtxt">El diagnóstico del A/C fue gratis y la recarga quedó perfecta. Sitio limpio, personal amable. Volvería sin dudarlo.</p>
+        <div class="rauth">— Roberto P.</div><div class="rbranch">Bethania</div>
+      </div>
+      <div class="rcard rv" style="transition-delay:.3s">
+        <div class="rstars"><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span></div>
+        <p class="rtxt">Fui a hacer la inspección vehicular y me resolvieron todo en el mismo lugar. Comodidad increíble, todo en un solo sitio.</p>
+        <div class="rauth">— Diana V.</div><div class="rbranch">Chanis / El Dorado</div>
+      </div>
+      <div class="rcard rv" style="transition-delay:.1s">
+        <div class="rstars"><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span></div>
+        <p class="rtxt">Highly recommend this place, very reasonably priced and honest people. Their shop is clean and organized. They also moved my vehicle in and out very fast.</p>
+        <div class="rauth">— Google Review</div><div class="rbranch">Corozal / Miraflores</div>
+      </div>
+      <div class="rcard rv" style="transition-delay:.2s">
+        <div class="rstars"><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span></div>
+        <p class="rtxt">I have absolutely no complaints. I've been bringing my cars here for 8 years. 5 stars.</p>
+        <div class="rauth">— Google Review</div><div class="rbranch">Chanis</div>
+      </div>
+      <div class="rcard rv" style="transition-delay:.3s">
+        <div class="rstars"><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span><span class="rstar"></span></div>
+        <p class="rtxt">Excelente atención y rapidez. Llegué sin cita y me atendieron al momento. El precio fue el que me dijeron sin sorpresas al final.</p>
+        <div class="rauth">— Pedro A.</div><div class="rbranch">Corozal</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA GOOGLE -->
+  <div class="rev-cta">
+    <div class="lbl" style="justify-content:center;margin-bottom:1rem;">¿Ya fuiste? Compartí tu experiencia</div>
+    <h2 style="font-family:var(--fh);font-size:clamp(36px,4vw,56px);letter-spacing:1px;margin-bottom:1rem;">Dejá tu Reseña en Google</h2>
+    <p>Tu opinión ayuda a otros panameños a encontrar el mejor servicio automotriz.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem;">
+      <a href="https://www.google.com/maps/place/Taller+de+Mec%C3%A1nica+Instafrenos+Miraflores/@8.9877651,-79.5773059" target="_blank" class="btnr"><span>Reseñar Corozal</span><span class="arr">→</span></a>
+      <a href="https://www.google.com/maps/place/Taller+de+Mec%C3%A1nica+Instafrenos+Bethania/@9.0116644,-79.5261029" target="_blank" class="btng">Reseñar Bethania</a>
+      <a href="https://www.google.com/maps/place/Taller+de+Mec%C3%A1nica+Instafrenos+Chanis/@9.0176361,-79.4848272" target="_blank" class="btng">Reseñar Chanis</a>
+    </div>
+  </div>
+  <footer style="background:#050505;border-top:1px solid rgba(255,255,255,.04);padding:36px 6%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+    <p style="font-size:12px;color:rgba(255,255,255,.2);">© 2025 Instaservice Panamá. Todos los derechos reservados.</p>
+    <div style="display:flex;gap:1.5rem;">
+      <a href="https://instagram.com/instaservicetaller" target="_blank" style="font-family:var(--fs);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.2);text-decoration:none;">Instagram</a>
+      <a href="tel:64443786" style="font-family:var(--fs);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.2);text-decoration:none;">6444-3786</a>
+    </div>
+  </footer>
+</div>
+<div id="page-contacto" class="page">
+  <div class="page-hero" style="background:var(--bg);">
+    <div class="page-hero-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778879500/626011167_18440438920106348_755576282888863580_n_p8gsxu.jpg');"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-overlay2"></div>
+    <div class="page-hero-lbl">Encontranos</div>
+    <h1 class="page-hero-title">Contacto &<br><span class="out">Sucursales</span></h1>
+    <p class="page-hero-sub">3 ubicaciones estratégicas en Ciudad de Panamá. Sin cita previa. Llegás y te atendemos.</p>
+  </div>
+
+  <div class="contact-page">
+    <div class="contact-intro">
+      <div class="contact-info rv">
+        <h3>Comunicate con Nosotros</h3>
+        <p>Nuestro equipo está disponible de lunes a sábado para atenderte. Podés llamar, escribir por Instagram o simplemente llegar a cualquiera de nuestras sucursales sin cita previa.</p>
+        <a href="tel:64443786" class="contact-phone-big">6444 · 3786</a>
+        <div class="contact-hours">Lunes a Sábado · 8:00 AM – 5:00 PM</div>
+        <div style="height:1.5rem;"></div>
+        <div class="contact-detail">
+          <div class="contact-detail-ico">📞</div>
+          <div class="contact-detail-text"><strong>Teléfono Principal</strong><a href="tel:64443786">6444-3786</a></div>
+        </div>
+        <!-- SUCURSALES CON WHATSAPP -->
+        <div style="margin:.75rem 0 .25rem;padding:.75rem 0 .4rem;border-bottom:1px solid rgba(255,255,255,.05);">
+          <div style="font-family:var(--fs);font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--w3);margin-bottom:.65rem;">WhatsApp por Sucursal</div>
+          <div style="display:flex;flex-direction:column;gap:.5rem;">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;">
+              <span style="font-family:var(--fs);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--w2);">📍 Corozal</span>
+              <a href="https://wa.me/5072214903?text=Hola%20Instaservice%20Corozal%2C%20quiero%20hacer%20una%20consulta." target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#25D366;color:white;font-family:var(--fs);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:6px 14px;text-decoration:none;border-radius:2px;transition:background .2s;white-space:nowrap;" onmouseover="this.style.background='#1ebe5a'" onmouseout="this.style.background='#25D366'">💬 WhatsApp</a>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;">
+              <span style="font-family:var(--fs);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--w2);">📍 Bethania</span>
+              <a href="https://wa.me/50764443786?text=Hola%20Instaservice%20Bethania%2C%20quiero%20hacer%20una%20consulta." target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#25D366;color:white;font-family:var(--fs);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:6px 14px;text-decoration:none;border-radius:2px;transition:background .2s;white-space:nowrap;" onmouseover="this.style.background='#1ebe5a'" onmouseout="this.style.background='#25D366'">💬 WhatsApp</a>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;">
+              <span style="font-family:var(--fs);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--w2);">📍 Chanis</span>
+              <a href="https://wa.me/5072214903?text=Hola%20Instaservice%20Chanis%2C%20quiero%20hacer%20una%20consulta." target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#25D366;color:white;font-family:var(--fs);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:6px 14px;text-decoration:none;border-radius:2px;transition:background .2s;white-space:nowrap;" onmouseover="this.style.background='#1ebe5a'" onmouseout="this.style.background='#25D366'">💬 WhatsApp</a>
+            </div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-ico">📧</div>
+          <div class="contact-detail-text"><strong>Email</strong><a href="mailto:ventas@instafrenos.com">ventas@instafrenos.com</a></div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-ico">📱</div>
+          <div class="contact-detail-text"><strong>Instagram</strong><a href="https://instagram.com/instaservicetaller" target="_blank">@instaservicetaller</a></div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-ico">🌐</div>
+          <div class="contact-detail-text"><strong>Links</strong><a href="https://beacons.ai/instaservice" target="_blank">beacons.ai/instaservice</a></div>
+        </div>
+        <div class="contact-social" style="margin-top:2rem;">
+          <a href="https://instagram.com/instaservicetaller" target="_blank" class="csoc">📸 Instagram</a>
+          <a href="https://www.facebook.com/InstaserviceTaller/" target="_blank" class="csoc">Facebook</a>
+          <a href="https://beacons.ai/instaservice" target="_blank" class="csoc">Beacons</a>
+        </div>
+      </div>
+      <div class="rv" style="transition-delay:.15s;">
+        <div style="background:var(--bg3);border:1px solid rgba(255,255,255,.045);padding:2rem;margin-bottom:1.5rem;">
+          <div style="font-family:var(--fh);font-size:32px;letter-spacing:1px;margin-bottom:.75rem;color:var(--r);">Sin Cita Previa</div>
+          <p style="font-size:14px;color:var(--w2);line-height:1.8;">Llegá a cualquiera de nuestras 3 sucursales directamente. Nuestro equipo te recibirá y diagnosticará tu vehículo de forma gratuita antes de comenzar cualquier trabajo.</p>
+        </div>
+        <div style="background:rgba(216,36,42,.07);border:1px solid rgba(216,36,42,.2);padding:2rem;">
+          <div style="font-family:var(--fh);font-size:32px;letter-spacing:1px;margin-bottom:.75rem;">Horario de Atención</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div><strong style="display:block;font-family:var(--fs);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Lunes – Sábado</strong><span style="font-size:15px;color:var(--r);font-family:var(--fh);font-size:22px;">8:00 AM – 5:00 PM</span></div>
+            <div><strong style="display:block;font-family:var(--fs);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Domingo</strong><span style="font-size:14px;color:var(--w3);">Cerrado</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUCURSALES CON MAPA -->
+    <div class="lbl rv" style="margin-bottom:2.5rem;">Nuestras Ubicaciones</div>
+    <div class="branches-grid">
+
+      <!-- COROZAL -->
+      <div class="branch-card rv">
+        <div class="branch-inner">
+          <div class="branch-info">
+            <div class="branch-num">01</div>
+            <div class="branch-name">Coro<b>zal</b></div>
+            <div class="branch-tag">Sede Principal</div>
+            <div class="branch-details">
+              <div class="branch-detail"><span class="branch-detail-icon">📍</span><span>Av. Omar Torrijos Herrera, Corozal / Miraflores, Ciudad de Panamá</span></div>
+              <div class="branch-detail"><span class="branch-detail-icon">📞</span><span><a href="tel:3176472" style="color:var(--r);text-decoration:none;">317-6472</a></span></div>
+              <div class="branch-detail"><span class="branch-detail-icon">⭐</span><span>4.4 / 5 — 213 reseñas en Google</span></div>
+            </div>
+            <div class="branch-hours">Lun–Sáb · 8:00 AM – 5:00 PM</div>
+            <div class="branch-btns">
+              <a href="https://www.google.com/maps/place/Taller+de+Mec%C3%A1nica+Instafrenos+Miraflores/@8.9877651,-79.5773059,17z" target="_blank" class="branch-btn branch-btn-red">📍 Abrir en Maps</a>
+              <a href="tel:3176472" class="branch-btn branch-btn-outline">📞 Llamar</a>
+              <a href="https://wa.me/5072214903?text=Hola%20Instaservice%20Corozal%2C%20quiero%20consultar%20sobre%20un%20servicio." target="_blank" class="branch-btn branch-btn-outline" style="border-color:#25D366;color:#25D366;">💬 WhatsApp</a>
+              <a href="https://www.google.com/maps/place/Taller+de+Mec%C3%A1nica+Instafrenos+Miraflores/@8.9877651,-79.5773059" target="_blank" class="branch-btn branch-btn-outline">⭐ Reseñas</a>
+            </div>
+          </div>
+          <div class="branch-map">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3940.5!2d-79.5773059!3d8.9877651!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fabae7735149246%3A0xc3b3a72d36b92b25!2sTaller%20de%20Mec%C3%A1nica%20Instafrenos%20Miraflores!5e0!3m2!1ses!2spa!4v1700000000000" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- BETHANIA -->
+      <div class="branch-card rv" style="transition-delay:.15s">
+        <div class="branch-inner">
+          <div class="branch-info">
+            <div class="branch-num">02</div>
+            <div class="branch-name">Betha<b>nia</b></div>
+            <div class="branch-tag">Sucursal</div>
+            <div class="branch-details">
+              <div class="branch-detail"><span class="branch-detail-icon">📍</span><span>Ave. Ricardo J. Alfaro (Tumba Muerto), Bethania, Ciudad de Panamá. Junto a estación PUMA.</span></div>
+              <div class="branch-detail"><span class="branch-detail-icon">📞</span><span><a href="tel:3884401" style="color:var(--r);text-decoration:none;">388-4401</a></span></div>
+              <div class="branch-detail"><span class="branch-detail-icon">⭐</span><span>4.2 / 5 — 149 reseñas en Google</span></div>
+            </div>
+            <div class="branch-hours">Lun–Sáb · 8:00 AM – 5:00 PM</div>
+            <div class="branch-btns">
+              <a href="https://www.google.com/maps/place/Taller+de+Mec%C3%A1nica+Instafrenos+Bethania/@9.0116644,-79.5261029,17z" target="_blank" class="branch-btn branch-btn-red">📍 Abrir en Maps</a>
+              <a href="tel:3884401" class="branch-btn branch-btn-outline">📞 Llamar</a>
+              <a href="https://wa.me/50764443786?text=Hola%20Instaservice%20Bethania%2C%20quiero%20consultar%20sobre%20un%20servicio." target="_blank" class="branch-btn branch-btn-outline" style="border-color:#25D366;color:#25D366;">💬 WhatsApp</a>
+              <a href="https://www.google.com/maps/place/Taller+de+Mec%C3%A1nica+Instafrenos+Bethania/@9.0116644,-79.5261029" target="_blank" class="branch-btn branch-btn-outline">⭐ Reseñas</a>
+            </div>
+          </div>
+          <div class="branch-map">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3939.5!2d-79.5261029!3d9.0116644!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8facaa8a514e2a8f%3A0x7ce5d110e191e19d!2sTaller%20de%20Mec%C3%A1nica%20Instafrenos%20Bethania!5e0!3m2!1ses!2spa!4v1700000000001" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHANIS -->
+      <div class="branch-card rv" style="transition-delay:.3s">
+        <div class="branch-inner">
+          <div class="branch-info">
+            <div class="branch-num">03</div>
+            <div class="branch-name">Cha<b>nis</b></div>
+            <div class="branch-tag">Sucursal</div>
+            <div class="branch-details">
+              <div class="branch-detail"><span class="branch-detail-icon">📍</span><span>Chanis / El Dorado, Ciudad de Panamá</span></div>
+              <div class="branch-detail"><span class="branch-detail-icon">📞</span><span><a href="tel:2214903" style="color:var(--r);text-decoration:none;">221-4903</a></span></div>
+              <div class="branch-detail"><span class="branch-detail-icon">⭐</span><span>4.4 / 5 — 132 reseñas en Google</span></div>
+            </div>
+            <div class="branch-hours">Lun–Sáb · 8:00 AM – 5:00 PM</div>
+            <div class="branch-btns">
+              <a href="https://www.google.com/maps/place/Taller+de+Mec%C3%A1nica+Instafrenos+Chanis/@9.0176361,-79.4848272,17z" target="_blank" class="branch-btn branch-btn-red">📍 Abrir en Maps</a>
+              <a href="tel:2214903" class="branch-btn branch-btn-outline">📞 Llamar</a>
+              <a href="https://wa.me/5072214903?text=Hola%20Instaservice%20Chanis%2C%20quiero%20consultar%20sobre%20un%20servicio." target="_blank" class="branch-btn branch-btn-outline" style="border-color:#25D366;color:#25D366;">💬 WhatsApp</a>
+              <a href="https://www.google.com/maps/place/Taller+de+Mec%C3%A1nica+Instafrenos+Chanis/@9.0176361,-79.4848272" target="_blank" class="branch-btn branch-btn-outline">⭐ Reseñas</a>
+            </div>
+          </div>
+          <div class="branch-map">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3939.3!2d-79.4848272!3d9.0176361!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8facea9ef00000001%3A0xb82e391f1fca5384!2sTaller%20de%20Mec%C3%A1nica%20Instafrenos%20Chanis!5e0!3m2!1ses!2spa!4v1700000000002" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer style="background:#050505;border-top:1px solid rgba(255,255,255,.04);padding:36px 6%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+    <p style="font-size:12px;color:rgba(255,255,255,.2);">© 2025 Instaservice Panamá. Todos los derechos reservados.</p>
+    <div style="display:flex;gap:1.5rem;">
+      <a href="https://instagram.com/instaservicetaller" target="_blank" style="font-family:var(--fs);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.2);text-decoration:none;">Instagram</a>
+      <a href="tel:64443786" style="font-family:var(--fs);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.2);text-decoration:none;">6444-3786</a>
+    </div>
+  </footer>
+</div>
+
+<script>
+// NAV SCROLL - hide on scroll down, show on scroll up
+// ===== COMPRA / VENTA =====
+let cvMode = 'comprar';
+function setCvMode(mode){
+  cvMode = mode;
+  document.getElementById('btn-comprar').classList.toggle('active', mode==='comprar');
+  document.getElementById('btn-vender').classList.toggle('active', mode==='vender');
+  if(mode==='vender'){
+    document.getElementById('cvl-marca').textContent = 'Marca del auto';
+    document.getElementById('cvl-anio').textContent = 'Año del auto';
+    document.getElementById('cvl-condicion').textContent = 'Condición del auto';
+    document.getElementById('cvl-msg').textContent = 'Descripción del vehículo (km, estado, precio pedido)';
+    document.getElementById('cv-presupuesto').closest('.cv-field').style.display='none';
+    document.getElementById('cv-marca').placeholder='Ej: Toyota, Honda, Nissan…';
+    document.getElementById('cv-anio').placeholder='Ej: 2016';
+    document.getElementById('cv-submit-txt').textContent='📩 Quiero Vender Mi Auto';
+  } else {
+    document.getElementById('cvl-marca').textContent = 'Marca que buscás';
+    document.getElementById('cvl-anio').textContent = 'Año aproximado';
+    document.getElementById('cvl-condicion').textContent = 'Condición del auto';
+    document.getElementById('cvl-msg').textContent = 'Detalle adicional';
+    document.getElementById('cv-presupuesto').closest('.cv-field').style.display='';
+    document.getElementById('cv-marca').placeholder='Ej: Toyota, Honda, Kia…';
+    document.getElementById('cv-anio').placeholder='Ej: 2018–2022';
+    document.getElementById('cv-submit-txt').textContent='📩 Enviar Consulta';
+  }
+}
+function submitCvForm(){
+  const nombre = document.getElementById('cv-nombre').value.trim();
+  const tel = document.getElementById('cv-telefono').value.trim();
+  
+  // Clear previous errors
+  document.querySelectorAll('.cv-field-error').forEach(e => e.remove());
+  document.querySelectorAll('.cv-input.error, .cv-select.error').forEach(e => e.classList.remove('error'));
+  
+  let hasError = false;
+  if(!nombre){
+    const f = document.getElementById('cv-nombre').closest('.cv-field');
+    document.getElementById('cv-nombre').classList.add('error');
+    const err = document.createElement('span');
+    err.className = 'cv-field-error';
+    err.textContent = 'Campo obligatorio';
+    f.appendChild(err);
+    hasError = true;
+  }
+  if(!tel){
+    const f = document.getElementById('cv-telefono').closest('.cv-field');
+    document.getElementById('cv-telefono').classList.add('error');
+    const err = document.createElement('span');
+    err.className = 'cv-field-error';
+    err.textContent = 'Campo obligatorio';
+    f.appendChild(err);
+    hasError = true;
+  }
+  if(hasError) return;
+
+  const marca = document.getElementById('cv-marca').value.trim();
+  const anio = document.getElementById('cv-anio').value.trim();
+  const presupuesto = document.getElementById('cv-presupuesto').value;
+  const condicion = document.getElementById('cv-condicion').value;
+  const mensaje = document.getElementById('cv-mensaje').value.trim();
+  const tipo = cvMode === 'comprar' ? 'COMPRAR un auto' : 'VENDER mi auto';
+  let txt = `Hola Instaservice! Quiero ${tipo}.\n\n👤 Nombre: ${nombre}\n📞 Tel: ${tel}`;
+  if(marca) txt += `\n🚗 Marca: ${marca}`;
+  if(anio) txt += `\n📅 Año: ${anio}`;
+  if(cvMode==='comprar' && presupuesto) txt += `\n💰 Presupuesto: ${presupuesto}`;
+  if(condicion) txt += `\n✅ Condición: ${condicion}`;
+  if(mensaje) txt += `\n💬 Detalle: ${mensaje}`;
+  const url = `https://wa.me/50764443786?text=${encodeURIComponent(txt)}`;
+  window.open(url, '_blank');
+  document.getElementById('cv-form-inner').style.display='none';
+  document.getElementById('cv-success').style.display='block';
+}
+</script>
+
+<!-- ===================== CHATBOT ===================== -->
+<style>
+/* CHAT BUBBLE */
+#chat-bubble{position:fixed;bottom:calc(28px + var(--safe-bottom));right:28px;z-index:2000;width:60px;height:60px;background:var(--r);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 28px rgba(216,36,42,.5);transition:transform .25s,box-shadow .25s;}
+#chat-bubble:hover{transform:scale(1.1);box-shadow:0 6px 36px rgba(216,36,42,.65);}
+#chat-bubble svg{width:26px;height:26px;fill:white;transition:opacity .2s,transform .2s;}
+#chat-bubble .ico-chat{position:absolute;}
+#chat-bubble .ico-close{position:absolute;opacity:0;transform:rotate(-90deg);}
+#chat-bubble.open .ico-chat{opacity:0;transform:rotate(90deg);}
+#chat-bubble.open .ico-close{opacity:1;transform:rotate(0deg);}
+#chat-bubble-ping{position:absolute;top:-2px;right:-2px;width:15px;height:15px;background:var(--rl);border-radius:50%;animation:ping 2s infinite;}
+@keyframes ping{0%,100%{box-shadow:0 0 0 0 rgba(255,59,66,.6);}60%{box-shadow:0 0 0 9px rgba(255,59,66,0);}}
+
+/* CHAT WINDOW */
+#chat-window{position:fixed;bottom:calc(104px + var(--safe-bottom));right:28px;z-index:1999;width:400px;max-width:calc(100vw - 36px);background:#0d0d0d;border:1px solid rgba(255,255,255,.07);border-top:2px solid var(--r);box-shadow:0 24px 70px rgba(0,0,0,.75);display:flex;flex-direction:column;opacity:0;visibility:hidden;transform:translateY(18px) scale(.97);transform-origin:bottom right;transition:opacity .3s cubic-bezier(.16,1,.3,1),transform .35s cubic-bezier(.16,1,.3,1),visibility .3s;border-radius:2px;max-height:calc(100vh - 130px);}
+#chat-window.open{opacity:1;visibility:visible;transform:translateY(0) scale(1);}
+
+/* HEADER */
+#chat-header{padding:13px 18px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:12px;background:#111;flex-shrink:0;}
+.chat-avatar{width:38px;height:38px;background:var(--r);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.chat-hinfo{flex:1;}
+.chat-hinfo strong{display:block;font-family:var(--fs);font-size:14px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;}
+.chat-hinfo span{font-size:11px;color:rgba(255,255,255,.4);display:flex;align-items:center;gap:5px;}
+.chat-hinfo span::before{content:'';width:6px;height:6px;background:#22c55e;border-radius:50%;display:inline-block;}
+.chat-tabs{display:flex;gap:2px;margin-left:auto;}
+.chat-tab{font-family:var(--fs);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 10px;border:1px solid rgba(255,255,255,.08);background:transparent;color:rgba(255,255,255,.3);cursor:pointer;transition:all .2s;}
+.chat-tab.active{background:var(--r);border-color:var(--r);color:white;}
+.chat-tab:hover:not(.active){border-color:rgba(216,36,42,.3);color:rgba(216,36,42,.8);}
+
+/* PANELS */
+.chat-panel{display:none;flex-direction:column;flex:1;overflow:hidden;}
+.chat-panel.active{display:flex;}
+
+/* MESSAGES */
+#chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth;min-height:200px;max-height:320px;}
+#chat-messages::-webkit-scrollbar{width:3px;}
+#chat-messages::-webkit-scrollbar-track{background:transparent;}
+#chat-messages::-webkit-scrollbar-thumb{background:rgba(216,36,42,.3);border-radius:2px;}
+.chat-msg{display:flex;flex-direction:column;max-width:84%;}
+.chat-msg.bot{align-self:flex-start;}
+.chat-msg.user{align-self:flex-end;}
+.chat-msg-bubble{padding:10px 14px;font-size:13px;line-height:1.65;border-radius:2px;}
+.chat-msg.bot .chat-msg-bubble{background:#1c1c1c;border:1px solid rgba(255,255,255,.06);color:rgba(255,255,255,.88);}
+.chat-msg.user .chat-msg-bubble{background:var(--r);color:white;}
+.chat-msg-time{font-size:10px;color:rgba(255,255,255,.18);margin-top:3px;font-family:var(--fs);letter-spacing:1px;}
+.chat-msg.user .chat-msg-time{text-align:right;}
+
+/* TYPING */
+.chat-typing{display:flex;gap:4px;padding:12px 14px;background:#1c1c1c;border:1px solid rgba(255,255,255,.06);align-self:flex-start;width:fit-content;}
+.chat-typing span{width:6px;height:6px;background:rgba(255,255,255,.3);border-radius:50%;animation:typing 1.2s infinite;}
+.chat-typing span:nth-child(2){animation-delay:.2s;}
+.chat-typing span:nth-child(3){animation-delay:.4s;}
+@keyframes typing{0%,60%,100%{transform:translateY(0);opacity:.3;}30%{transform:translateY(-5px);opacity:1;}}
+
+/* QUICK BUTTONS */
+#chat-quick{padding:8px 14px 10px;display:flex;flex-wrap:wrap;gap:5px;border-top:1px solid rgba(255,255,255,.04);flex-shrink:0;}
+.chat-qbtn{font-family:var(--fs);font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border:1px solid rgba(216,36,42,.28);color:rgba(216,36,42,.8);background:transparent;cursor:pointer;transition:background .2s,color .2s;white-space:nowrap;border-radius:2px;}
+.chat-qbtn:hover{background:var(--r);color:white;border-color:var(--r);}
+
+/* INPUT */
+#chat-input-row{padding:11px 14px;border-top:1px solid rgba(255,255,255,.06);display:flex;gap:8px;align-items:flex-end;background:#111;flex-shrink:0;}
+#chat-input{flex:1;background:#1c1c1c;border:1px solid rgba(255,255,255,.08);color:white;font-family:var(--fb);font-size:16px;padding:9px 12px;resize:none;outline:none;line-height:1.5;max-height:80px;transition:border-color .2s;border-radius:2px;}
+#chat-input:focus{border-color:rgba(216,36,42,.4);}
+#chat-input::placeholder{color:rgba(255,255,255,.22);}
+#chat-send{width:36px;height:36px;background:var(--r);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s;border-radius:2px;}
+#chat-send:hover{background:var(--rl);}
+#chat-send svg{width:15px;height:15px;fill:white;}
+#chat-send:disabled{background:rgba(216,36,42,.25);cursor:not-allowed;}
+
+/* SUCURSALES PANEL */
+#panel-suc{overflow-y:auto;padding:12px;}
+#panel-suc::-webkit-scrollbar{width:3px;}
+#panel-suc::-webkit-scrollbar-thumb{background:rgba(216,36,42,.3);}
+.suc-card{background:#1c1c1c;border:1px solid rgba(255,255,255,.06);padding:14px 16px;margin-bottom:10px;transition:border-color .25s;}
+.suc-card:hover{border-color:rgba(216,36,42,.25);}
+.suc-card-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.suc-num{font-family:var(--fh);font-size:26px;color:rgba(216,36,42,.2);line-height:1;min-width:32px;}
+.suc-name{font-family:var(--fh);font-size:20px;letter-spacing:1px;line-height:1;}
+.suc-name b{color:var(--r);}
+.suc-detail{font-size:12px;color:rgba(255,255,255,.5);margin-bottom:4px;display:flex;align-items:flex-start;gap:7px;line-height:1.4;}
+.suc-detail strong{color:rgba(255,255,255,.75);font-weight:600;min-width:16px;}
+.suc-actions{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap;}
+.suc-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;font-family:var(--fs);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;transition:all .2s;border-radius:2px;cursor:pointer;}
+.suc-btn-red{background:var(--r);color:white;border:1px solid var(--r);}
+.suc-btn-red:hover{background:var(--rl);border-color:var(--rl);}
+.suc-btn-out{border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);}
+.suc-btn-out:hover{border-color:rgba(216,36,42,.4);color:var(--r);}
+.suc-btn-wa{background:#25D366;color:white;border:1px solid #25D366;}
+.suc-btn-wa:hover{background:#1ebe5a;border-color:#1ebe5a;}
+
+/* FAQ PANEL */
+#panel-faq{overflow-y:auto;padding:12px;}
+#panel-faq::-webkit-scrollbar{width:3px;}
+#panel-faq::-webkit-scrollbar-thumb{background:rgba(216,36,42,.3);}
+.faq-cat{font-family:var(--fs);font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--r);padding:6px 4px 4px;margin-bottom:4px;border-bottom:1px solid rgba(216,36,42,.15);}
+.faq-item{padding:10px 12px;background:#1c1c1c;border:1px solid rgba(255,255,255,.05);margin-bottom:5px;cursor:pointer;transition:border-color .2s,background .2s;}
+.faq-item:hover{border-color:rgba(216,36,42,.25);background:#222;}
+.faq-q{font-family:var(--fs);font-size:12px;font-weight:700;letter-spacing:.3px;color:rgba(255,255,255,.85);display:flex;justify-content:space-between;align-items:center;gap:8px;}
+.faq-q::after{content:'＋';color:rgba(216,36,42,.6);font-size:14px;flex-shrink:0;transition:transform .25s;}
+.faq-item.open .faq-q::after{transform:rotate(45deg);}
+.faq-a{font-size:12px;color:rgba(255,255,255,.55);line-height:1.65;max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.16,1,.3,1),padding .25s;}
+.faq-item.open .faq-a{max-height:300px;padding-top:8px;}
+</style>
+<style>
+/* Chat: bottom sheet on mobile */
+@media(max-width:480px){
+  #chat-bubble{bottom:calc(20px + var(--safe-bottom));right:20px;width:56px;height:56px;}
+
+  /* Overlay solo como fondo semitransparente, no ocupa pantalla completa */
+  #chat-mobile-overlay{
+    display:none;
+    position:fixed;
+    top:0; left:0; right:0; bottom:0;
+    z-index:1998;
+    background:rgba(0,0,0,.45);
+    backdrop-filter:blur(2px);
+  }
+  #chat-mobile-overlay.open{display:block;}
+
+  /* chat-window como bottom sheet: flota desde abajo, ~78% de altura */
+  #chat-window{
+    position:fixed !important;
+    bottom:calc(84px + var(--safe-bottom)) !important;
+    left:10px !important;
+    right:10px !important;
+    top:auto !important;
+    width:auto !important;
+    max-width:100% !important;
+    height:76vh !important;
+    max-height:76vh !important;
+    border-radius:12px !important;
+    border:1px solid rgba(255,255,255,.08) !important;
+    border-top:2px solid var(--r) !important;
+    box-shadow:0 -8px 40px rgba(0,0,0,.6) !important;
+    display:grid !important;
+    grid-template-rows:auto 1fr auto;
+    overflow:hidden !important;
+  }
+  #chat-window.open{transform:translateY(0) scale(1);}
+
+  /* header ocupa fila 1 */
+  #chat-header{grid-row:1;}
+
+  /* panel-chat ocupa fila 2+3 — también grid interno */
+  .chat-panel{
+    grid-row:2 / span 2 !important;
+    display:none !important;
+    grid-template-rows:1fr auto auto !important;
+    overflow:hidden !important;
+    min-height:0 !important;
+  }
+  .chat-panel.active{display:grid !important;}
+
+  /* panel-suc y panel-faq: scroll simple, sin grid interno */
+  #panel-suc.active,
+  #panel-faq.active{
+    display:block !important;
+    overflow-y:auto !important;
+    -webkit-overflow-scrolling:touch !important;
+    grid-template-rows:none !important;
+  }
+
+  /* mensajes: fila 1 del panel — crece y scrollea */
+  #chat-messages{
+    grid-row:1;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    max-height:none;
+    min-height:0;
+    padding:12px;
+  }
+
+  /* botones rápidos: fila 2 del panel */
+  #chat-quick{
+    grid-row:2;
+    overflow-x:auto;
+    flex-wrap:nowrap;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  /* INPUT: fila 3 del panel — NUNCA se mueve */
+  #chat-input-row{
+    grid-row:3;
+    position:relative;
+    z-index:5;
+  }
+
+  #chat-input{font-size:16px;}
+  .cv-input,.cv-select,.cv-textarea{font-size:16px;}
+}
+</style>
+
+<!-- Bubble -->
+<button id="chat-bubble" onclick="toggleChat()" aria-label="Abrir chat de Instaservice">
+  <div id="chat-bubble-ping"></div>
+  <svg class="ico-chat" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 10H6v-2h12v2zm0-3H6V7h12v2z"/></svg>
+  <svg class="ico-close" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+</button>
+
+<!-- Window -->
+<div id="chat-mobile-overlay">
+<div id="chat-window">
+  <!-- Header con tabs -->
+  <div id="chat-header">
+    <div class="chat-avatar">🔧</div>
+    <div class="chat-hinfo">
+      <strong>Instaservice IA</strong>
+      <span>En línea · Responde al instante</span>
+    </div>
+    <div class="chat-tabs">
+      <button class="chat-tab active" onclick="switchTab('chat')">Chat</button>
+      <button class="chat-tab" onclick="switchTab('suc')">📍</button>
+      <button class="chat-tab" onclick="switchTab('faq')">FAQ</button>
+    </div>
+  </div>
+
+  <!-- PANEL: CHAT -->
+  <div class="chat-panel active" id="panel-chat">
+    <div id="chat-messages"></div>
+    <div id="chat-quick">
+      <button class="chat-qbtn" onclick="quickSend('¿Cuánto cuesta un cambio de aceite?')">💧 Cambio de aceite</button>
+      <button class="chat-qbtn" onclick="quickSend('¿Qué incluye el plan de mantenimiento?')">📋 Planes mant.</button>
+      <button class="chat-qbtn" onclick="quickSend('Mi carro vibra mucho, ¿qué puede ser?')">⚠️ Diagnóstico</button>
+      <button class="chat-qbtn" onclick="quickSend('¿Hacen trámites vehiculares?')">📄 Trámites</button>
+      <button class="chat-qbtn" onclick="quickSend('¿Cuáles son los horarios de atención?')">🕐 Horarios</button>
+      <button class="chat-qbtn" onclick="quickSend('¿Necesito cita previa para ir?')">✅ ¿Cita previa?</button>
+      <button class="chat-qbtn" onclick="quickSend('Quiero sacar un turno por WhatsApp')" style="border-color:#25D366;color:#25D366;">💬 Turno por WhatsApp</button>
+    </div>
+    <div id="chat-input-row">
+      <textarea id="chat-input" rows="1" placeholder="Escribí tu consulta..." onkeydown="chatKeyDown(event)" oninput="autoResize(this)"></textarea>
+      <button id="chat-send" onclick="sendMessage()" aria-label="Enviar">
+        <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- PANEL: SUCURSALES -->
+  <div class="chat-panel" id="panel-suc">
+    <!-- COROZAL -->
+    <div class="suc-card">
+      <div class="suc-card-head">
+        <div class="suc-num">01</div>
+        <div class="suc-name">INSTA<b>FRENOS</b> COROZAL</div>
+      </div>
+      <div class="suc-detail"><strong>📍</strong> Av. Omar Torrijos Herrera, Corozal, Panamá</div>
+      <div class="suc-detail"><strong>📞</strong> <a href="tel:2214903" style="color:var(--r);text-decoration:none;">221-4903</a></div>
+      <div class="suc-detail"><strong>🕐</strong> Lunes a Sábado · 8:00am – 5:00pm</div>
+      <div class="suc-detail"><strong>🚗</strong> Mecánica general, frenos, A/C, alineación, trámites</div>
+      <div class="suc-actions">
+        <a href="tel:2214903" class="suc-btn suc-btn-red">📞 Llamar</a>
+        <a href="https://wa.me/5072214903?text=Hola%20Instaservice%20Corozal%2C%20quiero%20consultar%20sobre%20un%20servicio%20para%20mi%20veh%C3%ADculo." target="_blank" class="suc-btn suc-btn-wa">💬 WhatsApp</a>
+        <a href="https://www.google.com/maps/search/Instafrenos+Corozal+Panama" target="_blank" class="suc-btn suc-btn-out">📍 Google Maps</a>
+      </div>
+    </div>
+    <!-- BETHANIA -->
+    <div class="suc-card">
+      <div class="suc-card-head">
+        <div class="suc-num">02</div>
+        <div class="suc-name">INSTA<b>FRENOS</b> BETHANIA</div>
+      </div>
+      <div class="suc-detail"><strong>📍</strong> Ave. Ricardo J. Alfaro, Bethania, Panamá</div>
+      <div class="suc-detail"><strong>📞</strong> <a href="tel:64443786" style="color:var(--r);text-decoration:none;">6444-3786</a></div>
+      <div class="suc-detail"><strong>🕐</strong> Lunes a Sábado · 8:00am – 5:00pm</div>
+      <div class="suc-detail"><strong>🚗</strong> Mecánica general, frenos, suspensión, electromecánica</div>
+      <div class="suc-actions">
+        <a href="tel:64443786" class="suc-btn suc-btn-red">📞 Llamar</a>
+        <a href="https://wa.me/50764443786?text=Hola%20Instaservice%20Bethania%2C%20quiero%20consultar%20sobre%20un%20servicio%20para%20mi%20veh%C3%ADculo." target="_blank" class="suc-btn suc-btn-wa">💬 WhatsApp</a>
+        <a href="https://www.google.com/maps/search/Instafrenos+Bethania+Panama" target="_blank" class="suc-btn suc-btn-out">📍 Google Maps</a>
+      </div>
+    </div>
+    <!-- CHANIS -->
+    <div class="suc-card">
+      <div class="suc-card-head">
+        <div class="suc-num">03</div>
+        <div class="suc-name">INSTA<b>FRENOS</b> CHANIS</div>
+      </div>
+      <div class="suc-detail"><strong>📍</strong> Calle 75 Este, Chanis, Panamá</div>
+      <div class="suc-detail"><strong>📞</strong> <a href="tel:2214903" style="color:var(--r);text-decoration:none;">221-4903</a></div>
+      <div class="suc-detail"><strong>🕐</strong> Lunes a Sábado · 8:00am – 5:00pm</div>
+      <div class="suc-detail"><strong>🚗</strong> Mecánica general, frenos, llantas, diagnóstico electrónico</div>
+      <div class="suc-actions">
+        <a href="tel:2214903" class="suc-btn suc-btn-red">📞 Llamar</a>
+        <a href="https://wa.me/5072214903?text=Hola%20Instaservice%20Chanis%2C%20quiero%20consultar%20sobre%20un%20servicio%20para%20mi%20veh%C3%ADculo." target="_blank" class="suc-btn suc-btn-wa">💬 WhatsApp</a>
+        <a href="https://www.google.com/maps/place/Taller+de+Mec%C3%A1nica+Instafrenos+Chanis/@9.0176361,-79.4848272,17z" target="_blank" class="suc-btn suc-btn-out">📍 Google Maps</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL: FAQ -->
+  <div class="chat-panel" id="panel-faq">
+    <div class="faq-cat">🔧 Mantenimiento</div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">¿Cada cuánto debo cambiar el aceite?</div>
+      <div class="faq-a">Depende del tipo de aceite y tu vehículo. Con aceite convencional, cada 3,000–5,000 km. Con aceite sintético, cada 7,500–10,000 km. Lo más importante es revisar el manual de tu carro. En Instaservice te orientamos según tu modelo y uso.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">¿Qué incluye un servicio de mantenimiento completo?</div>
+      <div class="faq-a">Nuestro plan full incluye: cambio de aceite y filtro, filtro de aire, filtro de combustible, revisión de frenos, revisión de niveles de fluidos (refrigerante, frenos, dirección, transmisión), inspección de correas, revisión de batería y bujías, y diagnóstico general del vehículo.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">¿Cuándo debo cambiar las pastillas de freno?</div>
+      <div class="faq-a">Las pastillas deben cambiarse cuando el grosor baja de 3mm, o si escuchás un chirrido metálico al frenar, sentís vibración en el pedal, o el carro jala hacia un lado al frenar. En promedio duran entre 30,000 y 70,000 km según el estilo de manejo. No esperes más, los frenos son seguridad.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">¿Cada cuánto debo alinear y balancear?</div>
+      <div class="faq-a">Recomendamos alineación cada 10,000–15,000 km o al cambiar llantas, después de un golpe fuerte o si notás que el carro jala hacia un lado. El balanceo idealmente cada vez que alineás, o si sentís vibración en el volante a cierta velocidad (generalmente entre 80–120 km/h).</div>
+    </div>
+
+    <div class="faq-cat">❄️ Aire Acondicionado</div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">¿Por qué el A/C de mi carro no enfría bien?</div>
+      <div class="faq-a">Las causas más comunes son: gas refrigerante bajo (fuga o pérdida normal), filtro de cabina tapado, compresor desgastado, condensador sucio o evaporador con hongos. En Instaservice hacemos diagnóstico de A/C y recarga de gas. No lo dejes para después en el clima panameño.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">¿Cada cuánto hay que recargar el gas del A/C?</div>
+      <div class="faq-a">Un sistema de A/C bien sellado puede durar varios años sin recarga. Si perdés gas frecuentemente, hay una fuga que hay que encontrar y sellar. También recomendamos cambiar el filtro de cabina cada 15,000 km para que el aire fluya correctamente y no haya malos olores.</div>
+    </div>
+
+    <div class="faq-cat">⚙️ Diagnóstico y Problemas</div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Se me prendió la luz del motor (check engine), ¿qué hago?</div>
+      <div class="faq-a">No entres en pánico, pero tampoco lo ignores. La luz puede ser desde algo menor como el tapón del tanque mal puesto, hasta una falla en el sistema de emisiones, sensores de oxígeno, catalizador o problemas de encendido. Hacemos diagnóstico electrónico con scanner para leer los códigos y darte una respuesta exacta desde $15.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Mi carro vibra al arrancar o al frenar, ¿qué puede ser?</div>
+      <div class="faq-a">Vibración al arrancar: posibles problemas en soportes del motor, bujías, o inyectores. Vibración al frenar: generalmente discos de freno deformados (warping) o pastillas desgastadas de forma irregular. Vibración a alta velocidad: desbalanceo de ruedas o problemas de alineación. Vení a que lo revisemos antes de que se complique.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">¿Por qué mi carro consume mucho combustible?</div>
+      <div class="faq-a">Varias causas: filtro de aire sucio (impide combustión eficiente), bujías desgastadas, sensores de oxígeno o MAF fallando, llantas mal infladas (aumentan la resistencia), sistema de inyección sucio, o simplemente el estilo de manejo. Un servicio de mantenimiento completo puede mejorar el consumo notablemente.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Mi carro hace un ruido raro al girar, ¿qué es?</div>
+      <div class="faq-a">Si es un traqueteo o clic al girar, probablemente es la junta homocinética (CV joint) desgastada — es urgente reemplazarla. Si es un zumbido, puede ser el rodamiento de rueda. Si chirrido al doblar, puede ser la dirección baja de fluido o una correa. Pasá por cualquier sucursal y lo diagnosticamos gratis en minutos.</div>
+    </div>
+
+    <div class="faq-cat">📄 Trámites Vehiculares</div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">¿Qué trámites vehiculares hacen?</div>
+      <div class="faq-a">En Instaservice gestionamos: RTV (Revisión Técnica Vehicular), traspaso de vehículo, inscripción de vehículo nuevo, renovación de placa, certificado de propiedad y otros trámites del ATTT. Te ahorramos filas y tiempo. Consultá disponibilidad en tu sucursal más cercana.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">¿Qué necesito para pasar la revisión técnica (RTV)?</div>
+      <div class="faq-a">Tu vehículo debe tener luces, frenos, bocina, limpiaparabrisas y sistema de emisiones en buen estado. En Instaservice podemos hacer una pre-inspección para identificar qué hay que corregir antes de ir a la RTV, aumentando tus chances de aprobar al primer intento.</div>
+    </div>
+
+    <div class="faq-cat">💰 Precios y Atención</div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">¿Necesito cita previa para ir?</div>
+      <div class="faq-a">No. En Instaservice atendemos sin cita previa de lunes a sábado de 8am a 5pm. Llegás, te atendemos. Para trabajos grandes o que requieren más tiempo como chapistería o reparaciones mayores, se recomienda llamar primero para coordinar.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">¿Aceptan todas las marcas de autos?</div>
+      <div class="faq-a">Sí. Atendemos Toyota, Honda, Hyundai, Kia, Nissan, Mazda, Ford, Chevrolet, Mitsubishi, Suzuki, Subaru, Jeep, RAM, y prácticamente cualquier marca que circule en Panamá. Nuestros técnicos tienen experiencia en autos tanto japoneses como americanos y coreanos.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">¿Ofrecen garantía por los trabajos realizados?</div>
+      <div class="faq-a">Sí, los trabajos realizados en Instaservice tienen garantía. El período varía según el tipo de servicio y las piezas utilizadas. Consultá en la sucursal los términos específicos para cada trabajo. Usamos repuestos de calidad para garantizar durabilidad.</div>
+    </div>
+  </div>
+</div><!-- end chat-window -->
+</div><!-- end chat-mobile-overlay -->
+
+<script>
+/* ================================================================
+   INSTASERVICE — PREMIUM HERO ENGINE
+   Particles · Mouse glow · Counter animations · Reveal on scroll
+   ================================================================ */
+
+// ── CUSTOM CURSOR ──
+const cur = document.getElementById('cursor');
+const curR = document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX; my=e.clientY;
+  cur.style.left=mx+'px'; cur.style.top=my+'px';
+});
+(function animCur(){
+  rx+=(mx-rx)*.12; ry+=(my-ry)*.12;
+  curR.style.left=Math.round(rx)+'px'; curR.style.top=Math.round(ry)+'px';
+  requestAnimationFrame(animCur);
+})();
+document.querySelectorAll('a,button,.hstat,.hgcard,.nav-item,.svc,.rcard,.branch-btn').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('cur-big'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('cur-big'));
+});
+
+// ── MOUSE-REACTIVE RED GLOW ──
+const redGlowEl = document.querySelector('.hero-overlay-red');
+document.querySelector('.hero')?.addEventListener('mousemove',e=>{
+  if(!redGlowEl) return;
+  const pct = e.clientX / window.innerWidth;
+  redGlowEl.style.transform = `translateX(${(pct-.5)*30}px)`;
+});
+
+// ── PARTICLE ENGINE ──
+const canvas = document.getElementById('pcanvas');
+if(canvas){
+  const ctx = canvas.getContext('2d');
+  let W,H,particles=[];
+  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+  resize();
+  window.addEventListener('resize',resize);
+
+  class Particle{
+    constructor(){this.reset();}
+    reset(){
+      this.x = Math.random()*W;
+      this.y = H + 10;
+      this.size = Math.random()*1.8+.4;
+      this.speedY = Math.random()*.8+.3;
+      this.speedX = (Math.random()-.5)*.5;
+      this.opacity = 0;
+      this.life = 0;
+      this.maxLife = Math.random()*180+120;
+      this.color = Math.random()>.65 ? `rgba(216,36,42,` : `rgba(255,255,255,`;
+    }
+    update(){
+      this.life++;
+      const ratio = this.life/this.maxLife;
+      this.opacity = ratio<.15 ? ratio/.15 : ratio>.75 ? 1-(ratio-.75)/.25 : 1;
+      this.y -= this.speedY;
+      this.x += this.speedX;
+      if(this.life>=this.maxLife) this.reset();
+    }
+    draw(){
+      ctx.beginPath();
+      ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+      ctx.fillStyle = this.color+this.opacity*.5+')';
+      ctx.fill();
+    }
+  }
+
+  for(let i=0;i<55;i++) particles.push(new Particle());
+
+  function animParticles(){
+    ctx.clearRect(0,0,W,H);
+    particles.forEach(p=>{p.update();p.draw();});
+    requestAnimationFrame(animParticles);
+  }
+  animParticles();
+}
+
+// ── VIDEO FALLBACK: forzar autoplay mobile con todas las alternativas ──
+window.addEventListener('DOMContentLoaded',()=>{
+  const vid = document.querySelector('.hero-video-wrap video');
+  const fallback = document.querySelector('.hero-img-fallback');
+  if(!vid) return;
+
+  // Forzar atributos por JS también (por si algún browser ignora el HTML)
+  vid.muted = true;
+  vid.loop = true;
+  vid.setAttribute('playsinline','');
+  vid.setAttribute('webkit-playsinline','');
+  vid.setAttribute('x5-playsinline','');
+
+  function tryPlay(){
+    const p = vid.play();
+    if(p !== undefined){
+      p.then(()=>{
+        // Reproduciendo OK — ocultar fallback
+        if(fallback) fallback.style.opacity='0';
+      }).catch(()=>{
+        // Primer intento fallido — mostrar fallback y reintentar
+        if(fallback) fallback.style.opacity='.55';
+        // Reintento tras 800ms (útil en algunos Android)
+        setTimeout(()=>{
+          vid.muted = true;
+          vid.play().catch(()=>{});
+        }, 800);
+      });
+    }
+  }
+
+  // Intentar de inmediato
+  tryPlay();
+
+  // También intentar cuando el video tenga suficientes datos
+  vid.addEventListener('canplay', tryPlay, { once: true });
+
+  // Reintento en primer touch/scroll del usuario (desbloquea autoplay en Safari iOS)
+  const unlockOnInteraction = ()=>{
+    vid.muted = true;
+    vid.play().then(()=>{
+      if(fallback) fallback.style.opacity='0';
+    }).catch(()=>{});
+    document.removeEventListener('touchstart', unlockOnInteraction);
+    document.removeEventListener('scroll', unlockOnInteraction);
+  };
+  document.addEventListener('touchstart', unlockOnInteraction, { passive: true });
+  document.addEventListener('scroll', unlockOnInteraction, { passive: true, once: true });
+
+  vid.addEventListener('error',()=>{ if(fallback) fallback.style.opacity='.55'; });
+});
+
+// ── LOADER ──
+window.addEventListener('load',()=>{
+  const lf=document.getElementById('lf');
+  const ln=document.getElementById('ln');
+  let n=0;
+  const iv=setInterval(()=>{
+    n+=Math.random()*12+4;
+    if(n>=100){n=100;clearInterval(iv);setTimeout(()=>{document.getElementById('loader').classList.add('out');},250);}
+    lf.style.width=n+'%';
+    ln.textContent=Math.floor(n)+'%';
+  },60);
+});
+
+// ── NAV SCROLL ──
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('on',window.scrollY>30);
+},{ passive:true });
+
+// ── NAV MENU ──
+function toggleMenu(){
+  document.getElementById('menuBtn').classList.toggle('open');
+  document.getElementById('navDropdown').classList.toggle('open');
+}
+document.addEventListener('click',e=>{
+  if(!e.target.closest('#navDropdown')&&!e.target.closest('#menuBtn'))
+    document.getElementById('navDropdown').classList.remove('open');
+});
+
+function navGo(page){
+  document.getElementById('menuBtn').classList.remove('open');
+  document.getElementById('navDropdown').classList.remove('open');
+  showPage(page);
+}
+
+// ── PAGE SYSTEM ──
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>{p.style.display='none';p.classList.remove('active');});
+  const pg=document.getElementById('page-'+id);
+  if(pg){pg.style.display='block';pg.classList.add('active');}
+  window.scrollTo({top:0,behavior:'smooth'});
+  document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
+}
+
+// ── ANIMATED COUNTER ──
+function animateCounter(el,target,suffix,duration){
+  const start=performance.now();
+  (function tick(now){
+    const pct=Math.min((now-start)/duration,1);
+    const ease=1-Math.pow(1-pct,3);
+    el.textContent=Math.floor(ease*target)+suffix;
+    if(pct<1) requestAnimationFrame(tick);
+  })(start);
+}
+
+// Run counters when hero is visible
+const heroEl = document.querySelector('.hero');
+const hcEl = document.getElementById('hc');
+let countersRan=false;
+if(hcEl){
+  new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting&&!countersRan){
+      countersRan=true;
+      animateCounter(hcEl,31,'K+',2000);
+      const statIG=document.getElementById('stat-ig');
+      const statYears=document.getElementById('stat-years');
+      const statSuc=document.getElementById('stat-suc');
+      const statRating=document.getElementById('stat-rating');
+      if(statIG) setTimeout(()=>animateCounter(statIG,31,'K+',1800),400);
+      if(statYears) setTimeout(()=>animateCounter(statYears,30,'+',1600),400);
+      if(statSuc) setTimeout(()=>animateCounter(statSuc,3,'',1200),400);
+      if(statRating) setTimeout(()=>{
+        animateCounter(statRating,44,'',1500);
+        setTimeout(()=>{if(statRating) statRating.textContent='4.4★';},1550);
+      },400);
+    }
+  },{threshold:.3}).observe(heroEl||document.body);
+}
+
+// ── SCROLL REVEAL (.rv) ──
+const rvEls=document.querySelectorAll('.rv');
+if(rvEls.length){
+  const observer=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.style.transition='opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)';
+        e.target.style.opacity='1';
+        e.target.style.transform='translateY(0)';
+        observer.unobserve(e.target);
+      }
+    });
+  },{threshold:.08});
+  rvEls.forEach((el,i)=>{
+    el.style.opacity='0';
+    el.style.transform='translateY(28px)';
+    el.style.transitionDelay=(i%4)*.08+'s';
+    observer.observe(el);
+  });
+}
+
+// ── SMOOTH SCROLL (Lenis-lite) ──
+let scrollY=0,targetY=0,isScrolling=false;
+function smoothScroll(){
+  targetY=window.scrollY;
+  scrollY+=(targetY-scrollY)*.1;
+  if(Math.abs(targetY-scrollY)>.5){
+    document.documentElement.style.setProperty('--scroll-y',scrollY+'px');
+    isScrolling=true;
+    requestAnimationFrame(smoothScroll);
+  } else {isScrolling=false;}
+}
+// Only on desktop for performance
+if(window.innerWidth>768){
+  window.addEventListener('scroll',()=>{if(!isScrolling){isScrolling=true;smoothScroll();}},{passive:true});
+}
+
+// setCvMode defined in legacy block below — no duplicate needed
+</script>
+
+<script>
+function resetCvForm(){
+  document.getElementById('cv-form-inner').style.display='';
+  document.getElementById('cv-success').style.display='none';
+  document.getElementById('cv-nombre').value='';
+  document.getElementById('cv-telefono').value='';
+  document.getElementById('cv-marca').value='';
+  document.getElementById('cv-anio').value='';
+  document.getElementById('cv-presupuesto').value='';
+  document.getElementById('cv-condicion').value='';
+  document.getElementById('cv-mensaje').value='';
+  document.querySelectorAll('.cv-field-error').forEach(e=>e.remove());
+  document.querySelectorAll('.cv-input.error,.cv-select.error').forEach(e=>e.classList.remove('error'));
+  setCvMode('comprar');
+}
+
+const CHAT_SYSTEM = `Sos Insta, el asistente virtual de INSTASERVICE, taller automotriz conocido como "La Agencia de los Panameños". Respondés SOLO sobre Instaservice y temas de autos/mecánica.
+
+TONO: amigable, claro, breve. Español natural panameño. Máximo 3 oraciones por respuesta. 1 emoji máximo. Sin markdown, sin listas con guiones, texto plano.
+
+COMPRENSIÓN: El cliente puede escribir con errores ortográficos, abreviado o informal. Siempre interpretá lo que quiso decir y respondé normalmente. Nunca le digas que no entendiste si el mensaje tiene sentido aproximado.
+
+INSTASERVICE:
+- Fundado en 1991, más de 30 años de experiencia
+- 3 sucursales en Ciudad de Panamá: Corozal/Miraflores (221-4903), Bethania (6444-3786), Chanis (221-4903)
+- Horario: Lunes a Sábado 8am-5pm, sin cita previa
+
+SERVICIOS QUE REALIZAN: mantenimiento (aceite desde $25 convencional, $45 sintético), frenos, suspensión, aire acondicionado, diagnóstico OBD2 desde $15, electromecánica, trámites vehiculares (RTV, traspaso, placa), chapistería y pintura, llantas y rines. Atienden Toyota, Honda, Hyundai, Kia, Nissan, Mazda, Ford, Chevrolet, Mitsubishi, Suzuki, Subaru, Jeep, RAM, Dodge, Volkswagen y más.
+
+SÍNTOMAS COMUNES:
+- Traqueteo al girar → CV joint
+- Zumbido con la velocidad → rodamiento
+- Vibración al frenar → discos o pastillas
+- Check engine → diagnóstico OBD2
+- Humo blanco → junta de culata, humo azul → aceite, humo negro → inyección
+- A/C no enfría → gas, filtro, compresor
+- Chirrido al frenar → pastillas desgastadas
+- Golpe en suspensión → bujes o amortiguadores
+
+FLUJO OBLIGATORIO — seguí estos pasos en orden:
+PASO 1: Respondé brevemente la consulta o síntoma (máximo 2 oraciones).
+PASO 2: Pedí los datos UNO POR UNO, en este orden exacto. UN SOLO DATO POR MENSAJE, nunca dos juntos.
+  - Dato 1: nombre ("¿Me decís tu nombre?")
+  - Dato 2: teléfono ("¿Y tu número de contacto?")
+  - Dato 3: vehículo ("¿Qué auto tenés, marca y modelo?")
+  - Dato 4: zona ("¿En qué zona de la ciudad estás?")
+  - Dato 5: sucursal ("Tenemos en Corozal (221-4903), Bethania (6444-3786) y Chanis (221-4903). ¿Cuál te queda más cerca?")
+  - Dato 6: solo si quiere turno → día y horario ("¿Qué día y horario te viene bien?")
+PASO 3: Cuando tenés todos los datos, mostrá este resumen EXACTO:
+
+Listo, acá está tu info para WhatsApp:
+
+Nombre: [nombre]
+Teléfono: [teléfono]
+Vehículo: [vehículo]
+Zona: [zona]
+Consulta: [problema o servicio del inicio]
+Sucursal: [sucursal]
+Solicitud: [turno / diagnóstico / revisión / presupuesto]
+
+Perfecto 👍 Ya podés continuar por WhatsApp con tu info cargada.
+
+PASO 4: En el mensaje siguiente respondé ÚNICAMENTE con la palabra: SHOW_WHATSAPP_SELECTOR
+
+REGLAS IMPORTANTES:
+- Si el cliente ya dio un dato espontáneamente, no lo pidas de nuevo, pasá al siguiente.
+- Si el cliente quiere ir directo a WhatsApp sin dar datos, respondé solo: SHOW_WHATSAPP_SELECTOR
+- Si es emergencia (humo, frenos sin respuesta, temperatura alta): "Por seguridad detené el vehículo y llamá al 6444-3786 de inmediato."
+- NUNCA inventés precios ni diagnósticos exactos. Decí "el precio exacto lo confirmás en sucursal".
+- Respondé SIEMPRE en español, aunque el cliente escriba en otro idioma.
+- NUNCA pidás más de un dato por mensaje.`;
+
+
+// ===== CONFIGURACIÓN GROQ =====
+const GROQ_API_KEY = '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';
+// ================================
+
+let chatHistory = [];
+let chatOpen = false;
+let chatInitialized = false;
+let activeTab = 'chat';
+
+function switchTab(tab){
+  activeTab = tab;
+  document.querySelectorAll('.chat-tab').forEach((t,i)=>{
+    const tabs = ['chat','suc','faq'];
+    t.classList.toggle('active', tabs[i] === tab);
+  });
+  document.querySelectorAll('.chat-panel').forEach(p => p.classList.remove('active'));
+  const panelMap = {chat:'panel-chat', suc:'panel-suc', faq:'panel-faq'};
+  document.getElementById(panelMap[tab]).classList.add('active');
+}
+
+function toggleFaq(el){
+  const wasOpen = el.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if(!wasOpen) el.classList.add('open');
+}
+
+function toggleChat(){
+  chatOpen = !chatOpen;
+  document.getElementById('chat-bubble').classList.toggle('open', chatOpen);
+  document.getElementById('chat-window').classList.toggle('open', chatOpen);
+  document.getElementById('chat-bubble-ping').style.display = chatOpen ? 'none' : '';
+  // En móvil, activar el overlay wrapper para que el chat sea position:absolute
+  const overlay = document.getElementById('chat-mobile-overlay');
+  if(overlay && window.innerWidth <= 480) overlay.classList.toggle('open', chatOpen);
+  if(chatOpen && !chatInitialized){
+    chatInitialized = true;
+    setTimeout(()=>{
+      addBotMessage('¡Hola! 👋 Soy el asistente de **Instaservice**. Podés preguntarme sobre servicios, síntomas de tu vehículo, precios o trámites. También encontrás nuestras sucursales en la pestaña 📍 y preguntas frecuentes en FAQ.\n\n¿En qué te ayudo hoy?');
+    }, 350);
+  }
+  // no auto-focus en móvil para evitar que el teclado suba el input
+}
+
+
+
+function addBotMessage(text){
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg bot';
+  const formatted = text
+    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\n/g,'<br>');
+  const now = new Date().toLocaleTimeString('es-PA',{hour:'2-digit',minute:'2-digit'});
+  div.innerHTML = `<div class="chat-msg-bubble">${formatted}</div><div class="chat-msg-time">${now}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function addUserMessage(text){
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg user';
+  const now = new Date().toLocaleTimeString('es-PA',{hour:'2-digit',minute:'2-digit'});
+  div.innerHTML = `<div class="chat-msg-bubble">${text}</div><div class="chat-msg-time">${now}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showTyping(){
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.id = 'chat-typing-indicator';
+  div.className = 'chat-typing';
+  div.innerHTML = '<span></span><span></span><span></span>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function removeTyping(){
+  const t = document.getElementById('chat-typing-indicator');
+  if(t) t.remove();
+}
+
+async function sendMessage(){
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if(!text) return;
+
+  document.getElementById('chat-quick').style.display = 'none';
+  input.value = '';
+  input.style.height = 'auto';
+  document.getElementById('chat-send').disabled = true;
+
+  addUserMessage(text);
+  chatHistory.push({role:'user', content: text});
+
+  // Mantener historial amplio para no perder contexto durante captura de datos
+  if(chatHistory.length > 40) chatHistory = chatHistory.slice(-40);
+
+  showTyping();
+
+  const GROQ_MODELS = ['llama-3.3-70b-versatile', 'llama3-70b-8192', 'mixtral-8x7b-32768'];
+  const TIMEOUT_MS = 12000; // 12 segundos por intento
+
+  let lastError = null;
+  let data = null;
+  let succeeded = false;
+
+  for(let i = 0; i < GROQ_MODELS.length; i++){
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
+
+    try {
+      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        signal: controller.signal,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + GROQ_API_KEY
+        },
+        body: JSON.stringify({
+          model: GROQ_MODELS[i],
+          max_tokens: 400,
+          temperature: 0.4,
+          messages: [
+            { role: 'system', content: CHAT_SYSTEM },
+            ...chatHistory
+          ]
+        })
+      });
+
+      clearTimeout(timer);
+      const raw = await res.text();
+
+      let parsed;
+      try { parsed = JSON.parse(raw); }
+      catch(e) {
+        console.error('No-JSON de Groq ('+GROQ_MODELS[i]+'):', raw.slice(0,200));
+        lastError = 'parse';
+        continue;
+      }
+
+      if(!res.ok || parsed.error){
+        console.error('Groq error HTTP '+res.status+' modelo '+GROQ_MODELS[i], parsed.error||'');
+        lastError = res.status;
+        if(res.status === 401) break; // key inválida, no reintentar
+        continue;
+      }
+
+      data = parsed;
+      succeeded = true;
+      break;
+
+    } catch(err){
+      clearTimeout(timer);
+      if(err.name === 'AbortError'){
+        console.error('Timeout en modelo '+GROQ_MODELS[i]);
+        lastError = 'timeout';
+      } else {
+        console.error('Fetch error ('+GROQ_MODELS[i]+'):', err.message);
+        lastError = 'network';
+      }
+    }
+  }
+
+  removeTyping();
+
+  if(!succeeded || !data){
+    let msg = 'Hubo un problema técnico. Escribinos directo por WhatsApp 👇';
+    if(lastError === 401)     msg = 'Error de autenticación del asistente. Escribinos por WhatsApp 👇';
+    else if(lastError === 429) msg = 'Demasiadas consultas en este momento. Escribinos por WhatsApp 👇';
+    else if(lastError === 'timeout') msg = 'El asistente tardó demasiado en responder. Intentá de nuevo o escribinos por WhatsApp 👇';
+    else if(lastError === 'network') msg = 'Sin conexión al asistente. Revisá tu internet o escribinos por WhatsApp 👇';
+    addBotMessage(msg);
+    showWhatsappSelector('');
+    chatHistory.pop();
+    document.getElementById('chat-send').disabled = false;
+    input.focus();
+    return;
+  }
+
+  const reply = data.choices?.[0]?.message?.content?.trim() || '';
+
+  if(!reply){
+    addBotMessage('No pude generar una respuesta. Intentá de nuevo.');
+    chatHistory.pop();
+  } else if(reply === 'SHOW_WHATSAPP_SELECTOR'){
+    const summaryMsg = [...chatHistory].reverse().find(m => m.role === 'assistant' && m.content.includes('Nombre:'));
+    showWhatsappSelector(summaryMsg ? summaryMsg.content : '');
+    chatHistory.push({role:'assistant', content: 'Selector de sucursales mostrado.'});
+  } else if(reply.includes('SHOW_WHATSAPP_SELECTOR')){
+    const summaryPart = reply.split('SHOW_WHATSAPP_SELECTOR')[0].trim();
+    if(summaryPart){
+      addBotMessage(summaryPart);
+      chatHistory.push({role:'assistant', content: summaryPart});
+    }
+    showWhatsappSelector(summaryPart);
+    chatHistory.push({role:'assistant', content: 'Selector de sucursales mostrado.'});
+  } else {
+    addBotMessage(reply);
+    chatHistory.push({role:'assistant', content: reply});
+  }
+
+  document.getElementById('chat-send').disabled = false;
+  input.focus();
+}
+
+function quickSend(text){
+  if(activeTab !== 'chat') switchTab('chat');
+  document.getElementById('chat-input').value = text;
+  sendMessage();
+}
+
+function extractClientData(){
+  // Extraer datos del historial completo analizando preguntas del bot y respuestas del usuario
+  const data = { nombre:'', telefono:'', vehiculo:'', zona:'', consulta:'', sucursal:'', solicitud:'' };
+
+  // Buscar el resumen generado por el bot (formato "Nombre: X\nTeléfono: Y...")
+  for(let i = chatHistory.length - 1; i >= 0; i--){
+    const msg = chatHistory[i];
+    if(msg.role === 'assistant' && msg.content.includes('Nombre:') && msg.content.includes('Teléfono:')){
+      const txt = msg.content;
+      const get = (label) => {
+        const m = txt.match(new RegExp(label + ':?\\s*([^\\n]+)', 'i'));
+        return m ? m[1].replace(/\*\*/g,'').trim() : '';
+      };
+      data.nombre    = get('Nombre');
+      data.telefono  = get('Tel[eé]fono');
+      data.vehiculo  = get('Veh[ií]culo');
+      data.zona      = get('Zona');
+      data.consulta  = get('Consulta');
+      data.sucursal  = get('Sucursal');
+      data.solicitud = get('Solicitud');
+      break;
+    }
+  }
+
+  // Si no hay resumen todavía, intentar extraer del flujo de conversación
+  if(!data.nombre){
+    // Buscar pares pregunta→respuesta en el historial
+    for(let i = 0; i < chatHistory.length - 1; i++){
+      const bot = chatHistory[i];
+      const usr = chatHistory[i+1];
+      if(bot.role !== 'assistant' || usr.role !== 'user') continue;
+      const b = bot.content.toLowerCase();
+      const u = usr.content.trim();
+      if(!data.nombre    && (b.includes('tu nombre') || b.includes('me dec')))           data.nombre    = u;
+      if(!data.telefono  && (b.includes('contacto') || b.includes('número') || b.includes('tel'))) data.telefono  = u;
+      if(!data.vehiculo  && (b.includes('auto') || b.includes('vehículo') || b.includes('marca'))) data.vehiculo  = u;
+      if(!data.zona      && (b.includes('zona') || b.includes('ciudad')))                data.zona      = u;
+      if(!data.sucursal  && (b.includes('sucursal') || b.includes('corozal') || b.includes('bethania') || b.includes('chanis'))) data.sucursal = u;
+      if(!data.solicitud && (b.includes('día') || b.includes('horario')))               data.solicitud = 'Turno: ' + u;
+    }
+
+    // Consulta: primer mensaje del usuario
+    const firstUser = chatHistory.find(m => m.role === 'user');
+    if(firstUser && !data.consulta) data.consulta = firstUser.content;
+  }
+
+  if(!data.solicitud) data.solicitud = 'Consulta / diagnóstico';
+
+  return data;
+}
+
+function showWhatsappSelector(summaryText){
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg bot';
+  const now = new Date().toLocaleTimeString('es-PA',{hour:'2-digit',minute:'2-digit'});
+
+  const waIcon = `<svg viewBox="0 0 24 24" width="14" height="14" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.553 4.113 1.52 5.843L0 24l6.335-1.49A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.89 0-3.659-.49-5.2-1.35l-.37-.22-3.763.886.948-3.664-.242-.376A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>`;
+  const btnStyle = `display:flex;align-items:center;gap:8px;background:#25D366;color:white;font-family:var(--fs);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 14px;text-decoration:none;border-radius:2px;`;
+
+  const cd = extractClientData();
+  const tienesDatos = cd.nombre || cd.telefono || cd.consulta;
+
+  function buildWaMsg(sucursalNombre){
+    if(!tienesDatos) return `Hola Instaservice ${sucursalNombre}, quiero hacer una consulta / sacar turno.`;
+    let lines = [`Hola Instaservice ${sucursalNombre}! Vengo del chat del sitio web 👋`,''];
+    if(cd.nombre)    lines.push(`Nombre: ${cd.nombre}`);
+    if(cd.telefono)  lines.push(`Teléfono: ${cd.telefono}`);
+    if(cd.vehiculo)  lines.push(`Vehículo: ${cd.vehiculo}`);
+    if(cd.zona)      lines.push(`Zona: ${cd.zona}`);
+    if(cd.consulta)  lines.push(`Motivo: ${cd.consulta}`);
+    if(cd.solicitud) lines.push(`Solicitud: ${cd.solicitud}`);
+    lines.push('','¿Me pueden ayudar? 🙏');
+    return lines.join('\n');
+  }
+
+  function buildWaLink(phone, nombre){
+    return `https://wa.me/${phone}?text=${encodeURIComponent(buildWaMsg(nombre))}`;
+  }
+
+  div.innerHTML = `
+    <div class="chat-msg-bubble" style="padding:12px 14px;">
+      <div style="font-family:var(--fs);font-size:12px;font-weight:700;letter-spacing:.5px;margin-bottom:10px;color:rgba(255,255,255,.7);">📲 ¿A cuál sucursal querés escribir?</div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <a href="${buildWaLink('5072214903','Corozal')}" target="_blank" style="${btnStyle}">
+          ${waIcon} 📍 Corozal · 221-4903
+        </a>
+        <a href="${buildWaLink('50764443786','Bethania')}" target="_blank" style="${btnStyle}">
+          ${waIcon} 📍 Bethania · 6444-3786
+        </a>
+        <a href="${buildWaLink('5072214903','Chanis')}" target="_blank" style="${btnStyle}">
+          ${waIcon} 📍 Chanis · 221-4903
+        </a>
+      </div>
+    </div>
+    <div class="chat-msg-time">${now}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function chatKeyDown(e){
+  if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); sendMessage(); }
+}
+
+function autoResize(el){
+  el.style.height='auto';
+  el.style.height=Math.min(el.scrollHeight,80)+'px';
+}
+
+// Aislar el scroll del chat de la página en mobile
+(function(){
+  let touchStartY = 0;
+
+  function getScrollTarget(e){
+    // Buscar el ancestro scrolleable más cercano dentro del chat-window
+    let el = e.target;
+    const win = document.getElementById('chat-window');
+    while(el && el !== win){
+      if(el.scrollHeight > el.clientHeight + 1){
+        const style = window.getComputedStyle(el);
+        if(style.overflowY === 'auto' || style.overflowY === 'scroll') return el;
+      }
+      el = el.parentElement;
+    }
+    return null;
+  }
+
+  function onTouchStart(e){
+    touchStartY = e.touches[0].clientY;
+  }
+
+  function onTouchMove(e){
+    const el = getScrollTarget(e);
+    if(!el){ e.preventDefault(); return; } // nada scrolleable → bloquear página
+
+    const deltaY = e.touches[0].clientY - touchStartY;
+    const atTop    = el.scrollTop === 0;
+    const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
+
+    if((atTop && deltaY > 0) || (atBottom && deltaY < 0)){
+      e.preventDefault();
+    } else {
+      e.stopPropagation();
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    const chatWin = document.getElementById('chat-window');
+    if(!chatWin) return;
+    chatWin.addEventListener('touchstart', onTouchStart, { passive: true });
+    chatWin.addEventListener('touchmove',  onTouchMove,  { passive: false });
+  });
+})();
+</script>
+</body>
+</html>
