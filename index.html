@@ -1194,8 +1194,8 @@ footer{background:#050505;border-top:1px solid rgba(255,255,255,.04);padding:72p
   display:flex;
   align-items:center;
   justify-content:center;
-  background:rgba(255,255,255,.018);
-  border:1px solid rgba(255,255,255,.06);
+  background:transparent;
+  border:1px solid rgba(255,255,255,.055);
   box-shadow:0 22px 80px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.04);
   backdrop-filter:blur(22px);
 }
@@ -1472,10 +1472,10 @@ nav.on{
   border-radius:50%!important;
   overflow:hidden!important;
   padding:0!important;
-  background:rgba(8,8,8,.80)!important;
-  border:1px solid rgba(255,255,255,.10)!important;
-  box-shadow:0 18px 45px rgba(0,0,0,.38),0 0 0 6px rgba(216,36,42,.035)!important;
-  backdrop-filter:blur(18px)!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
 }
 #chat-bubble .chat-brand-logo{
   position:absolute!important;
@@ -1485,7 +1485,7 @@ nav.on{
   object-fit:contain!important;
   transform:none!important;
   border-radius:50%!important;
-  filter:drop-shadow(0 5px 10px rgba(0,0,0,.28))!important;
+  filter:drop-shadow(0 10px 18px rgba(0,0,0,.36)) drop-shadow(0 0 10px rgba(216,36,42,.16))!important;
 }
 #chat-bubble:hover .chat-brand-logo{
   transform:scale(1.05)!important;
@@ -1506,7 +1506,7 @@ nav.on{
   right:7px!important;
   width:13px!important;
   height:13px!important;
-  border:2px solid #0b0b0b!important;
+  border:2px solid rgba(8,8,8,.78)!important;
 }
 
 /* FOOTER */
