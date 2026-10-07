@@ -8,14 +8,14 @@
 <meta name="theme-color" content="#080808">
 <title>Instaservice — La Agencia de los Panameños</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --r:#D8242A;--rl:#FF3B42;--rd:#9A1A1E;
   --bg:#080808;--bg2:#0f0f0f;--bg3:#161616;
   --w:#FFFFFF;--w2:rgba(255,255,255,0.7);--w3:rgba(255,255,255,0.3);
-  --fh:'Bebas Neue',sans-serif;--fs:'Barlow Condensed',sans-serif;--fb:'Barlow',sans-serif;
+  --fh:'Oswald',sans-serif;--fs:'Manrope',sans-serif;--fb:'Manrope',sans-serif;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-top: env(safe-area-inset-top, 0px);
 }
@@ -1601,6 +1601,229 @@ nav.on .brand-logo-nav{
   }
 }
 </style>
+
+<style id="refinement-pass-2026">
+/* Typography */
+body{font-family:var(--fb);font-weight:400;letter-spacing:-.01em}
+p{letter-spacing:-.012em}
+h1,h2,h3,h4,.bigtitle,.page-hero-title,.cv-title,.smart-card-title{font-family:var(--fh)!important;font-weight:600!important;letter-spacing:-.025em!important}
+.lbl,.menu-btn-label,.nav-item-text strong,.btnr,.btng,.chat-tab,.chat-qbtn,.cv-label,.cv-submit,.site-faq-kicker{
+  font-family:var(--fs)!important;
+  letter-spacing:.06em!important;
+}
+.btnr,.btng,.menu-btn-label,.nav-item-text strong,.chat-tab,.chat-qbtn,.cv-submit{text-transform:none!important}
+.htitle{font-size:clamp(68px,8vw,118px)!important;line-height:.94!important;letter-spacing:-.035em!important}
+.htitle .t3{-webkit-text-stroke:1px rgba(255,255,255,.58)!important}
+.hdesc{font-size:17px!important;line-height:1.7!important;max-width:600px!important}
+.bigtitle{line-height:1.02!important}
+
+/* Buy / Sell redesign */
+.cv-section{
+  padding:110px 6%!important;
+  background:
+    radial-gradient(circle at 12% 15%,rgba(216,36,42,.10),transparent 30%),
+    radial-gradient(circle at 88% 88%,rgba(255,255,255,.035),transparent 24%),
+    #090909!important;
+  border-top:1px solid rgba(255,255,255,.05);
+}
+.cv-shell{
+  max-width:1320px;margin:0 auto;
+  display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:center;
+}
+.cv-editorial{max-width:530px}
+.cv-kicker{
+  display:inline-flex;align-items:center;gap:10px;
+  color:#ef4248;font-size:12px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;
+  margin-bottom:24px;
+}
+.cv-kicker:before{content:"";width:34px;height:1px;background:#ef4248}
+.cv-title{
+  font-size:clamp(54px,6vw,86px)!important;line-height:.94!important;margin:0 0 24px!important;
+  color:#fff!important;
+}
+.cv-title span{color:#ef363c!important;-webkit-text-stroke:0!important}
+.cv-sub{font-size:16px!important;line-height:1.75!important;color:rgba(255,255,255,.58)!important;max-width:500px!important;margin:0 0 34px!important}
+.cv-points{display:grid;gap:14px;margin-bottom:34px}
+.cv-point{
+  display:grid;grid-template-columns:38px 1fr;gap:14px;align-items:start;
+  padding:0!important;background:transparent!important;border:0!important;
+}
+.cv-point>span{
+  width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(255,255,255,.11);color:rgba(255,255,255,.42);font-size:10px;font-weight:800;
+}
+.cv-point strong{display:block;font-size:14px;font-weight:700;color:#fff;margin:1px 0 4px}
+.cv-point p{font-size:12.5px;line-height:1.55;color:rgba(255,255,255,.38)}
+.cv-toggle{
+  display:inline-flex!important;padding:5px!important;gap:4px!important;
+  background:rgba(255,255,255,.035)!important;border:1px solid rgba(255,255,255,.075)!important;
+  border-radius:999px!important;margin:0!important;
+}
+.cv-toggle-btn{
+  border:0!important;border-radius:999px!important;background:transparent!important;
+  color:rgba(255,255,255,.54)!important;padding:12px 18px!important;
+  font:700 12px var(--fs)!important;letter-spacing:.01em!important;text-transform:none!important;
+  display:flex;align-items:center;gap:8px;cursor:pointer;
+}
+.cv-toggle-btn.active{background:#fff!important;color:#0b0b0b!important;box-shadow:0 8px 24px rgba(0,0,0,.18)!important}
+.cv-toggle-dot{width:7px;height:7px;border-radius:50%;background:#ef363c}
+.cv-form-wrap{
+  padding:34px!important;border-radius:28px!important;
+  background:linear-gradient(145deg,rgba(24,24,24,.92),rgba(12,12,12,.92))!important;
+  border:1px solid rgba(255,255,255,.085)!important;
+  box-shadow:0 30px 90px rgba(0,0,0,.38)!important;
+}
+.cv-form-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:28px;padding-bottom:23px;border-bottom:1px solid rgba(255,255,255,.06)}
+.cv-form-head span{font-size:10px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:#ef4248}
+.cv-form-head h3{font-size:25px!important;font-family:var(--fb)!important;font-weight:700!important;letter-spacing:-.025em!important;margin-top:6px}
+.cv-form-step{font:600 38px var(--fh);color:rgba(255,255,255,.11)}
+.cv-form{gap:15px!important}
+.cv-field{margin:0!important}
+.cv-label{font-size:10px!important;font-weight:800!important;color:rgba(255,255,255,.42)!important;text-transform:uppercase!important;margin-bottom:8px!important}
+.cv-input,.cv-select,.cv-textarea{
+  min-height:52px!important;padding:14px 16px!important;
+  border-radius:13px!important;background:rgba(255,255,255,.035)!important;
+  border:1px solid rgba(255,255,255,.075)!important;color:#fff!important;font:500 13px var(--fb)!important;
+}
+.cv-input::placeholder,.cv-textarea::placeholder{color:rgba(255,255,255,.22)!important}
+.cv-textarea{min-height:96px!important}
+.cv-submit{
+  width:100%!important;min-height:54px!important;border:0!important;border-radius:14px!important;
+  background:linear-gradient(135deg,#ef363c,#bd1e24)!important;color:#fff!important;
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  padding:0 20px!important;font-size:13px!important;font-weight:800!important;
+  box-shadow:0 16px 36px rgba(216,36,42,.20)!important;
+}
+.cv-submit-arrow{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.13)}
+.cv-note{display:flex;align-items:center;gap:7px;justify-content:flex-start!important;font-size:10px!important;color:rgba(255,255,255,.3)!important;margin-top:14px!important}
+.cv-note span{color:#47d875}
+.cv-success{text-align:center;padding:30px 10px!important}
+.cv-success-mark{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;background:rgba(71,216,117,.10);border:1px solid rgba(71,216,117,.2);color:#47d875;font-size:25px;margin:0 auto 16px}
+.cv-success-tt{font:600 30px var(--fh)!important}
+.cv-reset-btn{border-radius:999px!important}
+
+/* Chat: cleaner product UI */
+#chat-window{
+  width:430px!important;
+  max-height:min(690px,calc(100vh - 130px))!important;
+  border-radius:26px!important;
+  background:rgba(11,11,12,.96)!important;
+  border:1px solid rgba(255,255,255,.09)!important;
+  border-top:1px solid rgba(255,255,255,.09)!important;
+  box-shadow:0 36px 110px rgba(0,0,0,.62)!important;
+}
+#chat-header{
+  padding:18px!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012))!important;
+  border-bottom:1px solid rgba(255,255,255,.055)!important;
+}
+.chat-avatar{width:46px!important;height:46px!important;background:transparent!important;border:0!important}
+.chat-hinfo strong{font:700 14px var(--fs)!important;letter-spacing:-.01em!important;text-transform:none!important}
+.chat-hinfo span{font:500 10.5px var(--fs)!important;color:rgba(255,255,255,.38)!important}
+.chat-tabs{
+  gap:4px!important;padding:4px!important;border-radius:999px!important;
+  background:rgba(255,255,255,.035)!important;border:1px solid rgba(255,255,255,.055)!important;
+}
+.chat-tab{
+  padding:7px 10px!important;border-radius:999px!important;border:0!important;
+  background:transparent!important;color:rgba(255,255,255,.42)!important;font-size:9.5px!important;font-weight:700!important;
+}
+.chat-tab.active{background:rgba(255,255,255,.09)!important;color:#fff!important}
+#chat-messages{padding:18px!important;gap:12px!important;background:radial-gradient(circle at 10% 10%,rgba(216,36,42,.045),transparent 28%)}
+.chat-msg{max-width:84%!important}
+.chat-msg-bubble{
+  border-radius:17px!important;padding:11px 14px!important;
+  font:500 12.5px/1.55 var(--fb)!important;letter-spacing:-.01em!important;
+}
+.chat-msg.bot .chat-msg-bubble{
+  background:rgba(255,255,255,.055)!important;border:1px solid rgba(255,255,255,.06)!important;
+  border-bottom-left-radius:5px!important;
+}
+.chat-msg.user .chat-msg-bubble{
+  background:linear-gradient(135deg,#e9343b,#bd1f25)!important;border:0!important;
+  border-bottom-right-radius:5px!important;
+}
+.chat-msg-time{font:500 9px var(--fb)!important;color:rgba(255,255,255,.18)!important;letter-spacing:0!important;margin-top:5px!important}
+.chat-typing{border-radius:15px!important;background:rgba(255,255,255,.05)!important}
+#chat-quick{
+  padding:10px 14px!important;gap:7px!important;flex-wrap:nowrap!important;overflow-x:auto!important;
+  background:rgba(255,255,255,.012)!important;
+}
+.chat-qbtn{
+  padding:7px 11px!important;border-radius:999px!important;
+  border:1px solid rgba(255,255,255,.075)!important;background:rgba(255,255,255,.025)!important;
+  color:rgba(255,255,255,.48)!important;font-size:9px!important;font-weight:700!important;letter-spacing:.01em!important;
+}
+.chat-qbtn:hover{background:rgba(216,36,42,.11)!important;color:#fff!important;border-color:rgba(216,36,42,.28)!important}
+#chat-input-row{
+  padding:12px 14px 14px!important;background:rgba(8,8,8,.92)!important;border-top:1px solid rgba(255,255,255,.055)!important;
+  align-items:center!important;
+}
+#chat-input{
+  min-height:44px!important;max-height:90px!important;border-radius:14px!important;padding:12px 14px!important;
+  font:500 12.5px var(--fb)!important;background:rgba(255,255,255,.045)!important;
+}
+#chat-send{
+  width:44px!important;height:44px!important;min-width:44px!important;border-radius:13px!important;
+  background:#e9343b!important;display:grid!important;place-items:center!important;
+}
+#panel-suc{padding:15px!important}
+.suc-card{
+  border-radius:17px!important;background:rgba(255,255,255,.035)!important;
+  border:1px solid rgba(255,255,255,.07)!important;margin-bottom:10px!important;padding:16px!important;
+}
+.suc-num{border-radius:50%!important}
+.suc-btn{border-radius:999px!important}
+
+/* FAQ on page */
+.site-faq{
+  padding:110px 6% 120px;background:#080808;border-top:1px solid rgba(255,255,255,.05);
+}
+.site-faq-head{
+  max-width:1280px;margin:0 auto 48px;display:grid;grid-template-columns:1fr 420px;gap:60px;align-items:end;
+}
+.site-faq-kicker{font-size:11px;font-weight:800;text-transform:uppercase;color:#ef3b42;margin-bottom:16px}
+.site-faq-head h2{font-size:clamp(48px,5.5vw,78px);line-height:.96;margin:0}
+.site-faq-head h2 span{color:rgba(255,255,255,.27)}
+.site-faq-head>p{font-size:14px;line-height:1.75;color:rgba(255,255,255,.42);padding-bottom:5px}
+.site-faq-grid{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.site-faq-item{
+  background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.065);
+  border-radius:17px;padding:0 20px;transition:.25s;overflow:hidden;
+}
+.site-faq-item:hover,.site-faq-item[open]{background:rgba(255,255,255,.04);border-color:rgba(216,36,42,.24)}
+.site-faq-item summary{
+  list-style:none;cursor:pointer;min-height:70px;display:flex;align-items:center;gap:14px;
+  font:700 13px var(--fb);color:rgba(255,255,255,.86);position:relative;padding-right:30px;
+}
+.site-faq-item summary::-webkit-details-marker{display:none}
+.site-faq-item summary span{font-size:9px;color:#ef3b42;letter-spacing:.08em}
+.site-faq-item summary:after{
+  content:"+";position:absolute;right:0;width:27px;height:27px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.08);display:grid;place-items:center;color:rgba(255,255,255,.42);font-size:16px;font-weight:400;
+}
+.site-faq-item[open] summary:after{content:"–";color:#fff;background:rgba(216,36,42,.12)}
+.site-faq-item p{padding:0 30px 20px 23px;font-size:12.5px;line-height:1.7;color:rgba(255,255,255,.43)}
+
+@media(max-width:900px){
+  .cv-section,.site-faq{padding:80px 4.5%!important}
+  .cv-shell{grid-template-columns:1fr;gap:36px}
+  .cv-editorial{max-width:none}
+  .site-faq-head{grid-template-columns:1fr;gap:18px}
+  .site-faq-head>p{max-width:600px}
+  .site-faq-grid{grid-template-columns:1fr}
+  #chat-window{width:auto!important}
+}
+@media(max-width:560px){
+  .cv-form-wrap{padding:22px!important}
+  .cv-title{font-size:50px!important}
+  .cv-toggle{width:100%;display:grid!important;grid-template-columns:1fr 1fr}
+  .cv-toggle-btn{justify-content:center;padding:11px 10px!important}
+  .site-faq{padding-bottom:100px!important}
+  .site-faq-head h2{font-size:44px}
+}
+</style>
+
 </head>
 <body>
 <div id="cursor"></div>
@@ -1880,73 +2103,152 @@ nav.on .brand-logo-nav{
     </div>
   </div>
 
-  <div class="cv-section rv">
-    <div class="cv-header">
-      <div class="lbl" style="justify-content:center;">Compra & Venta de Autos</div>
-      <div class="cv-title">¿QUERÉS COMPRAR O<br><span class="out">VENDER TU AUTO</span><br>CON NOSOTROS?</div>
-      <p class="cv-sub">Completá el formulario y un asesor de Instaservice te contacta a la brevedad. Sin vueltas, sin complicaciones.</p>
-      <div class="cv-toggle">
-        <button class="cv-toggle-btn active" id="btn-comprar" onclick="setCvMode('comprar')">🚗 Quiero Comprar</button>
-        <button class="cv-toggle-btn" id="btn-vender" onclick="setCvMode('vender')">💰 Quiero Vender</button>
-      </div>
-    </div>
-    <div class="cv-form-wrap">
-      <div id="cv-success" class="cv-success">
-        <span class="cv-success-ico">✅</span>
-        <div class="cv-success-tt">¡Recibimos tu consulta!</div>
-        <p class="cv-success-ds">Un asesor de Instaservice te va a contactar en breve.<br>También podés llamarnos al <a href="tel:64443786" style="color:var(--r);text-decoration:none;">6444‑3786</a>.</p>
-        <button class="cv-reset-btn" onclick="resetCvForm()">↩ Nueva consulta</button>
-      </div>
-      <div id="cv-form-inner">
-        <div class="cv-form">
-          <div class="cv-field">
-            <label class="cv-label">Nombre completo *</label>
-            <input class="cv-input" id="cv-nombre" type="text" placeholder="Ej: Juan Pérez">
-          </div>
-          <div class="cv-field">
-            <label class="cv-label">Teléfono / WhatsApp *</label>
-            <input class="cv-input" id="cv-telefono" type="tel" placeholder="Ej: 6000-0000">
-          </div>
-          <div class="cv-field" id="cvf-marca">
-            <label class="cv-label" id="cvl-marca">Marca que buscás</label>
-            <input class="cv-input" id="cv-marca" type="text" placeholder="Ej: Toyota, Honda, Kia…">
-          </div>
-          <div class="cv-field" id="cvf-anio">
-            <label class="cv-label" id="cvl-anio">Año aproximado</label>
-            <input class="cv-input" id="cv-anio" type="text" placeholder="Ej: 2018–2022">
-          </div>
-          <div class="cv-field" id="cvf-presupuesto">
-            <label class="cv-label">Presupuesto estimado</label>
-            <select class="cv-select" id="cv-presupuesto">
-              <option value="">Seleccioná un rango</option>
-              <option>Menos de $5,000</option>
-              <option>$5,000 – $10,000</option>
-              <option>$10,000 – $15,000</option>
-              <option>$15,000 – $25,000</option>
-              <option>Más de $25,000</option>
-            </select>
-          </div>
-          <div class="cv-field" id="cvf-condicion">
-            <label class="cv-label" id="cvl-condicion">Condición del auto</label>
-            <select class="cv-select" id="cv-condicion">
-              <option value="">Indiferente</option>
-              <option>Nuevo</option>
-              <option>Seminuevo (hasta 3 años)</option>
-              <option>Usado</option>
-            </select>
-          </div>
-          <div class="cv-field cv-form-full">
-            <label class="cv-label" id="cvl-msg">Detalle adicional</label>
-            <textarea class="cv-textarea" id="cv-mensaje" placeholder="Contanos más sobre lo que buscás o el auto que querés vender…"></textarea>
-          </div>
-          <div class="cv-form-full">
-            <button class="cv-submit" onclick="submitCvForm()"><span id="cv-submit-txt">📩 Enviar Consulta</span></button>
-          </div>
+  <section class="cv-section rv" id="compra-venta">
+    <div class="cv-shell">
+      <div class="cv-editorial">
+        <div class="cv-kicker">Compra & venta de vehículos</div>
+        <h2 class="cv-title">Tu próximo auto<br><span>empieza aquí.</span></h2>
+        <p class="cv-sub">¿Quieres comprar o vender? Déjanos los datos principales y un asesor de Instaservice continúa contigo por WhatsApp.</p>
+
+        <div class="cv-points">
+          <div class="cv-point"><span>01</span><div><strong>Atención personalizada</strong><p>Un asesor revisa tu solicitud y te orienta según lo que buscas.</p></div></div>
+          <div class="cv-point"><span>02</span><div><strong>Proceso simple</strong><p>Completa un solo formulario y continúa la conversación por WhatsApp.</p></div></div>
+          <div class="cv-point"><span>03</span><div><strong>Sin compromiso</strong><p>Consulta opciones, presupuesto o venta de tu vehículo sin complicaciones.</p></div></div>
         </div>
-        <p class="cv-note">🔒 Tus datos son privados. Solo los usamos para contactarte.</p>
+
+        <div class="cv-toggle" role="tablist" aria-label="Comprar o vender">
+          <button class="cv-toggle-btn active" id="btn-comprar" onclick="setCvMode('comprar')" type="button">
+            <span class="cv-toggle-dot"></span>Quiero comprar
+          </button>
+          <button class="cv-toggle-btn" id="btn-vender" onclick="setCvMode('vender')" type="button">
+            <span class="cv-toggle-dot"></span>Quiero vender
+          </button>
+        </div>
+      </div>
+
+      <div class="cv-form-wrap">
+        <div class="cv-form-head">
+          <div>
+            <span>Solicitud rápida</span>
+            <h3 id="cv-form-title">Cuéntanos qué vehículo buscas</h3>
+          </div>
+          <div class="cv-form-step">01</div>
+        </div>
+
+        <div id="cv-success" class="cv-success">
+          <div class="cv-success-mark">✓</div>
+          <div class="cv-success-tt">Solicitud preparada</div>
+          <p class="cv-success-ds">Abrimos WhatsApp con tus datos para que puedas continuar directamente con un asesor.</p>
+          <button class="cv-reset-btn" onclick="resetCvForm()" type="button">Nueva consulta</button>
+        </div>
+
+        <div id="cv-form-inner">
+          <div class="cv-form">
+            <div class="cv-field">
+              <label class="cv-label">Nombre completo *</label>
+              <input class="cv-input" id="cv-nombre" type="text" placeholder="Tu nombre">
+            </div>
+            <div class="cv-field">
+              <label class="cv-label">WhatsApp *</label>
+              <input class="cv-input" id="cv-telefono" type="tel" placeholder="Ej. 6000-0000">
+            </div>
+            <div class="cv-field" id="cvf-marca">
+              <label class="cv-label" id="cvl-marca">Marca que buscas</label>
+              <input class="cv-input" id="cv-marca" type="text" placeholder="Toyota, Honda, Kia...">
+            </div>
+            <div class="cv-field" id="cvf-anio">
+              <label class="cv-label" id="cvl-anio">Año aproximado</label>
+              <input class="cv-input" id="cv-anio" type="text" placeholder="Ej. 2020–2024">
+            </div>
+            <div class="cv-field" id="cvf-presupuesto">
+              <label class="cv-label">Presupuesto estimado</label>
+              <select class="cv-select" id="cv-presupuesto">
+                <option value="">Selecciona un rango</option>
+                <option>Menos de $5,000</option>
+                <option>$5,000 – $10,000</option>
+                <option>$10,000 – $15,000</option>
+                <option>$15,000 – $25,000</option>
+                <option>Más de $25,000</option>
+              </select>
+            </div>
+            <div class="cv-field" id="cvf-condicion">
+              <label class="cv-label" id="cvl-condicion">Condición</label>
+              <select class="cv-select" id="cv-condicion">
+                <option value="">Sin preferencia</option>
+                <option>Nuevo</option>
+                <option>Seminuevo (hasta 3 años)</option>
+                <option>Usado</option>
+              </select>
+            </div>
+            <div class="cv-field cv-form-full">
+              <label class="cv-label" id="cvl-msg">Detalles adicionales</label>
+              <textarea class="cv-textarea" id="cv-mensaje" placeholder="Cuéntanos qué estás buscando, versión, kilometraje, estado o cualquier dato importante."></textarea>
+            </div>
+            <div class="cv-form-full">
+              <button class="cv-submit" onclick="submitCvForm()" type="button">
+                <span id="cv-submit-txt">Continuar por WhatsApp</span>
+                <span class="cv-submit-arrow">→</span>
+              </button>
+            </div>
+          </div>
+          <p class="cv-note"><span>✓</span> Tus datos se utilizan únicamente para responder esta solicitud.</p>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
+  <section class="site-faq" id="preguntas-frecuentes">
+    <div class="site-faq-head">
+      <div>
+        <div class="site-faq-kicker">Preguntas frecuentes</div>
+        <h2>Antes de venir,<br><span>resolvemos tus dudas.</span></h2>
+      </div>
+      <p>Información rápida sobre mantenimiento, diagnóstico, aire acondicionado, trámites y atención en nuestras sucursales.</p>
+    </div>
+
+    <div class="site-faq-grid">
+      <details class="site-faq-item">
+        <summary><span>01</span>¿Necesito cita previa para ir?</summary>
+        <p>No. Atendemos de lunes a sábado de 8:00 a.m. a 5:00 p.m. Para trabajos grandes o reparaciones que requieren más tiempo, recomendamos contactar primero a la sucursal.</p>
+      </details>
+      <details class="site-faq-item">
+        <summary><span>02</span>¿Cada cuánto debo cambiar el aceite?</summary>
+        <p>Depende del tipo de aceite, el vehículo y el uso. Como referencia, el aceite sintético suele tener intervalos mayores que el convencional. Lo ideal es seguir el manual del fabricante y revisar el nivel periódicamente.</p>
+      </details>
+      <details class="site-faq-item">
+        <summary><span>03</span>¿Qué incluye un mantenimiento completo?</summary>
+        <p>Puede incluir aceite y filtro, filtros de aire y combustible, revisión de frenos, fluidos, correas, batería, bujías y una inspección general. El alcance exacto depende del plan y del vehículo.</p>
+      </details>
+      <details class="site-faq-item">
+        <summary><span>04</span>Se encendió el check engine, ¿qué hago?</summary>
+        <p>No conviene ignorarlo. El código puede corresponder a sensores, emisiones, encendido u otras causas. Un diagnóstico electrónico permite identificar el origen antes de reemplazar piezas innecesariamente.</p>
+      </details>
+      <details class="site-faq-item">
+        <summary><span>05</span>¿Por qué el aire acondicionado no enfría bien?</summary>
+        <p>Puede deberse a refrigerante bajo, una fuga, filtro de cabina saturado, compresor, condensador o evaporador. Lo correcto es diagnosticar el sistema antes de recargar gas.</p>
+      </details>
+      <details class="site-faq-item">
+        <summary><span>06</span>¿Cuándo debo revisar los frenos?</summary>
+        <p>Si escuchas chirridos, sientes vibración, el pedal cambia de tacto o el auto se desvía al frenar, conviene revisarlos cuanto antes. El desgaste depende del uso y del estilo de conducción.</p>
+      </details>
+      <details class="site-faq-item">
+        <summary><span>07</span>¿Atienden todas las marcas?</summary>
+        <p>Sí. El taller trabaja con las principales marcas que circulan en Panamá, incluyendo vehículos japoneses, coreanos, americanos y otras marcas de uso habitual.</p>
+      </details>
+      <details class="site-faq-item">
+        <summary><span>08</span>¿Qué trámites vehiculares gestionan?</summary>
+        <p>Se gestionan distintos trámites vehiculares y servicios relacionados. La disponibilidad puede variar, por lo que recomendamos confirmar el trámite específico con la sucursal antes de ir.</p>
+      </details>
+      <details class="site-faq-item">
+        <summary><span>09</span>¿Los trabajos tienen garantía?</summary>
+        <p>Sí, según el tipo de servicio y las piezas utilizadas. Los términos y duración se confirman en sucursal para cada reparación o mantenimiento.</p>
+      </details>
+      <details class="site-faq-item">
+        <summary><span>10</span>¿A qué sucursal puedo ir?</summary>
+        <p>Instaservice cuenta con sucursales en Corozal, Bethania y Chanis. Puedes revisar teléfonos, horarios, WhatsApp y ubicación desde la sección de sucursales del sitio.</p>
+      </details>
+    </div>
+  </section>
+
 
   <footer>
     <div class="ftop">
@@ -2645,7 +2947,7 @@ function setCvMode(mode){
     document.getElementById('cv-presupuesto').closest('.cv-field').style.display='none';
     document.getElementById('cv-marca').placeholder='Ej: Toyota, Honda, Nissan…';
     document.getElementById('cv-anio').placeholder='Ej: 2016';
-    document.getElementById('cv-submit-txt').textContent='📩 Quiero Vender Mi Auto';
+    document.getElementById('cv-submit-txt').textContent='Enviar mi vehículo por WhatsApp'; document.getElementById('cv-form-title').textContent='Cuéntanos qué vehículo quieres vender';
   } else {
     document.getElementById('cvl-marca').textContent = 'Marca que buscás';
     document.getElementById('cvl-anio').textContent = 'Año aproximado';
@@ -2654,7 +2956,7 @@ function setCvMode(mode){
     document.getElementById('cv-presupuesto').closest('.cv-field').style.display='';
     document.getElementById('cv-marca').placeholder='Ej: Toyota, Honda, Kia…';
     document.getElementById('cv-anio').placeholder='Ej: 2018–2022';
-    document.getElementById('cv-submit-txt').textContent='📩 Enviar Consulta';
+    document.getElementById('cv-submit-txt').textContent='Continuar por WhatsApp'; document.getElementById('cv-form-title').textContent='Cuéntanos qué vehículo buscas';
   }
 }
 function submitCvForm(){
@@ -2915,9 +3217,8 @@ function submitCvForm(){
       <span>En línea · Responde al instante</span>
     </div>
     <div class="chat-tabs">
-      <button class="chat-tab active" onclick="switchTab('chat')">Chat</button>
-      <button class="chat-tab" onclick="switchTab('suc')">📍</button>
-      <button class="chat-tab" onclick="switchTab('faq')">FAQ</button>
+      <button class="chat-tab active" onclick="switchTab('chat')">Asistente</button>
+      <button class="chat-tab" onclick="switchTab('suc')">Sucursales</button>
     </div>
   </div>
 
@@ -2993,79 +3294,7 @@ function submitCvForm(){
     </div>
   </div>
 
-  <!-- PANEL: FAQ -->
-  <div class="chat-panel" id="panel-faq">
-    <div class="faq-cat">🔧 Mantenimiento</div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">¿Cada cuánto debo cambiar el aceite?</div>
-      <div class="faq-a">Depende del tipo de aceite y tu vehículo. Con aceite convencional, cada 3,000–5,000 km. Con aceite sintético, cada 7,500–10,000 km. Lo más importante es revisar el manual de tu carro. En Instaservice te orientamos según tu modelo y uso.</div>
-    </div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">¿Qué incluye un servicio de mantenimiento completo?</div>
-      <div class="faq-a">Nuestro plan full incluye: cambio de aceite y filtro, filtro de aire, filtro de combustible, revisión de frenos, revisión de niveles de fluidos (refrigerante, frenos, dirección, transmisión), inspección de correas, revisión de batería y bujías, y diagnóstico general del vehículo.</div>
-    </div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">¿Cuándo debo cambiar las pastillas de freno?</div>
-      <div class="faq-a">Las pastillas deben cambiarse cuando el grosor baja de 3mm, o si escuchás un chirrido metálico al frenar, sentís vibración en el pedal, o el carro jala hacia un lado al frenar. En promedio duran entre 30,000 y 70,000 km según el estilo de manejo. No esperes más, los frenos son seguridad.</div>
-    </div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">¿Cada cuánto debo alinear y balancear?</div>
-      <div class="faq-a">Recomendamos alineación cada 10,000–15,000 km o al cambiar llantas, después de un golpe fuerte o si notás que el carro jala hacia un lado. El balanceo idealmente cada vez que alineás, o si sentís vibración en el volante a cierta velocidad (generalmente entre 80–120 km/h).</div>
-    </div>
-
-    <div class="faq-cat">❄️ Aire Acondicionado</div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">¿Por qué el A/C de mi carro no enfría bien?</div>
-      <div class="faq-a">Las causas más comunes son: gas refrigerante bajo (fuga o pérdida normal), filtro de cabina tapado, compresor desgastado, condensador sucio o evaporador con hongos. En Instaservice hacemos diagnóstico de A/C y recarga de gas. No lo dejes para después en el clima panameño.</div>
-    </div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">¿Cada cuánto hay que recargar el gas del A/C?</div>
-      <div class="faq-a">Un sistema de A/C bien sellado puede durar varios años sin recarga. Si perdés gas frecuentemente, hay una fuga que hay que encontrar y sellar. También recomendamos cambiar el filtro de cabina cada 15,000 km para que el aire fluya correctamente y no haya malos olores.</div>
-    </div>
-
-    <div class="faq-cat">⚙️ Diagnóstico y Problemas</div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">Se me prendió la luz del motor (check engine), ¿qué hago?</div>
-      <div class="faq-a">No entres en pánico, pero tampoco lo ignores. La luz puede ser desde algo menor como el tapón del tanque mal puesto, hasta una falla en el sistema de emisiones, sensores de oxígeno, catalizador o problemas de encendido. Hacemos diagnóstico electrónico con scanner para leer los códigos y darte una respuesta exacta desde $15.</div>
-    </div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">Mi carro vibra al arrancar o al frenar, ¿qué puede ser?</div>
-      <div class="faq-a">Vibración al arrancar: posibles problemas en soportes del motor, bujías, o inyectores. Vibración al frenar: generalmente discos de freno deformados (warping) o pastillas desgastadas de forma irregular. Vibración a alta velocidad: desbalanceo de ruedas o problemas de alineación. Vení a que lo revisemos antes de que se complique.</div>
-    </div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">¿Por qué mi carro consume mucho combustible?</div>
-      <div class="faq-a">Varias causas: filtro de aire sucio (impide combustión eficiente), bujías desgastadas, sensores de oxígeno o MAF fallando, llantas mal infladas (aumentan la resistencia), sistema de inyección sucio, o simplemente el estilo de manejo. Un servicio de mantenimiento completo puede mejorar el consumo notablemente.</div>
-    </div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">Mi carro hace un ruido raro al girar, ¿qué es?</div>
-      <div class="faq-a">Si es un traqueteo o clic al girar, probablemente es la junta homocinética (CV joint) desgastada — es urgente reemplazarla. Si es un zumbido, puede ser el rodamiento de rueda. Si chirrido al doblar, puede ser la dirección baja de fluido o una correa. Pasá por cualquier sucursal y lo diagnosticamos gratis en minutos.</div>
-    </div>
-
-    <div class="faq-cat">📄 Trámites Vehiculares</div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">¿Qué trámites vehiculares hacen?</div>
-      <div class="faq-a">En Instaservice gestionamos: RTV (Revisión Técnica Vehicular), traspaso de vehículo, inscripción de vehículo nuevo, renovación de placa, certificado de propiedad y otros trámites del ATTT. Te ahorramos filas y tiempo. Consultá disponibilidad en tu sucursal más cercana.</div>
-    </div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">¿Qué necesito para pasar la revisión técnica (RTV)?</div>
-      <div class="faq-a">Tu vehículo debe tener luces, frenos, bocina, limpiaparabrisas y sistema de emisiones en buen estado. En Instaservice podemos hacer una pre-inspección para identificar qué hay que corregir antes de ir a la RTV, aumentando tus chances de aprobar al primer intento.</div>
-    </div>
-
-    <div class="faq-cat">💰 Precios y Atención</div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">¿Necesito cita previa para ir?</div>
-      <div class="faq-a">No. En Instaservice atendemos sin cita previa de lunes a sábado de 8am a 5pm. Llegás, te atendemos. Para trabajos grandes o que requieren más tiempo como chapistería o reparaciones mayores, se recomienda llamar primero para coordinar.</div>
-    </div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">¿Aceptan todas las marcas de autos?</div>
-      <div class="faq-a">Sí. Atendemos Toyota, Honda, Hyundai, Kia, Nissan, Mazda, Ford, Chevrolet, Mitsubishi, Suzuki, Subaru, Jeep, RAM, y prácticamente cualquier marca que circule en Panamá. Nuestros técnicos tienen experiencia en autos tanto japoneses como americanos y coreanos.</div>
-    </div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">¿Ofrecen garantía por los trabajos realizados?</div>
-      <div class="faq-a">Sí, los trabajos realizados en Instaservice tienen garantía. El período varía según el tipo de servicio y las piezas utilizadas. Consultá en la sucursal los términos específicos para cada trabajo. Usamos repuestos de calidad para garantizar durabilidad.</div>
-    </div>
-  </div>
-</div><!-- end chat-window -->
+  </div><!-- end chat-window -->
 </div><!-- end chat-mobile-overlay -->
 
 <script>
@@ -3404,11 +3633,11 @@ let activeTab = 'chat';
 function switchTab(tab){
   activeTab = tab;
   document.querySelectorAll('.chat-tab').forEach((t,i)=>{
-    const tabs = ['chat','suc','faq'];
+    const tabs = ['chat','suc'];
     t.classList.toggle('active', tabs[i] === tab);
   });
   document.querySelectorAll('.chat-panel').forEach(p => p.classList.remove('active'));
-  const panelMap = {chat:'panel-chat', suc:'panel-suc', faq:'panel-faq'};
+  const panelMap = {chat:'panel-chat', suc:'panel-suc'};
   document.getElementById(panelMap[tab]).classList.add('active');
 }
 
@@ -3429,7 +3658,7 @@ function toggleChat(){
   if(chatOpen && !chatInitialized){
     chatInitialized = true;
     setTimeout(()=>{
-      addBotMessage('¡Hola! 👋 Soy el asistente de **Instaservice**. Podés preguntarme sobre servicios, síntomas de tu vehículo, precios o trámites. También encontrás nuestras sucursales en la pestaña 📍 y preguntas frecuentes en FAQ.\n\n¿En qué te ayudo hoy?');
+      addBotMessage('¡Hola! 👋 Soy el asistente de **Instaservice**. Podés preguntarme sobre servicios, síntomas de tu vehículo, precios o trámites. También puedes consultar nuestras sucursales desde la pestaña superior.\n\n¿En qué te ayudo hoy?');
     }, 350);
   }
   // no auto-focus en móvil para evitar que el teclado suba el input
