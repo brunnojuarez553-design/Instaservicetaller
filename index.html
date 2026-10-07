@@ -2912,13 +2912,6 @@ h1,h2,h3,h4,.bigtitle,.page-hero-title,.cv-title,.smart-card-title{font-family:v
     </div>
   </div>
 
-  <div class="stats-strip">
-    <div class="sstrip"><div class="sstrip-n" id="stat-ig">0K+</div><div class="sstrip-l">Seguidores Instagram</div></div>
-    <div class="sstrip"><div class="sstrip-n" id="stat-years">0+</div><div class="sstrip-l">Años de Experiencia</div></div>
-    <div class="sstrip"><div class="sstrip-n" id="stat-suc">0</div><div class="sstrip-l">Sucursales en Panamá</div></div>
-    <div class="sstrip"><div class="sstrip-n" id="stat-rating">0★</div><div class="sstrip-l">Calificación Google</div></div>
-  </div>
-
   
 <!-- CONVERSION EXPERIENCE 2026 -->
 <section class="conversion-zone" id="cotizar">
@@ -4106,17 +4099,6 @@ if(hcEl){
     if(entries[0].isIntersecting&&!countersRan){
       countersRan=true;
       animateCounter(hcEl,31,'K+',2000);
-      const statIG=document.getElementById('stat-ig');
-      const statYears=document.getElementById('stat-years');
-      const statSuc=document.getElementById('stat-suc');
-      const statRating=document.getElementById('stat-rating');
-      if(statIG) setTimeout(()=>animateCounter(statIG,31,'K+',1800),400);
-      if(statYears) setTimeout(()=>animateCounter(statYears,30,'+',1600),400);
-      if(statSuc) setTimeout(()=>animateCounter(statSuc,3,'',1200),400);
-      if(statRating) setTimeout(()=>{
-        animateCounter(statRating,44,'',1500);
-        setTimeout(()=>{if(statRating) statRating.textContent='4.4★';},1550);
-      },400);
     }
   },{threshold:.3}).observe(heroEl||document.body);
 }
