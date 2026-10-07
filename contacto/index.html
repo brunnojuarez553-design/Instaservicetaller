@@ -2235,6 +2235,91 @@ h1,h2,h3,h4,.bigtitle,.page-hero-title,.cv-title,.smart-card-title{font-family:v
   }
 }
 </style>
+
+<style id="final-hide-stats-and-assistant-ring-2026">
+/* Hard-disable the obsolete home KPI cards even if an older block survives somewhere */
+.stats-strip,
+#stat-ig,
+#stat-years,
+#stat-suc,
+#stat-rating{
+  display:none!important;
+}
+
+/* Fixed physical size for the assistant button */
+#chat-bubble{
+  box-sizing:border-box!important;
+  width:78px!important;
+  height:78px!important;
+  min-width:78px!important;
+  min-height:78px!important;
+  max-width:78px!important;
+  max-height:78px!important;
+  border-radius:50%!important;
+  background:#050505!important;
+  border:4px solid #000!important;
+  box-shadow:
+    0 0 0 7px #050505,
+    0 14px 30px rgba(0,0,0,.58),
+    inset 0 0 0 1px rgba(255,255,255,.045)!important;
+  overflow:visible!important;
+}
+
+/* Logo always contained inside the fixed black circle */
+#chat-bubble .chat-brand-logo{
+  position:absolute!important;
+  inset:11%!important;
+  width:78%!important;
+  height:78%!important;
+  max-width:78%!important;
+  max-height:78%!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  border-radius:0!important;
+}
+
+/* Online effects start outside the black annulus */
+#chat-bubble::before{
+  inset:-18px!important;
+  border:2px solid rgba(57,242,122,.70)!important;
+  z-index:-2!important;
+}
+#chat-bubble::after{
+  inset:-27px!important;
+  border:1px solid rgba(57,242,122,.30)!important;
+  z-index:-3!important;
+}
+.assistant-sparkles{
+  inset:-31px!important;
+  z-index:-4!important;
+}
+
+/* Status dot sits on the black perimeter */
+#chat-bubble-ping{
+  top:2px!important;
+  right:2px!important;
+  width:14px!important;
+  height:14px!important;
+  border:4px solid #050505!important;
+  box-sizing:content-box!important;
+}
+
+@media(max-width:900px){
+  #chat-bubble{
+    width:70px!important;
+    height:70px!important;
+    min-width:70px!important;
+    min-height:70px!important;
+    max-width:70px!important;
+    max-height:70px!important;
+    border-width:4px!important;
+    box-shadow:
+      0 0 0 6px #050505,
+      0 12px 26px rgba(0,0,0,.56),
+      inset 0 0 0 1px rgba(255,255,255,.04)!important;
+  }
+}
+</style>
 </head>
 <body>
 <div id="cursor"></div>
