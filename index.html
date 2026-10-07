@@ -2159,6 +2159,152 @@ h1,h2,h3,h4,.bigtitle,.page-hero-title,.cv-title,.smart-card-title{font-family:v
 }
 </style>
 
+
+<style id="home-summary-overlay-2026">
+.home-summary-overlay{
+  max-width:1500px;
+  margin:0 auto;
+  padding:110px 6% 55px;
+}
+.home-summary-overlay-head{
+  max-width:760px;
+  margin-bottom:48px;
+}
+.home-summary-overlay-head h2{
+  font-size:clamp(52px,6vw,88px);
+  line-height:.96;
+  letter-spacing:-.045em;
+  margin:0 0 20px;
+}
+.home-summary-overlay-head h2 span{color:#ef3c42}
+.home-summary-overlay-head>p{
+  color:rgba(255,255,255,.52);
+  font-size:16px;
+  line-height:1.8;
+  max-width:590px;
+  margin:0;
+}
+
+.summary-hero-block{
+  position:relative;
+  min-height:520px;
+  margin:24px 0;
+  border-radius:30px;
+  overflow:hidden;
+  isolation:isolate;
+  display:flex;
+  align-items:flex-end;
+  background-image:var(--summary-bg);
+  background-size:cover;
+  background-position:center;
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 30px 80px rgba(0,0,0,.30);
+}
+.summary-hero-block:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-2;
+  background-image:var(--summary-bg);
+  background-size:cover;
+  background-position:center;
+  transform:scale(1.02);
+  transition:transform 1s cubic-bezier(.16,1,.3,1),filter .5s;
+}
+.summary-hero-block:hover:before{
+  transform:scale(1.065);
+  filter:brightness(1.08);
+}
+.summary-hero-shade{
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:
+    linear-gradient(90deg,rgba(5,5,5,.92) 0%,rgba(5,5,5,.70) 42%,rgba(5,5,5,.26) 72%,rgba(5,5,5,.12) 100%),
+    linear-gradient(0deg,rgba(5,5,5,.78) 0%,rgba(5,5,5,.08) 58%,rgba(5,5,5,.18) 100%);
+}
+.summary-hero-block:nth-of-type(3) .summary-hero-shade{
+  background:
+    linear-gradient(90deg,rgba(5,5,5,.90) 0%,rgba(10,7,7,.68) 42%,rgba(120,18,22,.16) 78%,rgba(120,18,22,.08) 100%),
+    linear-gradient(0deg,rgba(5,5,5,.80),rgba(5,5,5,.04) 62%);
+}
+.summary-hero-content{
+  width:min(720px,72%);
+  padding:58px 62px;
+  position:relative;
+  z-index:2;
+}
+.summary-hero-content .summary-number{
+  position:absolute;
+  right:10px;
+  top:-18px;
+  font-size:110px;
+  font-weight:700;
+  line-height:1;
+  color:rgba(255,255,255,.045);
+  letter-spacing:-.06em;
+}
+.summary-hero-content .summary-label{
+  color:#ef4046;
+  font-size:12px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.13em;
+  margin-bottom:16px;
+}
+.summary-hero-content h3{
+  font-size:clamp(42px,5vw,70px);
+  line-height:.96;
+  letter-spacing:-.045em;
+  max-width:680px;
+  margin:0 0 20px;
+  text-wrap:balance;
+}
+.summary-hero-content p{
+  color:rgba(255,255,255,.66);
+  font-size:15px;
+  line-height:1.82;
+  max-width:610px;
+  margin:0 0 30px;
+}
+.summary-hero-block:hover .summary-more{
+  border-color:rgba(239,60,66,.44);
+  background:rgba(10,10,10,.46);
+}
+
+@media(max-width:900px){
+  .home-summary-overlay{padding:85px 4.5% 40px}
+  .summary-hero-block{min-height:470px;border-radius:24px}
+  .summary-hero-content{width:82%;padding:44px}
+  .summary-hero-shade{
+    background:
+      linear-gradient(90deg,rgba(5,5,5,.93) 0%,rgba(5,5,5,.70) 58%,rgba(5,5,5,.22) 100%),
+      linear-gradient(0deg,rgba(5,5,5,.78),rgba(5,5,5,.08) 60%);
+  }
+}
+@media(max-width:600px){
+  .home-summary-overlay-head h2{font-size:46px}
+  .summary-hero-block{
+    min-height:540px;
+    align-items:flex-end;
+    border-radius:21px;
+    background-position:center;
+  }
+  .summary-hero-block:before{background-position:center}
+  .summary-hero-shade{
+    background:
+      linear-gradient(0deg,rgba(4,4,4,.96) 0%,rgba(4,4,4,.82) 44%,rgba(4,4,4,.34) 72%,rgba(4,4,4,.20) 100%);
+  }
+  .summary-hero-content{
+    width:100%;
+    padding:34px 26px;
+  }
+  .summary-hero-content h3{font-size:39px}
+  .summary-hero-content p{font-size:14px}
+  .summary-hero-content .summary-number{font-size:74px;right:22px;top:-38px}
+}
+</style>
+
 </head>
 <body>
 <div id="cursor"></div>
@@ -2344,50 +2490,43 @@ h1,h2,h3,h4,.bigtitle,.page-hero-title,.cv-title,.smart-card-title{font-family:v
 
 
 <!-- HOME SUMMARY SECTIONS -->
-<section class="home-summary" aria-label="Conoce Instaservice">
-  <div class="home-summary-head rv">
-    <div>
-      <div class="summary-kicker">Todo Instaservice</div>
-      <h2>Conoce lo esencial.<br><span>Explora cuando quieras.</span></h2>
-    </div>
-    <p>Una presentación más simple del taller, nuestros servicios y nuestras sucursales. Cada sección tiene su propia página con la información completa.</p>
+
+<section class="home-summary-overlay" aria-label="Conoce Instaservice">
+  <div class="home-summary-overlay-head rv">
+    <div class="summary-kicker">Todo Instaservice</div>
+    <h2>Conoce lo esencial.<br><span>Explora cada sección.</span></h2>
+    <p>Una visión rápida de quiénes somos, qué hacemos y dónde encontrarnos.</p>
   </div>
 
-  <article class="summary-row rv">
-    <div class="summary-media">
-      <img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778892582/675447746_18455830984106348_3257308772832864931_n_dc4gda.jpg" alt="Equipo de Instaservice Panamá">
-    </div>
-    <div class="summary-copy">
+  <article class="summary-hero-block rv" style="--summary-bg:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778892582/675447746_18455830984106348_3257308772832864931_n_dc4gda.jpg')">
+    <div class="summary-hero-shade"></div>
+    <div class="summary-hero-content">
       <span class="summary-number">01</span>
       <div class="summary-label">Quiénes Somos</div>
-      <h3>Más de 30 años acompañando a los conductores de Panamá.</h3>
-      <p>Instaservice nació con una idea simple: servicio automotriz confiable, directo y con atención profesional. Hoy cuenta con tres sucursales y una comunidad que sigue creciendo.</p>
+      <h3>Más de 30 años construyendo confianza.</h3>
+      <p>Instaservice nació con una idea simple: atención automotriz profesional, directa y confiable. Hoy somos parte del día a día de miles de conductores en Panamá.</p>
       <a class="summary-more" href="/quienes/"><span>Más información</span><i>→</i></a>
     </div>
   </article>
 
-  <article class="summary-row summary-row-reverse rv">
-    <div class="summary-media">
-      <img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778892431/673180734_18455831290106348_7850905331393331382_n_mii8gn.jpg" alt="Servicios automotrices Instaservice">
-    </div>
-    <div class="summary-copy">
+  <article class="summary-hero-block rv" style="--summary-bg:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778892431/673180734_18455831290106348_7850905331393331382_n_mii8gn.jpg')">
+    <div class="summary-hero-shade"></div>
+    <div class="summary-hero-content">
       <span class="summary-number">02</span>
       <div class="summary-label">Servicios</div>
-      <h3>Diagnóstico, mantenimiento y soluciones para tu vehículo.</h3>
-      <p>Mecánica, frenos, aire acondicionado, alineación, electromecánica, inspección y trámites vehiculares. Todo en un solo lugar y con atención para múltiples marcas.</p>
+      <h3>Soluciones completas para tu vehículo.</h3>
+      <p>Mecánica, frenos, aire acondicionado, alineación, electromecánica, inspección y trámites vehiculares. Todo en un mismo lugar.</p>
       <a class="summary-more" href="/servicios/"><span>Ver todos los servicios</span><i>→</i></a>
     </div>
   </article>
 
-  <article class="summary-row rv">
-    <div class="summary-media">
-      <img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778895532/675346138_18455830957106348_1874998712270215820_n_icui8z.jpg" alt="Sucursales Instaservice Panamá">
-    </div>
-    <div class="summary-copy">
+  <article class="summary-hero-block rv" style="--summary-bg:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778895532/675346138_18455830957106348_1874998712270215820_n_icui8z.jpg')">
+    <div class="summary-hero-shade"></div>
+    <div class="summary-hero-content">
       <span class="summary-number">03</span>
       <div class="summary-label">Sucursales</div>
       <h3>Corozal, Bethania y Chanis.</h3>
-      <p>Tres puntos de atención en Ciudad de Panamá. Consulta horarios, teléfonos, WhatsApp y ubicación de cada sucursal para elegir la más conveniente.</p>
+      <p>Tres puntos de atención en Ciudad de Panamá. Consulta horarios, teléfonos, WhatsApp y ubicación de cada sucursal.</p>
       <a class="summary-more" href="/contacto/"><span>Ver sucursales</span><i>→</i></a>
     </div>
   </article>
