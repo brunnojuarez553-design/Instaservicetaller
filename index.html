@@ -4797,7 +4797,6 @@ function autoResize(el){
     '.btnr',
     '.smart-action',
     '.service-option',
-    '.cv-submit',
     '.branch-btn-red',
     '.conv-dock .primary',
     '.conv-dock a[href^="tel:"]',
@@ -4885,7 +4884,7 @@ function autoResize(el){
     openAssistantIntent('Quiero consultar por '+service+' para mi vehículo.');
   };
 
-  // Route conversion CTAs into the assistant while preserving informational navigation.
+  // Route general conversion CTAs into the assistant. Compra/Venta keeps its direct WhatsApp flow because the form already captures the required data.
   document.addEventListener('click',function(e){
     const el=e.target.closest && e.target.closest(CTA_SELECTOR);
     if(!el) return;
@@ -4900,11 +4899,7 @@ function autoResize(el){
     e.preventDefault();
     e.stopImmediatePropagation();
 
-    if(el.classList.contains('cv-submit')){
-      openAssistantIntent(formIntent());
-    }else{
-      openAssistantIntent(inferIntent(el));
-    }
+    openAssistantIntent(inferIntent(el));
   },true);
 
   function normalizeBranch(value){
