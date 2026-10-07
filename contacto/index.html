@@ -1844,6 +1844,66 @@ h1,h2,h3,h4,.bigtitle,.page-hero-title,.cv-title,.smart-card-title{font-family:v
 #chat-bubble:hover .chat-brand-logo{transform:scale(1.025)!important}
 </style>
 <link rel="canonical" href="https://instaservicetaller.vercel.app/contacto/">
+
+<style id="online-pulse-2026">
+#chat-bubble{
+  position:fixed!important;
+  isolation:isolate;
+}
+#chat-bubble::before,
+#chat-bubble::after{
+  content:"";
+  position:absolute;
+  inset:-7px;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:-1;
+}
+#chat-bubble::before{
+  border:2px solid rgba(46,229,107,.72);
+  box-shadow:
+    0 0 12px rgba(46,229,107,.34),
+    0 0 28px rgba(46,229,107,.18),
+    inset 0 0 10px rgba(46,229,107,.08);
+  animation:onlineRingPulse 2.1s ease-out infinite;
+}
+#chat-bubble::after{
+  inset:-14px;
+  border:1px solid rgba(46,229,107,.34);
+  box-shadow:0 0 24px rgba(46,229,107,.16);
+  animation:onlineWave 2.1s ease-out infinite;
+}
+#chat-bubble:hover::before{
+  border-color:rgba(46,229,107,.95);
+  box-shadow:
+    0 0 14px rgba(46,229,107,.48),
+    0 0 34px rgba(46,229,107,.24);
+}
+#chat-bubble-ping{
+  background:#2ee56b!important;
+  box-shadow:
+    0 0 0 3px rgba(46,229,107,.12),
+    0 0 14px rgba(46,229,107,.7)!important;
+  animation:onlineDot 1.65s ease-in-out infinite!important;
+}
+@keyframes onlineRingPulse{
+  0%{transform:scale(.92);opacity:.22}
+  45%{opacity:.85}
+  100%{transform:scale(1.18);opacity:0}
+}
+@keyframes onlineWave{
+  0%{transform:scale(.86);opacity:.12}
+  60%{opacity:.42}
+  100%{transform:scale(1.22);opacity:0}
+}
+@keyframes onlineDot{
+  0%,100%{transform:scale(.9);box-shadow:0 0 0 0 rgba(46,229,107,.45),0 0 12px rgba(46,229,107,.65)}
+  50%{transform:scale(1.12);box-shadow:0 0 0 7px rgba(46,229,107,0),0 0 18px rgba(46,229,107,.9)}
+}
+@media(prefers-reduced-motion:reduce){
+  #chat-bubble::before,#chat-bubble::after,#chat-bubble-ping{animation:none!important}
+}
+</style>
 </head>
 <body>
 <div id="cursor"></div>
