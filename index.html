@@ -1056,6 +1056,104 @@ footer{background:#050505;border-top:1px solid rgba(255,255,255,.04);padding:72p
   .hero-video-wrap video{filter:brightness(.88) contrast(1.03) saturate(1.03)!important}
 }
 </style>
+
+<style id="brand-logo-premium-2026">
+/* Branding unificado: logos grandes y sin fondos agregados */
+.brand-logo{
+  display:block;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  filter:none!important;
+}
+.nlogo{
+  background:transparent!important;
+  min-height:72px;
+  display:flex;
+  align-items:center;
+}
+.brand-logo-nav{
+  height:56px!important;
+  max-width:min(300px,42vw);
+}
+.flogo{
+  background:transparent!important;
+  border:0!important;
+  padding:0!important;
+  display:flex;
+  align-items:center;
+}
+.brand-logo-footer{
+  height:58px!important;
+  max-width:300px;
+}
+.brand-logo-loader{
+  max-width:min(420px,82vw);
+}
+
+/* Botón flotante con el logo como protagonista */
+#chat-bubble{
+  width:70px!important;
+  height:70px!important;
+  background:transparent!important;
+  border:none!important;
+  box-shadow:0 10px 34px rgba(0,0,0,.42)!important;
+  overflow:visible;
+}
+#chat-bubble .chat-brand-logo{
+  position:absolute;
+  inset:0;
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain;
+  object-position:center;
+  transform:scale(1.18);
+  filter:drop-shadow(0 8px 16px rgba(0,0,0,.38));
+  transition:opacity .2s,transform .25s;
+}
+#chat-bubble:hover .chat-brand-logo{
+  transform:scale(1.25);
+}
+#chat-bubble.open .chat-brand-logo{
+  opacity:0;
+  transform:scale(.75) rotate(15deg);
+}
+#chat-bubble .ico-close{
+  width:26px!important;
+  height:26px!important;
+  padding:5px;
+  border-radius:50%;
+  background:rgba(8,8,8,.92);
+  box-shadow:0 5px 18px rgba(0,0,0,.45);
+}
+#chat-bubble-ping{
+  top:2px!important;
+  right:2px!important;
+  z-index:3;
+}
+
+/* Logo real dentro del encabezado del asistente */
+.chat-avatar{
+  width:48px!important;
+  height:48px!important;
+  background:transparent!important;
+  border:none!important;
+  overflow:visible!important;
+}
+.chat-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  transform:scale(1.12);
+  filter:drop-shadow(0 5px 10px rgba(0,0,0,.32));
+}
+
+@media(max-width:700px){
+  .brand-logo-nav{height:50px!important;max-width:52vw}
+  .brand-logo-footer{height:52px!important}
+  #chat-bubble{width:64px!important;height:64px!important}
+}
+</style>
 </head>
 <body>
 <div id="cursor"></div>
@@ -1063,7 +1161,7 @@ footer{background:#050505;border-top:1px solid rgba(255,255,255,.04);padding:72p
 
 <!-- LOADER -->
 <div id="loader">
-  <img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778880516/cccccc_httfzl.png" alt="Instaservice" style="height:clamp(60px,10vw,100px);width:auto;object-fit:contain;margin-bottom:2rem;opacity:0;animation:loaderLogoIn .5s .15s forwards;">
+  <img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778880516/cccccc_httfzl.png" alt="Instaservice" class="brand-logo brand-logo-loader" style="height:clamp(92px,13vw,145px);width:auto;object-fit:contain;margin-bottom:2rem;opacity:0;animation:loaderLogoIn .5s .15s forwards;">
   <div class="ld-track"><div class="ld-fill" id="lf"></div></div>
   <div class="ld-num" id="ln">0%</div>
 </div>
@@ -1074,7 +1172,7 @@ footer{background:#050505;border-top:1px solid rgba(255,255,255,.04);padding:72p
 <!-- NAV -->
 <nav id="nav">
   <a class="nlogo" onclick="showPage('home')">
-    <img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778880516/cccccc_httfzl.png" alt="Instaservice" style="height:38px;width:auto;object-fit:contain;">
+    <img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778880516/cccccc_httfzl.png" alt="Instaservice" class="brand-logo brand-logo-nav" style="height:56px;width:auto;object-fit:contain;">
   </a>
   <div class="nav-right">
     <button class="menu-btn" id="menuBtn" onclick="toggleMenu()" aria-label="Menú">
@@ -1402,7 +1500,7 @@ footer{background:#050505;border-top:1px solid rgba(255,255,255,.04);padding:72p
   <footer>
     <div class="ftop">
       <div class="fbrand">
-        <div class="flogo"><img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778880516/cccccc_httfzl.png" alt="Instaservice" style="height:32px;width:auto;object-fit:contain;"></div>
+        <div class="flogo"><img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778880516/cccccc_httfzl.png" alt="Instaservice" class="brand-logo brand-logo-footer" style="height:58px;width:auto;object-fit:contain;"></div>
         <p>"La Agencia de los Panameños" — Taller automotriz y trámites vehiculares con más de 30 años sirviendo a Panamá con profesionalismo y confianza.</p>
         <div class="fsoc-row">
           <a href="https://instagram.com/instaservicetaller" target="_blank" class="fsoc" title="Instagram">
@@ -2351,7 +2449,7 @@ function submitCvForm(){
 <!-- Bubble -->
 <button id="chat-bubble" onclick="toggleChat()" aria-label="Abrir chat de Instaservice">
   <div id="chat-bubble-ping"></div>
-  <svg class="ico-chat" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 10H6v-2h12v2zm0-3H6V7h12v2z"/></svg>
+  <img class="ico-chat chat-brand-logo" src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778880516/cccccc_httfzl.png" alt="Instaservice">
   <svg class="ico-close" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
 </button>
 
@@ -2360,7 +2458,7 @@ function submitCvForm(){
 <div id="chat-window">
   <!-- Header con tabs -->
   <div id="chat-header">
-    <div class="chat-avatar">🔧</div>
+    <div class="chat-avatar"><img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778880516/cccccc_httfzl.png" alt="Instaservice"></div>
     <div class="chat-hinfo">
       <strong>Instaservice IA</strong>
       <span>En línea · Responde al instante</span>
