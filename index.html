@@ -2305,6 +2305,198 @@ h1,h2,h3,h4,.bigtitle,.page-hero-title,.cv-title,.smart-card-title{font-family:v
 }
 </style>
 
+
+<style id="home-full-sections-2026">
+.home-story-section{
+  position:relative;
+  min-height:82vh;
+  width:100%;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  isolation:isolate;
+  border-top:1px solid rgba(255,255,255,.05);
+}
+.home-story-bg{
+  position:absolute;
+  inset:0;
+  z-index:-3;
+  background-size:cover;
+  background-position:center;
+  transform:scale(1.015);
+  transition:transform 1.3s cubic-bezier(.16,1,.3,1),filter .6s ease;
+}
+.home-story-about .home-story-bg{
+  background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778892582/675447746_18455830984106348_3257308772832864931_n_dc4gda.jpg');
+}
+.home-story-services .home-story-bg{
+  background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778892431/673180734_18455831290106348_7850905331393331382_n_mii8gn.jpg');
+}
+.home-story-branches .home-story-bg{
+  background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778895532/675346138_18455830957106348_1874998712270215820_n_icui8z.jpg');
+}
+.home-story-section:hover .home-story-bg{
+  transform:scale(1.055);
+  filter:brightness(1.06);
+}
+.home-story-overlay{
+  position:absolute;
+  inset:0;
+  z-index:-2;
+  background:
+    linear-gradient(90deg,rgba(5,5,5,.92) 0%,rgba(5,5,5,.76) 36%,rgba(5,5,5,.32) 68%,rgba(5,5,5,.10) 100%),
+    linear-gradient(0deg,rgba(5,5,5,.72) 0%,rgba(5,5,5,.10) 52%,rgba(5,5,5,.22) 100%);
+}
+.home-story-services .home-story-overlay{
+  background:
+    linear-gradient(270deg,rgba(5,5,5,.92) 0%,rgba(5,5,5,.76) 36%,rgba(5,5,5,.32) 68%,rgba(5,5,5,.12) 100%),
+    linear-gradient(0deg,rgba(5,5,5,.72),rgba(5,5,5,.08) 55%,rgba(5,5,5,.22));
+}
+.home-story-branches .home-story-overlay{
+  background:
+    linear-gradient(90deg,rgba(6,5,5,.92) 0%,rgba(8,5,5,.72) 42%,rgba(115,15,20,.17) 75%,rgba(115,15,20,.06) 100%),
+    linear-gradient(0deg,rgba(5,5,5,.76),rgba(5,5,5,.08) 56%);
+}
+.home-story-inner{
+  width:100%;
+  max-width:1500px;
+  margin:0 auto;
+  padding:110px 6%;
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:70px;
+  align-items:end;
+}
+.home-story-inner-right{
+  grid-template-columns:.8fr 1.2fr;
+}
+.home-story-inner-right .home-story-copy{
+  grid-column:2;
+}
+.home-story-inner-right .home-story-meta{
+  grid-column:1;
+  grid-row:1;
+  text-align:left;
+  align-items:flex-start;
+}
+.home-story-copy{
+  max-width:800px;
+}
+.home-story-kicker{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  color:#ef4046;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  margin-bottom:20px;
+}
+.home-story-kicker:before{
+  content:"";
+  width:38px;
+  height:1px;
+  background:#ef4046;
+}
+.home-story-copy h2{
+  font-size:clamp(56px,7vw,100px);
+  line-height:.91;
+  letter-spacing:-.055em;
+  margin:0 0 28px;
+  max-width:900px;
+  text-wrap:balance;
+}
+.home-story-copy h2 span{
+  color:#ef3c42;
+}
+.home-story-copy p{
+  max-width:670px;
+  color:rgba(255,255,255,.68);
+  font-size:17px;
+  line-height:1.8;
+  margin:0 0 34px;
+}
+.home-story-meta{
+  justify-self:end;
+  align-self:end;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:6px;
+  padding-bottom:8px;
+  color:rgba(255,255,255,.45);
+}
+.home-story-meta span{
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.home-story-meta strong{
+  font-size:16px;
+  color:rgba(255,255,255,.86);
+  font-weight:700;
+}
+.home-story-section:after{
+  content:"";
+  position:absolute;
+  left:6%;
+  right:6%;
+  bottom:0;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);
+}
+
+@media(max-width:900px){
+  .home-story-section{min-height:72vh}
+  .home-story-inner,
+  .home-story-inner-right{
+    grid-template-columns:1fr;
+    gap:36px;
+    padding:86px 5%;
+  }
+  .home-story-inner-right .home-story-copy,
+  .home-story-inner-right .home-story-meta{
+    grid-column:auto;
+    grid-row:auto;
+  }
+  .home-story-meta,
+  .home-story-inner-right .home-story-meta{
+    justify-self:start;
+    align-items:flex-start;
+    text-align:left;
+  }
+  .home-story-services .home-story-overlay{
+    background:
+      linear-gradient(90deg,rgba(5,5,5,.92) 0%,rgba(5,5,5,.74) 48%,rgba(5,5,5,.22) 100%),
+      linear-gradient(0deg,rgba(5,5,5,.74),rgba(5,5,5,.08) 58%);
+  }
+}
+@media(max-width:600px){
+  .home-story-section{
+    min-height:78vh;
+    align-items:flex-end;
+  }
+  .home-story-inner{
+    padding:92px 24px 72px;
+  }
+  .home-story-copy h2{
+    font-size:46px;
+    line-height:.96;
+  }
+  .home-story-copy p{
+    font-size:15px;
+    line-height:1.72;
+  }
+  .home-story-overlay,
+  .home-story-services .home-story-overlay,
+  .home-story-branches .home-story-overlay{
+    background:
+      linear-gradient(0deg,rgba(4,4,4,.96) 0%,rgba(4,4,4,.82) 48%,rgba(4,4,4,.28) 78%,rgba(4,4,4,.16) 100%);
+  }
+}
+</style>
+
 </head>
 <body>
 <div id="cursor"></div>
@@ -2491,45 +2683,56 @@ h1,h2,h3,h4,.bigtitle,.page-hero-title,.cv-title,.smart-card-title{font-family:v
 
 <!-- HOME SUMMARY SECTIONS -->
 
-<section class="home-summary-overlay" aria-label="Conoce Instaservice">
-  <div class="home-summary-overlay-head rv">
-    <div class="summary-kicker">Todo Instaservice</div>
-    <h2>Conoce lo esencial.<br><span>Explora cada sección.</span></h2>
-    <p>Una visión rápida de quiénes somos, qué hacemos y dónde encontrarnos.</p>
-  </div>
 
-  <article class="summary-hero-block rv" style="--summary-bg:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778892582/675447746_18455830984106348_3257308772832864931_n_dc4gda.jpg')">
-    <div class="summary-hero-shade"></div>
-    <div class="summary-hero-content">
-      <span class="summary-number">01</span>
-      <div class="summary-label">Quiénes Somos</div>
-      <h3>Más de 30 años construyendo confianza.</h3>
+<section class="home-story-section home-story-about rv" aria-label="Quiénes Somos">
+  <div class="home-story-bg"></div>
+  <div class="home-story-overlay"></div>
+  <div class="home-story-inner">
+    <div class="home-story-copy">
+      <div class="home-story-kicker">01 · Quiénes Somos</div>
+      <h2>Más de 30 años<br><span>construyendo confianza.</span></h2>
       <p>Instaservice nació con una idea simple: atención automotriz profesional, directa y confiable. Hoy somos parte del día a día de miles de conductores en Panamá.</p>
-      <a class="summary-more" href="/quienes/"><span>Más información</span><i>→</i></a>
+      <a class="summary-more" href="/quienes/"><span>Conocer nuestra historia</span><i>→</i></a>
     </div>
-  </article>
-
-  <article class="summary-hero-block rv" style="--summary-bg:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778892431/673180734_18455831290106348_7850905331393331382_n_mii8gn.jpg')">
-    <div class="summary-hero-shade"></div>
-    <div class="summary-hero-content">
-      <span class="summary-number">02</span>
-      <div class="summary-label">Servicios</div>
-      <h3>Soluciones completas para tu vehículo.</h3>
-      <p>Mecánica, frenos, aire acondicionado, alineación, electromecánica, inspección y trámites vehiculares. Todo en un mismo lugar.</p>
-      <a class="summary-more" href="/servicios/"><span>Ver todos los servicios</span><i>→</i></a>
+    <div class="home-story-meta">
+      <span>Desde 1991</span>
+      <strong>La Agencia de los Panameños</strong>
     </div>
-  </article>
+  </div>
+</section>
 
-  <article class="summary-hero-block rv" style="--summary-bg:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778895532/675346138_18455830957106348_1874998712270215820_n_icui8z.jpg')">
-    <div class="summary-hero-shade"></div>
-    <div class="summary-hero-content">
-      <span class="summary-number">03</span>
-      <div class="summary-label">Sucursales</div>
-      <h3>Corozal, Bethania y Chanis.</h3>
-      <p>Tres puntos de atención en Ciudad de Panamá. Consulta horarios, teléfonos, WhatsApp y ubicación de cada sucursal.</p>
+<section class="home-story-section home-story-services rv" aria-label="Servicios">
+  <div class="home-story-bg"></div>
+  <div class="home-story-overlay"></div>
+  <div class="home-story-inner home-story-inner-right">
+    <div class="home-story-copy">
+      <div class="home-story-kicker">02 · Servicios</div>
+      <h2>Todo lo que tu auto necesita.<br><span>En un solo lugar.</span></h2>
+      <p>Mecánica, frenos, aire acondicionado, alineación, electromecánica, inspección y trámites vehiculares con atención profesional para múltiples marcas.</p>
+      <a class="summary-more" href="/servicios/"><span>Explorar servicios</span><i>→</i></a>
+    </div>
+    <div class="home-story-meta">
+      <span>Diagnóstico · Mantenimiento · Trámites</span>
+      <strong>Atención integral</strong>
+    </div>
+  </div>
+</section>
+
+<section class="home-story-section home-story-branches rv" aria-label="Sucursales">
+  <div class="home-story-bg"></div>
+  <div class="home-story-overlay"></div>
+  <div class="home-story-inner">
+    <div class="home-story-copy">
+      <div class="home-story-kicker">03 · Sucursales</div>
+      <h2>Corozal. Bethania. Chanis.<br><span>Siempre cerca.</span></h2>
+      <p>Tres puntos de atención en Ciudad de Panamá. Consulta horarios, teléfonos, WhatsApp y ubicación para elegir la sucursal que mejor te quede.</p>
       <a class="summary-more" href="/contacto/"><span>Ver sucursales</span><i>→</i></a>
     </div>
-  </article>
+    <div class="home-story-meta">
+      <span>3 ubicaciones</span>
+      <strong>Ciudad de Panamá</strong>
+    </div>
+  </div>
 </section>
 
 <!-- GOOGLE REVIEWS PREMIUM -->
