@@ -2672,6 +2672,116 @@ h1,h2,h3,h4,.bigtitle,.page-hero-title,.cv-title,.smart-card-title{font-family:v
   #chat-bubble::after{animation:none!important}
 }
 </style>
+
+<style id="assistant-conversion-hub-2026">
+/* Assistant as the site's conversion hub */
+.assistant-final-card{
+  margin:8px 0 4px;
+  padding:18px;
+  border-radius:20px;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(37,211,102,.10),transparent 34%),
+    linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.022));
+  border:1px solid rgba(255,255,255,.09);
+  box-shadow:0 18px 48px rgba(0,0,0,.30);
+}
+.assistant-final-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding-bottom:12px;margin-bottom:13px;
+  border-bottom:1px solid rgba(255,255,255,.065);
+}
+.assistant-final-head strong{
+  font-size:14px;color:#fff;letter-spacing:-.01em;
+}
+.assistant-ready{
+  display:inline-flex;align-items:center;gap:6px;
+  color:#5cf08e;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+}
+.assistant-ready:before{
+  content:"";width:7px;height:7px;border-radius:50%;background:#39e878;
+  box-shadow:0 0 12px rgba(57,232,120,.85);
+}
+.assistant-data-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:9px;
+  margin-bottom:15px;
+}
+.assistant-data-item{
+  min-width:0;padding:10px 11px;border-radius:12px;
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(255,255,255,.05);
+}
+.assistant-data-item.full{grid-column:1/-1}
+.assistant-data-item span{
+  display:block;color:rgba(255,255,255,.32);
+  font-size:8px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;margin-bottom:4px;
+}
+.assistant-data-item b{
+  display:block;color:rgba(255,255,255,.86);
+  font-size:11px;line-height:1.35;font-weight:650;
+  overflow-wrap:anywhere;
+}
+.assistant-wa-premium{
+  position:relative;
+  width:100%;min-height:52px;
+  border:0;border-radius:15px;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  padding:0 16px;
+  background:linear-gradient(135deg,#2be06d,#18b953);
+  color:#fff!important;text-decoration:none!important;
+  font-size:12px;font-weight:850;letter-spacing:.015em;
+  box-shadow:0 12px 30px rgba(37,211,102,.20);
+  overflow:hidden;
+  transition:transform .25s,box-shadow .25s,filter .25s;
+}
+.assistant-wa-premium:before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(105deg,transparent 20%,rgba(255,255,255,.22) 45%,transparent 68%);
+  transform:translateX(-120%);
+  animation:waPremiumSweep 3.4s ease-in-out infinite;
+}
+.assistant-wa-premium>*{position:relative;z-index:1}
+.assistant-wa-premium svg{width:18px;height:18px;fill:#fff}
+.assistant-wa-premium:hover{
+  transform:translateY(-2px);
+  box-shadow:0 16px 36px rgba(37,211,102,.28);
+  filter:brightness(1.04);
+}
+.assistant-final-note{
+  margin:9px 2px 0;
+  color:rgba(255,255,255,.32);
+  font-size:9px;line-height:1.45;text-align:center;
+}
+.assistant-branch-fallback{
+  display:grid;gap:7px;margin-top:10px;
+}
+.assistant-branch-fallback a{
+  display:flex;align-items:center;justify-content:space-between;
+  min-height:43px;padding:0 13px;border-radius:12px;
+  background:rgba(37,211,102,.08);
+  border:1px solid rgba(37,211,102,.18);
+  color:#6bf39b;text-decoration:none;font-size:11px;font-weight:750;
+}
+
+/* CTA hint so all conversion actions visibly belong to Insta */
+.assistant-cta-hint{
+  display:inline-flex;align-items:center;gap:7px;
+}
+.assistant-cta-hint:before{
+  content:"";width:7px;height:7px;border-radius:50%;background:#39e878;
+  box-shadow:0 0 10px rgba(57,232,120,.75);
+}
+@keyframes waPremiumSweep{
+  0%,55%{transform:translateX(-120%)}
+  78%,100%{transform:translateX(120%)}
+}
+@media(max-width:480px){
+  .assistant-data-grid{grid-template-columns:1fr}
+  .assistant-data-item.full{grid-column:auto}
+}
+@media(prefers-reduced-motion:reduce){
+  .assistant-wa-premium:before{animation:none!important}
+}
+</style>
 </head>
 <body>
 <div id="cursor"></div>
@@ -4090,8 +4200,10 @@ SÍNTOMAS COMUNES:
 - Chirrido al frenar → pastillas desgastadas
 - Golpe en suspensión → bujes o amortiguadores
 
+OBJETIVO COMERCIAL: Tu función es resolver dudas y, cuando exista intención real de servicio, convertir la conversación en una consulta útil para el taller. Debés ahorrar trabajo al equipo: antes de derivar a WhatsApp recopilá y ordená la información necesaria para que el asesor reciba el caso ya calificado.
+
 FLUJO OBLIGATORIO — seguí estos pasos en orden:
-PASO 1: Respondé brevemente la consulta o síntoma (máximo 2 oraciones).
+PASO 1: Identificá la intención del cliente y respondé brevemente su duda, consulta o síntoma (máximo 2 oraciones). Si llegó desde un botón del sitio, usá ese contexto y no le hagas repetir lo que ya indicó.
 PASO 2: Pedí los datos UNO POR UNO, en este orden exacto. UN SOLO DATO POR MENSAJE, nunca dos juntos.
   - Dato 1: nombre ("¿Me decís tu nombre?")
   - Dato 2: teléfono ("¿Y tu número de contacto?")
@@ -4113,7 +4225,7 @@ Solicitud: [turno / diagnóstico / revisión / presupuesto]
 
 Perfecto 👍 Ya podés continuar por WhatsApp con tu info cargada.
 
-PASO 4: En el mensaje siguiente respondé ÚNICAMENTE con la palabra: SHOW_WHATSAPP_SELECTOR
+PASO 4: Cuando el resumen esté completo, respondé ÚNICAMENTE con la palabra: SHOW_WHATSAPP_SELECTOR. El sitio generará automáticamente una ficha premium y un botón de WhatsApp con todos los datos adjuntos.
 
 REGLAS IMPORTANTES:
 - Si el cliente ya dio un dato espontáneamente, no lo pidas de nuevo, pasá al siguiente.
@@ -4673,6 +4785,225 @@ function autoResize(el){
       var bubble=getHelpBubble();
       if(bubble) bubble.classList.remove('show');
     }
+  });
+})();
+</script>
+
+<script id="assistant-conversion-hub-js-2026">
+(function(){
+  const CTA_SELECTOR = [
+    'a[href*="wa.me/"]',
+    'a[href^="tel:"]',
+    '.btnr',
+    '.smart-action',
+    '.service-option',
+    '.cv-submit',
+    '.branch-btn-red',
+    '.conv-dock .primary',
+    '.conv-dock a[href^="tel:"]',
+    'button[onclick*="openQuoteModal"]',
+    'button[onclick*="quickQuote"]'
+  ].join(',');
+
+  function cleanText(el){
+    return (el && el.innerText ? el.innerText : '').replace(/\s+/g,' ').trim();
+  }
+
+  function inferIntent(el){
+    if(!el) return 'Quiero hacer una consulta sobre mi vehículo.';
+    const text=cleanText(el).toLowerCase();
+
+    if(el.classList && el.classList.contains('service-option')){
+      const label=cleanText(el.querySelector('strong')) || cleanText(el);
+      return 'Quiero consultar por el servicio de '+label+'.';
+    }
+    if(text.includes('agendar') || text.includes('reservar') || text.includes('turno'))
+      return 'Quiero agendar una revisión para mi vehículo.';
+    if(text.includes('cotizar') || text.includes('presupuesto'))
+      return 'Quiero cotizar un servicio para mi vehículo.';
+    if(text.includes('llamar'))
+      return 'Quiero comunicarme con el taller y necesito ayuda.';
+    if(text.includes('mantenimiento'))
+      return 'Quiero consultar por mantenimiento para mi vehículo.';
+    if(text.includes('freno'))
+      return 'Quiero consultar por un problema o servicio de frenos.';
+    if(text.includes('aire'))
+      return 'Quiero consultar por el aire acondicionado de mi vehículo.';
+    if(text.includes('diagn'))
+      return 'Quiero hacer un diagnóstico de mi vehículo.';
+    if(text.includes('trámite'))
+      return 'Quiero consultar por un trámite vehicular.';
+    return 'Quiero hacer una consulta y recibir asesoramiento para mi vehículo.';
+  }
+
+  function formIntent(){
+    const get=id=>{
+      const el=document.getElementById(id);
+      return el ? String(el.value||'').trim() : '';
+    };
+    const parts=['Quiero hacer una consulta de compra o venta de vehículo.'];
+    const nombre=get('cv-nombre'), tel=get('cv-telefono'), marca=get('cv-marca'),
+          anio=get('cv-anio'), presupuesto=get('cv-presupuesto'),
+          condicion=get('cv-condicion'), detalle=get('cv-mensaje');
+    if(nombre) parts.push('Mi nombre es '+nombre+'.');
+    if(tel) parts.push('Mi teléfono es '+tel+'.');
+    if(marca) parts.push('Vehículo o marca: '+marca+'.');
+    if(anio) parts.push('Año: '+anio+'.');
+    if(presupuesto) parts.push('Presupuesto: '+presupuesto+'.');
+    if(condicion) parts.push('Condición: '+condicion+'.');
+    if(detalle) parts.push('Detalle: '+detalle);
+    return parts.join(' ');
+  }
+
+  window.openAssistantIntent=function(intent){
+    const helper=document.getElementById('assistant-help-bubble');
+    if(helper) helper.classList.remove('show');
+
+    if(typeof switchTab==='function') switchTab('chat');
+
+    const win=document.getElementById('chat-window');
+    if(win && !win.classList.contains('open') && typeof toggleChat==='function'){
+      toggleChat();
+    }
+
+    const text=(intent||'Quiero hacer una consulta sobre mi vehículo.').trim();
+
+    setTimeout(function(){
+      const input=document.getElementById('chat-input');
+      if(!input || typeof sendMessage!=='function') return;
+      input.value=text;
+      input.dispatchEvent(new Event('input',{bubbles:true}));
+      sendMessage();
+    }, chatInitialized ? 120 : 560);
+  };
+
+  // Replace old quote workflow with the assistant.
+  window.openQuoteModal=function(){
+    openAssistantIntent('Quiero cotizar o reservar una atención para mi vehículo.');
+  };
+  window.quickQuote=function(service){
+    openAssistantIntent('Quiero consultar por '+service+' para mi vehículo.');
+  };
+
+  // Route conversion CTAs into the assistant while preserving informational navigation.
+  document.addEventListener('click',function(e){
+    const el=e.target.closest && e.target.closest(CTA_SELECTOR);
+    if(!el) return;
+
+    // Never intercept the assistant's own final WhatsApp handoff.
+    if(el.classList.contains('assistant-wa-premium') || el.closest('.assistant-final-card')) return;
+
+    // Keep social/review/map links untouched.
+    if(el.closest('.google-reviews-home') && !el.classList.contains('btnr')) return;
+    if(el.classList.contains('summary-more')) return;
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    if(el.classList.contains('cv-submit')){
+      openAssistantIntent(formIntent());
+    }else{
+      openAssistantIntent(inferIntent(el));
+    }
+  },true);
+
+  function normalizeBranch(value){
+    const v=String(value||'').toLowerCase();
+    if(v.includes('beth')) return {name:'Bethania',phone:'50764443786'};
+    if(v.includes('chan')) return {name:'Chanis',phone:'5072214903'};
+    if(v.includes('coro') || v.includes('mira')) return {name:'Corozal',phone:'5072214903'};
+    return null;
+  }
+
+  function esc(value){
+    return String(value||'').replace(/[&<>"']/g,function(ch){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch];
+    });
+  }
+
+  function makeWaMessage(cd,branchName){
+    const lines=[
+      'Hola Instaservice '+branchName+'. Vengo del asistente virtual del sitio web.',
+      ''
+    ];
+    if(cd.nombre) lines.push('Nombre: '+cd.nombre);
+    if(cd.telefono) lines.push('Teléfono: '+cd.telefono);
+    if(cd.vehiculo) lines.push('Vehículo: '+cd.vehiculo);
+    if(cd.zona) lines.push('Zona: '+cd.zona);
+    if(cd.consulta) lines.push('Consulta: '+cd.consulta);
+    if(cd.solicitud) lines.push('Solicitud: '+cd.solicitud);
+    lines.push('Sucursal: '+branchName,'','Quedo atento para continuar con la atención.');
+    return lines.join('\n');
+  }
+
+  // Premium final handoff with all captured information attached.
+  window.showWhatsappSelector=function(){
+    const msgs=document.getElementById('chat-messages');
+    if(!msgs) return;
+
+    const cd=typeof extractClientData==='function' ? extractClientData() : {};
+    const branch=normalizeBranch(cd.sucursal);
+
+    const div=document.createElement('div');
+    div.className='chat-msg bot assistant-handoff';
+
+    function item(label,value,full){
+      if(!value) return '';
+      return '<div class="assistant-data-item'+(full?' full':'')+'"><span>'+esc(label)+'</span><b>'+esc(value)+'</b></div>';
+    }
+
+    let action='';
+    if(branch){
+      const href='https://wa.me/'+branch.phone+'?text='+encodeURIComponent(makeWaMessage(cd,branch.name));
+      action='<a class="assistant-wa-premium" href="'+href+'" target="_blank" rel="noopener">'+
+        '<svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.553 4.113 1.52 5.843L0 24l6.335-1.49A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.89 0-3.659-.49-5.2-1.35l-.37-.22-3.763.886.948-3.664-.242-.376A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>'+
+        '<span>Continuar por WhatsApp · '+esc(branch.name)+'</span></a>';
+    }else{
+      const branches=[
+        {name:'Corozal',phone:'5072214903'},
+        {name:'Bethania',phone:'50764443786'},
+        {name:'Chanis',phone:'5072214903'}
+      ];
+      action='<div class="assistant-branch-fallback">'+branches.map(function(b){
+        const href='https://wa.me/'+b.phone+'?text='+encodeURIComponent(makeWaMessage(cd,b.name));
+        return '<a href="'+href+'" target="_blank" rel="noopener"><span>'+b.name+'</span><span>Continuar →</span></a>';
+      }).join('')+'</div>';
+    }
+
+    div.innerHTML=
+      '<div class="assistant-final-card">'+
+        '<div class="assistant-final-head"><strong>Tu consulta está lista</strong><span class="assistant-ready">Datos completos</span></div>'+
+        '<div class="assistant-data-grid">'+
+          item('Nombre',cd.nombre,false)+
+          item('Teléfono',cd.telefono,false)+
+          item('Vehículo',cd.vehiculo,false)+
+          item('Zona',cd.zona,false)+
+          item('Consulta',cd.consulta,true)+
+          item('Sucursal',cd.sucursal,false)+
+          item('Solicitud',cd.solicitud,false)+
+        '</div>'+
+        action+
+        '<div class="assistant-final-note">WhatsApp se abrirá con toda esta información ya cargada para el equipo del taller.</div>'+
+      '</div>';
+
+    msgs.appendChild(div);
+    msgs.scrollTop=msgs.scrollHeight;
+  };
+
+  // Make conversion dock labels reflect assistant-first flow.
+  document.addEventListener('DOMContentLoaded',function(){
+    document.querySelectorAll('.conv-dock .primary').forEach(function(el){
+      const textNodes=[...el.childNodes].filter(n=>n.nodeType===3);
+      textNodes.forEach(n=>{ if(n.textContent.trim()) n.textContent=' Asistente'; });
+      el.setAttribute('aria-label','Abrir asistente');
+    });
+
+    document.querySelectorAll('.btnr').forEach(function(el){
+      const text=(el.innerText||'').toLowerCase();
+      if(text.includes('agendar') || text.includes('cotizar') || text.includes('consult')){
+        el.setAttribute('title','Te atiende Insta, el asistente de Instaservice');
+      }
+    });
   });
 })();
 </script>
