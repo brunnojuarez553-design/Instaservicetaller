@@ -1098,7 +1098,8 @@ footer{background:#050505;border-top:1px solid rgba(255,255,255,.04);padding:72p
   background:transparent!important;
   border:none!important;
   box-shadow:0 10px 34px rgba(0,0,0,.42)!important;
-  overflow:visible;
+  overflow:hidden;
+  border-radius:50%;
 }
 #chat-bubble .chat-brand-logo{
   position:absolute;
@@ -1154,6 +1155,422 @@ footer{background:#050505;border-top:1px solid rgba(255,255,255,.04);padding:72p
   #chat-bubble{width:64px!important;height:64px!important}
 }
 </style>
+
+<style id="luxury-ui-2026">
+:root{
+  --lux-card:rgba(255,255,255,.045);
+  --lux-card-strong:rgba(18,18,18,.78);
+  --lux-border:rgba(255,255,255,.085);
+  --lux-border-hover:rgba(216,36,42,.36);
+  --lux-radius-sm:14px;
+  --lux-radius:20px;
+  --lux-radius-lg:28px;
+  --lux-shadow:0 18px 55px rgba(0,0,0,.30);
+  --lux-shadow-deep:0 28px 90px rgba(0,0,0,.46);
+}
+
+/* Real-world fix for the baked black square around the logo:
+   screen blend makes black pixels visually disappear while preserving red/white. */
+.brand-logo,
+.chat-brand-logo,
+.chat-avatar img{
+  mix-blend-mode:screen!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+
+/* LOADER */
+#loader{
+  background:
+    radial-gradient(circle at 50% 42%,rgba(216,36,42,.08),transparent 28%),
+    #060606!important;
+  gap:18px;
+}
+.loader-orbit{
+  width:176px;
+  height:176px;
+  border-radius:50%;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,255,255,.018);
+  border:1px solid rgba(255,255,255,.06);
+  box-shadow:0 22px 80px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.04);
+  backdrop-filter:blur(22px);
+}
+.loader-orbit-ring{
+  position:absolute;
+  inset:-6px;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,.045);
+  border-top-color:var(--r);
+  border-right-color:rgba(216,36,42,.32);
+  animation:loaderSpin 1.2s linear infinite;
+}
+.loader-orbit-ring-2{
+  inset:9px;
+  border-width:1px;
+  border-top-color:rgba(255,255,255,.5);
+  border-right-color:transparent;
+  animation-duration:2s;
+  animation-direction:reverse;
+}
+.brand-logo-loader{
+  width:118px!important;
+  height:118px!important;
+  object-fit:contain!important;
+  margin:0!important;
+  opacity:0;
+  animation:loaderLogoIn .55s .12s forwards;
+  filter:drop-shadow(0 9px 18px rgba(0,0,0,.26))!important;
+}
+.ld-track{
+  width:176px!important;
+  height:2px!important;
+  border-radius:999px!important;
+  margin:0!important;
+  background:rgba(255,255,255,.07)!important;
+}
+.ld-fill{border-radius:999px!important}
+.ld-num{margin-top:0!important;letter-spacing:3px!important}
+@keyframes loaderSpin{to{transform:rotate(360deg)}}
+
+/* NAVBAR */
+nav{
+  height:84px!important;
+  padding:0 5.5%!important;
+}
+nav.on{
+  background:rgba(6,6,6,.68)!important;
+  backdrop-filter:blur(24px) saturate(1.2)!important;
+  border-bottom:1px solid rgba(255,255,255,.06)!important;
+}
+.nlogo{min-height:84px!important}
+.brand-logo-nav{
+  height:68px!important;
+  max-width:320px!important;
+  filter:drop-shadow(0 8px 16px rgba(0,0,0,.30))!important;
+}
+.menu-btn{
+  border-radius:999px!important;
+  padding:11px 18px!important;
+  background:rgba(255,255,255,.045)!important;
+  border:1px solid rgba(255,255,255,.09)!important;
+  backdrop-filter:blur(18px)!important;
+  box-shadow:0 8px 24px rgba(0,0,0,.18)!important;
+}
+.menu-btn:hover{
+  background:rgba(216,36,42,.10)!important;
+  border-color:rgba(216,36,42,.34)!important;
+}
+.nav-dropdown{
+  top:88px!important;
+  border-radius:22px!important;
+  overflow:hidden!important;
+  background:rgba(10,10,10,.82)!important;
+  backdrop-filter:blur(28px) saturate(1.18)!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+  box-shadow:var(--lux-shadow-deep)!important;
+}
+.nav-item{
+  margin:5px 8px!important;
+  border-radius:14px!important;
+}
+.nav-item::before{display:none!important}
+.nav-item-ico{
+  border-radius:12px!important;
+  background:rgba(255,255,255,.04)!important;
+}
+.nav-item-ico svg{
+  width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;color:rgba(255,255,255,.72)
+}
+
+/* HERO refinements */
+.heyebrow{
+  border-radius:999px!important;
+  background:rgba(8,8,8,.34)!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  backdrop-filter:blur(16px)!important;
+  box-shadow:0 10px 30px rgba(0,0,0,.14)!important;
+}
+.btnr,.btng{
+  clip-path:none!important;
+  border-radius:999px!important;
+  min-height:52px;
+}
+.btnr{
+  background:linear-gradient(135deg,#ef363c 0%,#c91f25 100%)!important;
+  box-shadow:0 12px 34px rgba(216,36,42,.24)!important;
+}
+.btnr::before{border-radius:inherit}
+.btng{
+  background:rgba(255,255,255,.045)!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  backdrop-filter:blur(16px)!important;
+}
+.btnr .arr{
+  border-radius:50%!important;
+}
+
+/* GLOBAL CARD LANGUAGE */
+.hgcard,
+.sstrip,
+.smart-card,
+.trust-chip,
+.cv-form-wrap,
+.contact-info,
+.qs-stat,
+.tl-content,
+.review-card,
+.branch-card,
+.service-card,
+.svc-card,
+.quote-panel{
+  border-radius:var(--lux-radius)!important;
+}
+.hgcard,
+.smart-card,
+.trust-chip,
+.cv-form-wrap,
+.contact-info,
+.qs-stat,
+.tl-content,
+.review-card,
+.branch-card,
+.service-card,
+.svc-card{
+  background:linear-gradient(145deg,rgba(255,255,255,.052),rgba(255,255,255,.025))!important;
+  border:1px solid var(--lux-border)!important;
+  box-shadow:var(--lux-shadow)!important;
+  backdrop-filter:blur(18px)!important;
+}
+.hgcard:hover,
+.smart-card:hover,
+.trust-chip:hover,
+.qs-stat:hover,
+.review-card:hover,
+.branch-card:hover,
+.service-card:hover,
+.svc-card:hover{
+  border-color:var(--lux-border-hover)!important;
+  transform:translateY(-6px);
+}
+.hgcard::before{
+  height:1px!important;
+  left:18px!important;
+  right:18px!important;
+  top:0!important;
+  border-radius:999px;
+}
+.hgcard::after{
+  border-radius:inherit!important;
+}
+
+/* STATS */
+.stats-strip{
+  gap:12px!important;
+  background:transparent!important;
+  margin:26px 6% 0!important;
+}
+.sstrip{
+  background:rgba(255,255,255,.028)!important;
+  border:1px solid rgba(255,255,255,.065)!important;
+  box-shadow:0 12px 35px rgba(0,0,0,.18)!important;
+}
+.sstrip-n{font-size:50px!important}
+
+/* HOME / SECTIONS */
+.home-grid{gap:20px!important}
+.conversion-zone{
+  border-top:0!important;
+  border-bottom:0!important;
+}
+.smart-card{
+  border-radius:28px!important;
+  overflow:hidden!important;
+}
+.service-option{
+  border-radius:16px!important;
+  background:rgba(255,255,255,.035)!important;
+}
+.smart-action{
+  border-radius:999px!important;
+  min-height:50px;
+}
+.trust-chip{
+  border-radius:18px!important;
+}
+
+/* FORMS */
+.cv-input,.cv-select,.cv-textarea,
+.quote-input,.quote-select,.quote-textarea,
+#chat-input{
+  border-radius:14px!important;
+  background:rgba(255,255,255,.045)!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+}
+.cv-input:focus,.cv-select:focus,.cv-textarea:focus,
+.quote-input:focus,.quote-select:focus,.quote-textarea:focus,
+#chat-input:focus{
+  border-color:rgba(216,36,42,.48)!important;
+  box-shadow:0 0 0 4px rgba(216,36,42,.07)!important;
+}
+.cv-submit,.quote-nav button{
+  border-radius:999px!important;
+}
+
+/* FLOATING ACTION DOCK */
+.conv-dock{
+  border-radius:999px!important;
+  padding:6px!important;
+  background:rgba(8,8,8,.72)!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+  backdrop-filter:blur(24px) saturate(1.2)!important;
+  box-shadow:0 18px 55px rgba(0,0,0,.34)!important;
+}
+.conv-dock a,.conv-dock button{
+  border-radius:999px!important;
+}
+.conv-dock .primary{
+  background:linear-gradient(135deg,#ef363c,#c91f25)!important;
+}
+
+/* CHAT */
+#chat-window{
+  border-radius:24px!important;
+  overflow:hidden!important;
+  background:rgba(10,10,10,.88)!important;
+  backdrop-filter:blur(26px) saturate(1.15)!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+  box-shadow:0 28px 90px rgba(0,0,0,.54)!important;
+}
+#chat-header{
+  background:rgba(255,255,255,.025)!important;
+  padding:16px 18px!important;
+}
+.chat-avatar{
+  border-radius:50%!important;
+  overflow:hidden!important;
+  background:rgba(255,255,255,.035)!important;
+  border:1px solid rgba(255,255,255,.07)!important;
+}
+.chat-avatar img{
+  width:120%!important;
+  height:120%!important;
+  transform:none!important;
+  object-fit:contain!important;
+}
+.chat-tab,.chat-qbtn{
+  border-radius:999px!important;
+}
+
+/* Floating logo button: truly circular */
+#chat-bubble{
+  width:76px!important;
+  height:76px!important;
+  border-radius:50%!important;
+  overflow:hidden!important;
+  padding:0!important;
+  background:rgba(8,8,8,.80)!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  box-shadow:0 18px 45px rgba(0,0,0,.38),0 0 0 6px rgba(216,36,42,.035)!important;
+  backdrop-filter:blur(18px)!important;
+}
+#chat-bubble .chat-brand-logo{
+  position:absolute!important;
+  inset:-8%!important;
+  width:116%!important;
+  height:116%!important;
+  object-fit:contain!important;
+  transform:none!important;
+  border-radius:50%!important;
+  filter:drop-shadow(0 5px 10px rgba(0,0,0,.28))!important;
+}
+#chat-bubble:hover .chat-brand-logo{
+  transform:scale(1.05)!important;
+}
+#chat-bubble.open .chat-brand-logo{
+  opacity:0!important;
+  transform:scale(.72)!important;
+}
+#chat-bubble .ico-close{
+  width:38px!important;
+  height:38px!important;
+  padding:9px!important;
+  border-radius:50%!important;
+  background:rgba(255,255,255,.07)!important;
+}
+#chat-bubble-ping{
+  top:7px!important;
+  right:7px!important;
+  width:13px!important;
+  height:13px!important;
+  border:2px solid #0b0b0b!important;
+}
+
+/* FOOTER */
+footer{
+  border-top:1px solid rgba(255,255,255,.06)!important;
+  background:linear-gradient(180deg,#080808,#050505)!important;
+}
+.flogo{
+  border-radius:0!important;
+  background:transparent!important;
+}
+.brand-logo-footer{
+  height:72px!important;
+  filter:drop-shadow(0 8px 16px rgba(0,0,0,.28))!important;
+}
+.fsoc{
+  border-radius:50%!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+  background:rgba(255,255,255,.03)!important;
+}
+
+/* Modals and quote choices */
+.quote-panel{
+  background:rgba(12,12,12,.94)!important;
+  backdrop-filter:blur(26px)!important;
+}
+.quote-choice{
+  border-radius:16px!important;
+  background:rgba(255,255,255,.035)!important;
+}
+.quote-close{
+  border-radius:50%!important;
+}
+
+/* Less harsh separators */
+.ticker{
+  border-color:rgba(255,255,255,.05)!important;
+  background:rgba(7,7,7,.96)!important;
+}
+.msep{
+  border-color:rgba(255,255,255,.05)!important;
+}
+
+@media(max-width:900px){
+  nav{height:76px!important;padding:0 4.5%!important}
+  .nlogo{min-height:76px!important}
+  .brand-logo-nav{height:58px!important;max-width:58vw!important}
+  .nav-dropdown{top:80px!important;right:4.5%!important;left:4.5%!important;min-width:0!important}
+  .stats-strip{grid-template-columns:1fr 1fr!important;margin:18px 4.5% 0!important}
+  .home-grid{padding-left:4.5%!important;padding-right:4.5%!important}
+  .conv-dock{border-radius:20px!important}
+  .conv-dock a,.conv-dock button{border-radius:14px!important}
+  #chat-bubble{width:68px!important;height:68px!important}
+}
+@media(max-width:580px){
+  .loader-orbit{width:148px;height:148px}
+  .brand-logo-loader{width:100px!important;height:100px!important}
+  .ld-track{width:148px!important}
+  .stats-strip{grid-template-columns:1fr!important}
+  .home-grid{grid-template-columns:1fr!important}
+  .hgcard{border-radius:18px!important}
+}
+</style>
+
 </head>
 <body>
 <div id="cursor"></div>
@@ -1161,7 +1578,11 @@ footer{background:#050505;border-top:1px solid rgba(255,255,255,.04);padding:72p
 
 <!-- LOADER -->
 <div id="loader">
-  <img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778880516/cccccc_httfzl.png" alt="Instaservice" class="brand-logo brand-logo-loader" style="height:clamp(92px,13vw,145px);width:auto;object-fit:contain;margin-bottom:2rem;opacity:0;animation:loaderLogoIn .5s .15s forwards;">
+  <div class="loader-orbit">
+    <div class="loader-orbit-ring"></div>
+    <div class="loader-orbit-ring loader-orbit-ring-2"></div>
+    <img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778880516/cccccc_httfzl.png" alt="Instaservice" class="brand-logo brand-logo-loader">
+  </div>
   <div class="ld-track"><div class="ld-fill" id="lf"></div></div>
   <div class="ld-num" id="ln">0%</div>
 </div>
@@ -1172,7 +1593,7 @@ footer{background:#050505;border-top:1px solid rgba(255,255,255,.04);padding:72p
 <!-- NAV -->
 <nav id="nav">
   <a class="nlogo" onclick="showPage('home')">
-    <img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778880516/cccccc_httfzl.png" alt="Instaservice" class="brand-logo brand-logo-nav" style="height:56px;width:auto;object-fit:contain;">
+    <img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778880516/cccccc_httfzl.png" alt="Instaservice" class="brand-logo brand-logo-nav" style="height:68px;width:auto;object-fit:contain;">
   </a>
   <div class="nav-right">
     <button class="menu-btn" id="menuBtn" onclick="toggleMenu()" aria-label="Menú">
@@ -1188,22 +1609,22 @@ footer{background:#050505;border-top:1px solid rgba(255,255,255,.04);padding:72p
 <div class="nav-dropdown" id="navDropdown">
   <div class="nav-dropdown-inner">
     <div class="nav-item" onclick="navGo('quienes')">
-      <div class="nav-item-ico">🏆</div>
+      <div class="nav-item-ico"><svg viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 01-8 0V4z"/><path d="M8 6H5v1a4 4 0 004 4M16 6h3v1a4 4 0 01-4 4M12 13v4M8 21h8M9 17h6v4"/></svg></div>
       <div class="nav-item-text"><strong>Quiénes Somos</strong><span>Historia, valores y equipo</span></div>
       <div class="nav-item-arr">→</div>
     </div>
     <div class="nav-item" onclick="navGo('servicios')">
-      <div class="nav-item-ico">🔧</div>
+      <div class="nav-item-ico"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 01-5.1 5.1L4 17l3 3 5.6-5.6a4 4 0 005.1-5.1z"/></svg></div>
       <div class="nav-item-text"><strong>Servicios</strong><span>Mecánica, frenos, A/C y más</span></div>
       <div class="nav-item-arr">→</div>
     </div>
     <div class="nav-item" onclick="navGo('resenas')">
-      <div class="nav-item-ico">⭐</div>
+      <div class="nav-item-ico"><svg viewBox="0 0 24 24"><path d="M12 3l2.7 5.5 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.8 1-6.1-4.4-4.3 6.1-.9L12 3z"/></svg></div>
       <div class="nav-item-text"><strong>Reseñas</strong><span>Lo que dicen nuestros clientes</span></div>
       <div class="nav-item-arr">→</div>
     </div>
     <div class="nav-item" onclick="navGo('contacto')">
-      <div class="nav-item-ico">📍</div>
+      <div class="nav-item-ico"><svg viewBox="0 0 24 24"><path d="M12 21s6-5.2 6-11a6 6 0 10-12 0c0 5.8 6 11 6 11z"/><circle cx="12" cy="10" r="2"/></svg></div>
       <div class="nav-item-text"><strong>Contacto & Sucursales</strong><span>Ubicaciones y horarios</span></div>
       <div class="nav-item-arr">→</div>
     </div>
@@ -1500,7 +1921,7 @@ footer{background:#050505;border-top:1px solid rgba(255,255,255,.04);padding:72p
   <footer>
     <div class="ftop">
       <div class="fbrand">
-        <div class="flogo"><img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778880516/cccccc_httfzl.png" alt="Instaservice" class="brand-logo brand-logo-footer" style="height:58px;width:auto;object-fit:contain;"></div>
+        <div class="flogo"><img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778880516/cccccc_httfzl.png" alt="Instaservice" class="brand-logo brand-logo-footer" style="height:72px;width:auto;object-fit:contain;"></div>
         <p>"La Agencia de los Panameños" — Taller automotriz y trámites vehiculares con más de 30 años sirviendo a Panamá con profesionalismo y confianza.</p>
         <div class="fsoc-row">
           <a href="https://instagram.com/instaservicetaller" target="_blank" class="fsoc" title="Instagram">
