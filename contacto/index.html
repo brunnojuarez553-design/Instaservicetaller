@@ -2189,6 +2189,52 @@ h1,h2,h3,h4,.bigtitle,.page-hero-title,.cv-title,.smart-card-title{font-family:v
   .assistant-wa-premium:before{animation:none!important}
 }
 </style>
+
+<style id="assistant-fixed-black-ring-2026">
+#chat-bubble{
+  width:76px!important;
+  height:76px!important;
+  border-radius:50%!important;
+  background:#080808!important;
+  border:3px solid #000!important;
+  box-shadow:
+    0 10px 28px rgba(0,0,0,.52),
+    inset 0 0 0 1px rgba(255,255,255,.035)!important;
+  overflow:visible!important;
+}
+#chat-bubble .chat-brand-logo{
+  inset:9%!important;
+  width:82%!important;
+  height:82%!important;
+  max-width:82%!important;
+  max-height:82%!important;
+  object-fit:contain!important;
+}
+#chat-bubble::before{
+  inset:-10px!important;
+  z-index:-2!important;
+}
+#chat-bubble::after{
+  inset:-18px!important;
+  z-index:-3!important;
+}
+.assistant-sparkles{
+  inset:-21px!important;
+  z-index:-4!important;
+}
+#chat-bubble-ping{
+  top:5px!important;
+  right:5px!important;
+  border:3px solid #080808!important;
+}
+@media(max-width:900px){
+  #chat-bubble{
+    width:68px!important;
+    height:68px!important;
+    border-width:3px!important;
+  }
+}
+</style>
 </head>
 <body>
 <div id="cursor"></div>
