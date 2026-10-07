@@ -1904,6 +1904,261 @@ h1,h2,h3,h4,.bigtitle,.page-hero-title,.cv-title,.smart-card-title{font-family:v
   #chat-bubble::before,#chat-bubble::after,#chat-bubble-ping{animation:none!important}
 }
 </style>
+
+<style id="home-summary-reviews-2026">
+.home-summary{
+  padding:120px 6% 40px;
+  max-width:1500px;
+  margin:0 auto;
+}
+.home-summary-head{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:70px;
+  align-items:end;
+  margin-bottom:72px;
+}
+.summary-kicker{
+  display:flex;align-items:center;gap:12px;
+  color:#ef4046;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+  margin-bottom:16px;
+}
+.summary-kicker:before{content:"";width:34px;height:1px;background:#ef4046}
+.home-summary-head h2,.google-reviews-title h2{
+  font-size:clamp(52px,6vw,88px);
+  line-height:.96;
+  letter-spacing:-.045em;
+  margin:0;
+}
+.home-summary-head h2 span,.google-reviews-title h2 span{color:#ef3c42}
+.home-summary-head>p{
+  color:rgba(255,255,255,.55);
+  font-size:16px;
+  line-height:1.8;
+  max-width:520px;
+  margin:0;
+}
+.summary-row{
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:64px;
+  align-items:center;
+  padding:54px 0;
+  border-top:1px solid rgba(255,255,255,.07);
+}
+.summary-row-reverse .summary-media{order:2}
+.summary-row-reverse .summary-copy{order:1}
+.summary-media{
+  min-height:390px;
+  border-radius:28px;
+  overflow:hidden;
+  position:relative;
+  background:#111;
+  box-shadow:0 28px 70px rgba(0,0,0,.28);
+}
+.summary-media:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 48%,rgba(0,0,0,.42));
+  pointer-events:none;
+}
+.summary-media img{
+  width:100%;height:100%;min-height:390px;object-fit:cover;display:block;
+  transition:transform .8s cubic-bezier(.16,1,.3,1),filter .5s;
+}
+.summary-row:hover .summary-media img{transform:scale(1.035);filter:brightness(1.08)}
+.summary-copy{position:relative;padding:20px 0}
+.summary-number{
+  position:absolute;right:0;top:-4px;
+  font-size:72px;font-weight:700;line-height:1;color:rgba(255,255,255,.045);
+  letter-spacing:-.05em;
+}
+.summary-label{
+  color:#ef4046;font-size:12px;font-weight:800;text-transform:uppercase;
+  letter-spacing:.12em;margin-bottom:16px;
+}
+.summary-copy h3{
+  font-size:clamp(34px,4vw,54px);
+  line-height:1.03;letter-spacing:-.04em;
+  margin:0 0 20px;max-width:620px;
+}
+.summary-copy p{
+  color:rgba(255,255,255,.55);font-size:15px;line-height:1.85;
+  max-width:590px;margin:0 0 28px;
+}
+.summary-more{
+  position:relative;
+  display:inline-flex;align-items:center;gap:18px;
+  min-height:50px;padding:0 22px 0 24px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.035);
+  color:#fff;text-decoration:none;
+  font-size:13px;font-weight:800;
+  overflow:hidden;
+  isolation:isolate;
+  transition:transform .28s,border-color .28s,box-shadow .28s;
+}
+.summary-more:before{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(100deg,transparent 0%,rgba(239,60,66,.18) 40%,rgba(239,60,66,.42) 50%,rgba(239,60,66,.18) 60%,transparent 100%);
+  transform:translateX(-115%);
+  animation:summaryButtonSweep 3.2s ease-in-out infinite;
+}
+.summary-more:after{
+  content:"";position:absolute;inset:-1px;border-radius:inherit;z-index:-2;
+  background:linear-gradient(90deg,rgba(239,60,66,.0),rgba(239,60,66,.75),rgba(239,60,66,.0));
+  opacity:.28;
+  animation:summaryGlow 2.4s ease-in-out infinite;
+}
+.summary-more i{
+  width:28px;height:28px;border-radius:50%;
+  display:grid;place-items:center;font-style:normal;
+  background:#ef363c;
+  transition:transform .28s;
+  box-shadow:0 6px 16px rgba(239,54,60,.25);
+}
+.summary-more:hover{
+  transform:translateY(-3px);
+  border-color:rgba(239,60,66,.45);
+  box-shadow:0 14px 34px rgba(0,0,0,.26);
+}
+.summary-more:hover i{transform:translateX(4px)}
+@keyframes summaryButtonSweep{
+  0%,52%{transform:translateX(-115%)}
+  76%,100%{transform:translateX(115%)}
+}
+@keyframes summaryGlow{
+  0%,100%{opacity:.10}
+  50%{opacity:.38}
+}
+
+/* Google review showcase */
+.google-reviews-home{
+  padding:110px 0 120px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 78% 20%,rgba(239,54,60,.08),transparent 28%),
+    linear-gradient(180deg,#090909,#070707);
+  border-top:1px solid rgba(255,255,255,.055);
+  border-bottom:1px solid rgba(255,255,255,.055);
+}
+.google-reviews-head{
+  padding:0 6%;
+  max-width:1500px;
+  margin:0 auto 54px;
+  display:grid;
+  grid-template-columns:.78fr 1.22fr;
+  gap:72px;
+  align-items:center;
+}
+.google-rating-block{
+  display:flex;align-items:center;gap:22px;
+  padding:28px 30px;
+  border-radius:26px;
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 22px 70px rgba(0,0,0,.24);
+}
+.google-mark{
+  width:72px;height:72px;border-radius:50%;
+  display:grid;place-items:center;
+  background:#fff;color:#4285f4;
+  font:800 38px Arial,sans-serif;
+  box-shadow:0 12px 34px rgba(0,0,0,.25);
+}
+.google-rating-line{display:flex;align-items:flex-end;gap:7px}
+.google-rating-line strong{font-size:58px;line-height:.85;letter-spacing:-.05em}
+.google-rating-line span{color:rgba(255,255,255,.35);font-size:17px}
+.google-stars{color:#f6b900;letter-spacing:2px;font-size:14px}
+.google-stars-large{font-size:18px;margin-top:7px}
+.google-rating-block p{font-size:12px;color:rgba(255,255,255,.42);margin:7px 0 0}
+.google-reviews-title>p{
+  font-size:15px;line-height:1.8;color:rgba(255,255,255,.5);
+  max-width:580px;margin:18px 0 25px;
+}
+.reviews-marquee{
+  position:relative;
+  width:100%;
+  overflow:hidden;
+  padding:10px 0 24px;
+}
+.reviews-track{
+  display:flex;
+  gap:18px;
+  width:max-content;
+  animation:googleReviewsMarquee 72s linear infinite;
+}
+.reviews-marquee:hover .reviews-track{animation-play-state:paused}
+.google-review-card{
+  width:390px;
+  min-height:240px;
+  flex:none;
+  padding:26px;
+  border-radius:24px;
+  background:linear-gradient(145deg,rgba(255,255,255,.052),rgba(255,255,255,.024));
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 18px 50px rgba(0,0,0,.22);
+  backdrop-filter:blur(16px);
+  transition:transform .3s,border-color .3s;
+}
+.google-review-card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(239,60,66,.28);
+}
+.google-review-top{display:flex;align-items:center;gap:12px}
+.google-g{
+  width:40px;height:40px;border-radius:50%;
+  display:grid;place-items:center;background:#fff;color:#4285f4;
+  font:800 21px Arial,sans-serif;
+}
+.google-review-top>div:nth-child(2){flex:1}
+.google-review-top strong{display:block;font-size:14px;letter-spacing:-.01em}
+.google-review-top span{display:block;color:rgba(255,255,255,.35);font-size:11px;margin-top:3px}
+.google-check{
+  width:22px;height:22px;border-radius:50%;display:grid;place-items:center;
+  font-size:11px;background:rgba(66,133,244,.13);color:#6da1ff;
+}
+.google-review-card .google-stars{margin:20px 0 10px;font-size:13px}
+.google-review-card p{
+  color:rgba(255,255,255,.68);font-size:14px;line-height:1.72;
+  margin:0;min-height:96px;
+}
+.google-review-source{
+  margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,.055);
+  color:rgba(255,255,255,.28);font-size:10px;text-transform:uppercase;letter-spacing:.09em;
+}
+.reviews-marquee-fade{
+  position:absolute;top:0;bottom:0;width:10vw;z-index:3;pointer-events:none;
+}
+.reviews-marquee-fade-left{left:0;background:linear-gradient(90deg,#080808,transparent)}
+.reviews-marquee-fade-right{right:0;background:linear-gradient(-90deg,#080808,transparent)}
+@keyframes googleReviewsMarquee{
+  from{transform:translateX(0)}
+  to{transform:translateX(calc(-50% - 9px))}
+}
+@media(max-width:900px){
+  .home-summary{padding:86px 4.5% 25px}
+  .home-summary-head,.google-reviews-head{grid-template-columns:1fr;gap:30px}
+  .summary-row,.summary-row-reverse{grid-template-columns:1fr;gap:30px;padding:40px 0}
+  .summary-row-reverse .summary-media,.summary-row-reverse .summary-copy{order:initial}
+  .summary-media,.summary-media img{min-height:300px}
+  .google-reviews-head{padding:0 4.5%}
+}
+@media(max-width:600px){
+  .home-summary-head h2,.google-reviews-title h2{font-size:46px}
+  .summary-copy h3{font-size:36px}
+  .summary-media,.summary-media img{min-height:235px}
+  .google-rating-block{padding:22px;gap:16px}
+  .google-mark{width:58px;height:58px;font-size:30px}
+  .google-rating-line strong{font-size:46px}
+  .google-review-card{width:310px;min-height:250px;padding:22px}
+  .reviews-marquee-fade{width:28px}
+}
+@media(prefers-reduced-motion:reduce){
+  .summary-more:before,.summary-more:after,.reviews-track{animation:none!important}
+}
+</style>
+
 </head>
 <body>
 <div id="cursor"></div>
@@ -2087,39 +2342,319 @@ h1,h2,h3,h4,.bigtitle,.page-hero-title,.cv-title,.smart-card-title{font-family:v
   </div>
 </section>
 
-<!-- PREVIEW CARDS - NAVEGACION A SECCIONES -->
-  <div class="home-grid">
-    <div class="hgcard rv" onclick="showPage('quienes')">
-      <div class="hgcard-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778892582/675447746_18455830984106348_3257308772832864931_n_dc4gda.jpg');"></div>
-      <span class="hgcard-ico">🏆</span>
-      <div class="hgcard-tt">Quiénes Somos</div>
-      <p class="hgcard-ds">Más de 30 años construyendo confianza. Conocé nuestra historia, valores y el equipo detrás de la Agencia de los Panameños.</p>
-      <div class="hgcard-arr">Ver historia →</div>
+
+<!-- HOME SUMMARY SECTIONS -->
+<section class="home-summary" aria-label="Conoce Instaservice">
+  <div class="home-summary-head rv">
+    <div>
+      <div class="summary-kicker">Todo Instaservice</div>
+      <h2>Conoce lo esencial.<br><span>Explora cuando quieras.</span></h2>
     </div>
-    <div class="hgcard rv" style="transition-delay:.1s" onclick="showPage('servicios')">
-      <div class="hgcard-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778892431/673180734_18455831290106348_7850905331393331382_n_mii8gn.jpg');"></div>
-      <span class="hgcard-ico">🔧</span>
-      <div class="hgcard-tt">Servicios</div>
-      <p class="hgcard-ds">Mecánica, frenos, A/C, alineación, electromecánica, trámites vehiculares y mucho más. Todo en un solo lugar, sin cita previa.</p>
-      <div class="hgcard-arr">Ver servicios →</div>
+    <p>Una presentación más simple del taller, nuestros servicios y nuestras sucursales. Cada sección tiene su propia página con la información completa.</p>
+  </div>
+
+  <article class="summary-row rv">
+    <div class="summary-media">
+      <img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778892582/675447746_18455830984106348_3257308772832864931_n_dc4gda.jpg" alt="Equipo de Instaservice Panamá">
     </div>
-    <div class="hgcard rv" style="transition-delay:.2s" onclick="showPage('resenas')">
-      <div class="hgcard-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778892716/658924316_18455830912106348_6849801991620259883_n_tznhyb.jpg');"></div>
-      <span class="hgcard-ico">⭐</span>
-      <div class="hgcard-tt">Reseñas</div>
-      <p class="hgcard-ds">Más de 490 reseñas en Google con calificación de 4.4 estrellas. Leé lo que dicen nuestros clientes en las 3 sucursales.</p>
-      <div class="hgcard-arr">Ver reseñas →</div>
+    <div class="summary-copy">
+      <span class="summary-number">01</span>
+      <div class="summary-label">Quiénes Somos</div>
+      <h3>Más de 30 años acompañando a los conductores de Panamá.</h3>
+      <p>Instaservice nació con una idea simple: servicio automotriz confiable, directo y con atención profesional. Hoy cuenta con tres sucursales y una comunidad que sigue creciendo.</p>
+      <a class="summary-more" href="/quienes/"><span>Más información</span><i>→</i></a>
     </div>
-    <div class="hgcard rv" style="transition-delay:.3s" onclick="showPage('contacto')">
-      <div class="hgcard-bg" style="background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778895532/675346138_18455830957106348_1874998712270215820_n_icui8z.jpg');background-size:cover;background-repeat:no-repeat;"></div>
-      <span class="hgcard-ico">📍</span>
-      <div class="hgcard-tt">Contacto & Sucursales</div>
-      <p class="hgcard-ds">3 ubicaciones estratégicas en Ciudad de Panamá. Encontrá la más cerca con mapas, teléfonos y horarios de cada sucursal.</p>
-      <div class="hgcard-arr">Ver sucursales →</div>
+  </article>
+
+  <article class="summary-row summary-row-reverse rv">
+    <div class="summary-media">
+      <img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778892431/673180734_18455831290106348_7850905331393331382_n_mii8gn.jpg" alt="Servicios automotrices Instaservice">
+    </div>
+    <div class="summary-copy">
+      <span class="summary-number">02</span>
+      <div class="summary-label">Servicios</div>
+      <h3>Diagnóstico, mantenimiento y soluciones para tu vehículo.</h3>
+      <p>Mecánica, frenos, aire acondicionado, alineación, electromecánica, inspección y trámites vehiculares. Todo en un solo lugar y con atención para múltiples marcas.</p>
+      <a class="summary-more" href="/servicios/"><span>Ver todos los servicios</span><i>→</i></a>
+    </div>
+  </article>
+
+  <article class="summary-row rv">
+    <div class="summary-media">
+      <img src="https://res.cloudinary.com/dvvuwigmy/image/upload/v1778895532/675346138_18455830957106348_1874998712270215820_n_icui8z.jpg" alt="Sucursales Instaservice Panamá">
+    </div>
+    <div class="summary-copy">
+      <span class="summary-number">03</span>
+      <div class="summary-label">Sucursales</div>
+      <h3>Corozal, Bethania y Chanis.</h3>
+      <p>Tres puntos de atención en Ciudad de Panamá. Consulta horarios, teléfonos, WhatsApp y ubicación de cada sucursal para elegir la más conveniente.</p>
+      <a class="summary-more" href="/contacto/"><span>Ver sucursales</span><i>→</i></a>
+    </div>
+  </article>
+</section>
+
+<!-- GOOGLE REVIEWS PREMIUM -->
+<section class="google-reviews-home" aria-label="Reseñas de Google">
+  <div class="google-reviews-head rv">
+    <div class="google-rating-block">
+      <div class="google-mark">G</div>
+      <div>
+        <div class="google-rating-line"><strong>4.4</strong><span>/ 5</span></div>
+        <div class="google-stars google-stars-large">★★★★★</div>
+        <p>Más de 490 reseñas en Google</p>
+      </div>
+    </div>
+    <div class="google-reviews-title">
+      <div class="summary-kicker">Opiniones verificadas</div>
+      <h2>Lo que dicen<br><span>nuestros clientes.</span></h2>
+      <p>Experiencias reales de clientes de nuestras sucursales en Ciudad de Panamá.</p>
+      <a class="summary-more" href="/resenas/"><span>Ver todas las reseñas</span><i>→</i></a>
     </div>
   </div>
 
-  <!-- NOVEDADES -->
+  <div class="reviews-marquee" aria-label="Carrusel de reseñas">
+    <div class="reviews-marquee-fade reviews-marquee-fade-left"></div>
+    <div class="reviews-marquee-fade reviews-marquee-fade-right"></div>
+    <div class="reviews-track">
+      <article class="google-review-card">
+    <div class="google-review-top">
+      <div class="google-g">G</div>
+      <div>
+        <strong>Carlos M.</strong>
+        <span>Corozal</span>
+      </div>
+      <div class="google-check" title="Reseña de Google">✓</div>
+    </div>
+    <div class="google-stars">★★★★★</div>
+    <p>Excelente servicio. Fui por el cambio de aceite y en menos de 30 minutos salí. Los precios son justos y el personal muy profesional.</p>
+    <div class="google-review-source">Publicado en Google</div>
+  </article>
+<article class="google-review-card">
+    <div class="google-review-top">
+      <div class="google-g">G</div>
+      <div>
+        <strong>Ana R.</strong>
+        <span>Bethania</span>
+      </div>
+      <div class="google-check" title="Reseña de Google">✓</div>
+    </div>
+    <div class="google-stars">★★★★★</div>
+    <p>Me ayudaron con todos los trámites del traspaso sin complicaciones. Me asesoraron paso a paso. Definitivamente recomendados.</p>
+    <div class="google-review-source">Publicado en Google</div>
+  </article>
+<article class="google-review-card">
+    <div class="google-review-top">
+      <div class="google-g">G</div>
+      <div>
+        <strong>Javier T.</strong>
+        <span>Chanis</span>
+      </div>
+      <div class="google-check" title="Reseña de Google">✓</div>
+    </div>
+    <div class="google-stars">★★★★★</div>
+    <p>Llevo años yendo al local de Chanis. Siempre me tratan bien y el trabajo es de calidad. No los cambio por nada.</p>
+    <div class="google-review-source">Publicado en Google</div>
+  </article>
+<article class="google-review-card">
+    <div class="google-review-top">
+      <div class="google-g">G</div>
+      <div>
+        <strong>María L.</strong>
+        <span>Ciudad de Panamá</span>
+      </div>
+      <div class="google-check" title="Reseña de Google">✓</div>
+    </div>
+    <div class="google-stars">★★★★★</div>
+    <p>Los frenos de mi Honda estaban fallando y me lo resolvieron ese mismo día. Precio muy razonable y trabajo de calidad.</p>
+    <div class="google-review-source">Publicado en Google</div>
+  </article>
+<article class="google-review-card">
+    <div class="google-review-top">
+      <div class="google-g">G</div>
+      <div>
+        <strong>Roberto P.</strong>
+        <span>Bethania</span>
+      </div>
+      <div class="google-check" title="Reseña de Google">✓</div>
+    </div>
+    <div class="google-stars">★★★★★</div>
+    <p>El diagnóstico del A/C fue gratis y la recarga quedó perfecta. Sitio limpio, personal amable. Volvería sin dudarlo.</p>
+    <div class="google-review-source">Publicado en Google</div>
+  </article>
+<article class="google-review-card">
+    <div class="google-review-top">
+      <div class="google-g">G</div>
+      <div>
+        <strong>Diana V.</strong>
+        <span>Chanis / El Dorado</span>
+      </div>
+      <div class="google-check" title="Reseña de Google">✓</div>
+    </div>
+    <div class="google-stars">★★★★★</div>
+    <p>Fui a hacer la inspección vehicular y me resolvieron todo en el mismo lugar. Comodidad increíble, todo en un solo sitio.</p>
+    <div class="google-review-source">Publicado en Google</div>
+  </article>
+<article class="google-review-card">
+    <div class="google-review-top">
+      <div class="google-g">G</div>
+      <div>
+        <strong>Google Review</strong>
+        <span>Corozal / Miraflores</span>
+      </div>
+      <div class="google-check" title="Reseña de Google">✓</div>
+    </div>
+    <div class="google-stars">★★★★★</div>
+    <p>Highly recommend this place, very reasonably priced and honest people. Their shop is clean and organized. They also moved my vehicle in and out very fast.</p>
+    <div class="google-review-source">Publicado en Google</div>
+  </article>
+<article class="google-review-card">
+    <div class="google-review-top">
+      <div class="google-g">G</div>
+      <div>
+        <strong>Google Review</strong>
+        <span>Chanis</span>
+      </div>
+      <div class="google-check" title="Reseña de Google">✓</div>
+    </div>
+    <div class="google-stars">★★★★★</div>
+    <p>I have absolutely no complaints. I've been bringing my cars here for 8 years. 5 stars.</p>
+    <div class="google-review-source">Publicado en Google</div>
+  </article>
+<article class="google-review-card">
+    <div class="google-review-top">
+      <div class="google-g">G</div>
+      <div>
+        <strong>Pedro A.</strong>
+        <span>Corozal</span>
+      </div>
+      <div class="google-check" title="Reseña de Google">✓</div>
+    </div>
+    <div class="google-stars">★★★★★</div>
+    <p>Excelente atención y rapidez. Llegué sin cita y me atendieron al momento. El precio fue el que me dijeron sin sorpresas al final.</p>
+    <div class="google-review-source">Publicado en Google</div>
+  </article>
+<article class="google-review-card">
+    <div class="google-review-top">
+      <div class="google-g">G</div>
+      <div>
+        <strong>Carlos M.</strong>
+        <span>Corozal</span>
+      </div>
+      <div class="google-check" title="Reseña de Google">✓</div>
+    </div>
+    <div class="google-stars">★★★★★</div>
+    <p>Excelente servicio. Fui por el cambio de aceite y en menos de 30 minutos salí. Los precios son justos y el personal muy profesional.</p>
+    <div class="google-review-source">Publicado en Google</div>
+  </article>
+<article class="google-review-card">
+    <div class="google-review-top">
+      <div class="google-g">G</div>
+      <div>
+        <strong>Ana R.</strong>
+        <span>Bethania</span>
+      </div>
+      <div class="google-check" title="Reseña de Google">✓</div>
+    </div>
+    <div class="google-stars">★★★★★</div>
+    <p>Me ayudaron con todos los trámites del traspaso sin complicaciones. Me asesoraron paso a paso. Definitivamente recomendados.</p>
+    <div class="google-review-source">Publicado en Google</div>
+  </article>
+<article class="google-review-card">
+    <div class="google-review-top">
+      <div class="google-g">G</div>
+      <div>
+        <strong>Javier T.</strong>
+        <span>Chanis</span>
+      </div>
+      <div class="google-check" title="Reseña de Google">✓</div>
+    </div>
+    <div class="google-stars">★★★★★</div>
+    <p>Llevo años yendo al local de Chanis. Siempre me tratan bien y el trabajo es de calidad. No los cambio por nada.</p>
+    <div class="google-review-source">Publicado en Google</div>
+  </article>
+<article class="google-review-card">
+    <div class="google-review-top">
+      <div class="google-g">G</div>
+      <div>
+        <strong>María L.</strong>
+        <span>Ciudad de Panamá</span>
+      </div>
+      <div class="google-check" title="Reseña de Google">✓</div>
+    </div>
+    <div class="google-stars">★★★★★</div>
+    <p>Los frenos de mi Honda estaban fallando y me lo resolvieron ese mismo día. Precio muy razonable y trabajo de calidad.</p>
+    <div class="google-review-source">Publicado en Google</div>
+  </article>
+<article class="google-review-card">
+    <div class="google-review-top">
+      <div class="google-g">G</div>
+      <div>
+        <strong>Roberto P.</strong>
+        <span>Bethania</span>
+      </div>
+      <div class="google-check" title="Reseña de Google">✓</div>
+    </div>
+    <div class="google-stars">★★★★★</div>
+    <p>El diagnóstico del A/C fue gratis y la recarga quedó perfecta. Sitio limpio, personal amable. Volvería sin dudarlo.</p>
+    <div class="google-review-source">Publicado en Google</div>
+  </article>
+<article class="google-review-card">
+    <div class="google-review-top">
+      <div class="google-g">G</div>
+      <div>
+        <strong>Diana V.</strong>
+        <span>Chanis / El Dorado</span>
+      </div>
+      <div class="google-check" title="Reseña de Google">✓</div>
+    </div>
+    <div class="google-stars">★★★★★</div>
+    <p>Fui a hacer la inspección vehicular y me resolvieron todo en el mismo lugar. Comodidad increíble, todo en un solo sitio.</p>
+    <div class="google-review-source">Publicado en Google</div>
+  </article>
+<article class="google-review-card">
+    <div class="google-review-top">
+      <div class="google-g">G</div>
+      <div>
+        <strong>Google Review</strong>
+        <span>Corozal / Miraflores</span>
+      </div>
+      <div class="google-check" title="Reseña de Google">✓</div>
+    </div>
+    <div class="google-stars">★★★★★</div>
+    <p>Highly recommend this place, very reasonably priced and honest people. Their shop is clean and organized. They also moved my vehicle in and out very fast.</p>
+    <div class="google-review-source">Publicado en Google</div>
+  </article>
+<article class="google-review-card">
+    <div class="google-review-top">
+      <div class="google-g">G</div>
+      <div>
+        <strong>Google Review</strong>
+        <span>Chanis</span>
+      </div>
+      <div class="google-check" title="Reseña de Google">✓</div>
+    </div>
+    <div class="google-stars">★★★★★</div>
+    <p>I have absolutely no complaints. I've been bringing my cars here for 8 years. 5 stars.</p>
+    <div class="google-review-source">Publicado en Google</div>
+  </article>
+<article class="google-review-card">
+    <div class="google-review-top">
+      <div class="google-g">G</div>
+      <div>
+        <strong>Pedro A.</strong>
+        <span>Corozal</span>
+      </div>
+      <div class="google-check" title="Reseña de Google">✓</div>
+    </div>
+    <div class="google-stars">★★★★★</div>
+    <p>Excelente atención y rapidez. Llegué sin cita y me atendieron al momento. El precio fue el que me dijeron sin sorpresas al final.</p>
+    <div class="google-review-source">Publicado en Google</div>
+  </article>
+    </div>
+  </div>
+</section>
+
+<!-- NOVEDADES -->
   <div style="padding:80px 6% 60px;position:relative;overflow:hidden;">
     <div style="position:absolute;inset:0;background-image:url('https://res.cloudinary.com/dvvuwigmy/image/upload/v1778995173/sdasdsadsd_pqy9fi.png');background-size:cover;background-position:center;opacity:.18;pointer-events:none;z-index:0;"></div>
     <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,8,8,.72) 0%,rgba(8,8,8,.55) 50%,rgba(8,8,8,.72) 100%);pointer-events:none;z-index:0;"></div>
