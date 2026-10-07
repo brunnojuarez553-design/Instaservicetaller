@@ -138,7 +138,7 @@ nav.on{background:rgba(8,8,8,.92);backdrop-filter:blur(20px);border-bottom:1px s
   object-fit:cover;
   object-position:center;
   animation:zoomSlow 20s ease-in-out infinite alternate;
-  filter:blur(1px) brightness(.7);
+  filter:brightness(.92) contrast(1.02) saturate(1.04);
   transform-origin:center;
 }
 
@@ -157,19 +157,19 @@ nav.on{background:rgba(8,8,8,.92);backdrop-filter:blur(20px);border-bottom:1px s
   position:absolute;inset:0;z-index:1;
   background:linear-gradient(
     180deg,
-    rgba(8,8,8,.75) 0%,
-    rgba(8,8,8,.5) 35%,
-    rgba(8,8,8,.45) 60%,
-    rgba(8,8,8,.88) 100%
+    rgba(8,8,8,.42) 0%,
+    rgba(8,8,8,.22) 35%,
+    rgba(8,8,8,.20) 60%,
+    rgba(8,8,8,.68) 100%
   );
 }
 .hero-overlay-2{
   position:absolute;inset:0;z-index:1;
   background:linear-gradient(
     105deg,
-    rgba(8,8,8,.92) 0%,
-    rgba(8,8,8,.6) 45%,
-    rgba(8,8,8,.12) 100%
+    rgba(8,8,8,.72) 0%,
+    rgba(8,8,8,.34) 42%,
+    rgba(8,8,8,.05) 100%
   );
 }
 .hero-overlay-red{
@@ -234,8 +234,8 @@ nav.on{background:rgba(8,8,8,.92);backdrop-filter:blur(20px);border-bottom:1px s
   z-index:5;
   padding:0 6%;
   display:grid;
-  grid-template-columns:1.15fr .85fr;
-  gap:4rem;
+  grid-template-columns:minmax(0, 760px);
+  gap:0;
   align-items:flex-end;
 }
 
@@ -280,7 +280,7 @@ h1.htitle{
 /* DESCRIPTION */
 .hdesc{
   font-size:16px;color:rgba(255,255,255,.65);
-  line-height:1.85;max-width:440px;
+  line-height:1.85;max-width:620px;
   margin-bottom:2.5rem;
   opacity:0;animation:fu .8s 1.25s cubic-bezier(.16,1,.3,1) forwards;
 }
@@ -1045,6 +1045,17 @@ footer{background:#050505;border-top:1px solid rgba(255,255,255,.04);padding:72p
   @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 
+
+<style id="hero-cleanup-2026">
+.hero-grid,.hero-scanline,#pcanvas,.hslash,.hero-vline,.hero-corner,.hright{display:none!important}
+.hcontent{grid-template-columns:minmax(0,760px)!important;max-width:1440px}
+.hero-video-wrap video{filter:brightness(.92) contrast(1.02) saturate(1.04)!important}
+.hero-overlay-red{opacity:.42}
+.hero-overlay-red2{opacity:.25}
+@media(max-width:900px){
+  .hero-video-wrap video{filter:brightness(.88) contrast(1.03) saturate(1.03)!important}
+}
+</style>
 </head>
 <body>
 <div id="cursor"></div>
@@ -1126,44 +1137,6 @@ footer{background:#050505;border-top:1px solid rgba(255,255,255,.04);padding:72p
     <div class="hero-overlay-red"></div>
     <div class="hero-overlay-red2"></div>
 
-    <!-- ── TECHNICAL GRID SVG ── -->
-    <div class="hero-grid">
-      <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
-            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(216,36,42,0.5)" stroke-width="0.5"/>
-          </pattern>
-          <pattern id="grid-large" width="180" height="180" patternUnits="userSpaceOnUse">
-            <path d="M 180 0 L 0 0 0 180" fill="none" stroke="rgba(216,36,42,0.9)" stroke-width="1"/>
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#grid)"/>
-        <rect width="100%" height="100%" fill="url(#grid-large)"/>
-        <!-- Horizontal accent lines -->
-        <line x1="0" y1="200" x2="1440" y2="200" stroke="rgba(216,36,42,0.3)" stroke-width="1"/>
-        <line x1="0" y1="700" x2="1440" y2="700" stroke="rgba(216,36,42,0.15)" stroke-width="1"/>
-        <!-- Diagonal accent -->
-        <line x1="700" y1="0" x2="1440" y2="900" stroke="rgba(216,36,42,0.08)" stroke-width="1.5"/>
-      </svg>
-    </div>
-
-    <!-- ── SCAN LINE ── -->
-    <div class="hero-scanline"></div>
-
-    <!-- ── PARTICLE CANVAS ── -->
-    <canvas id="pcanvas"></canvas>
-
-    <!-- ── VERTICAL LINES ── -->
-    <div class="hslash"></div>
-    <div class="hero-vline hero-vline-1"></div>
-    <div class="hero-vline hero-vline-2"></div>
-    <div class="hero-vline hero-vline-3"></div>
-
-    <!-- ── CORNER BRACKETS ── -->
-    <div class="hero-corner hero-corner-tl"></div>
-    <div class="hero-corner hero-corner-tr"></div>
-    <div class="hero-corner hero-corner-bl"></div>
-
     <!-- ── YEAR LABEL ── -->
     <div class="hero-year">EST. 1991 · PANAMÁ</div>
 
@@ -1196,27 +1169,7 @@ footer{background:#050505;border-top:1px solid rgba(255,255,255,.04);padding:72p
         </div>
 
       </div>
-
-      <!-- STATS GLASSMORPHISM CARDS -->
-      <div class="hright">
-        <div class="hstat">
-          <div class="hstat-n" id="hc">0K+</div>
-          <div class="hstat-i"><strong>Clientes Satisfechos</strong><span>Y creciendo cada día</span></div>
-        </div>
-        <div class="hstat">
-          <div class="hstat-n">3</div>
-          <div class="hstat-i"><strong>Sucursales</strong><span>Corozal · Bethania · Chanis</span></div>
-        </div>
-        <div class="hstat">
-          <div class="hstat-n">30+</div>
-          <div class="hstat-i"><strong>Años de Experiencia</strong><span>En el sector automotriz</span></div>
-        </div>
-        <div class="hstat">
-          <div class="hstat-n">30m</div>
-          <div class="hstat-i"><strong>Servicio Express</strong><span>Sin cita previa necesaria</span></div>
-        </div>
       </div>
-    </div>
 
     <!-- SCROLL HINT -->
     <div class="scroll-hint"><span class="scl-t">Scroll</span><div class="scl"></div></div>
